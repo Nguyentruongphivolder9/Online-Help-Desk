@@ -2,7 +2,7 @@
 {
     public class RequestStatus
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string StatusName { get; set; }
         public string ColorCode { get; set; }
 

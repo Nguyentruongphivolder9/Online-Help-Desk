@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OHDDbContext))]
-    [Migration("20240118163800_initial")]
+    [Migration("20240119140405_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -81,8 +81,8 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("RefreshTokenExpiry")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("StatusAccount")
                         .IsRequired()
@@ -248,8 +248,8 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<Guid>("RequestStatusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RequestStatusId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uniqueidentifier");
@@ -275,9 +275,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Requests.RequestStatus", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ColorCode")
                         .IsRequired()
@@ -286,48 +288,151 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("StatusName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
                     b.ToTable("RequestStatus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ColorCode = "#3300FF",
+                            StatusName = "Open"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ColorCode = "#FFFF00",
+                            StatusName = "Assigned"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ColorCode = "#FF6600",
+                            StatusName = "Work in progress"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ColorCode = "#FF0033",
+                            StatusName = "Need more info"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ColorCode = "#FF0000",
+                            StatusName = "Rejected"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ColorCode = "#33FF33",
+                            StatusName = "Completed"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ColorCode = "#FF0000",
+                            StatusName = "Closed"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Roles.Role", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<Guid>("RoleTypeId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RoleTypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleTypeId");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleName = "Student",
+                            RoleTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleName = "Teacher",
+                            RoleTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleName = "Request Handler",
+                            RoleTypeId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            RoleName = "Assignees",
+                            RoleTypeId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            RoleName = "Admin",
+                            RoleTypeId = 4
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Roles.RoleType", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("RoleTypeName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("RoleTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleTypeName = "End-Users"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleTypeName = "Facility-Heads"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleTypeName = "Assignees"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            RoleTypeName = "Administrator"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Accounts.Account", b =>
