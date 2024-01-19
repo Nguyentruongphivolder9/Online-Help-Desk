@@ -9,7 +9,7 @@ namespace Domain.Entities.Requests
         public Guid Id { get; set; }
         public string AccountId { get; set; }
         public Guid RoomId { get; set; }
-        public Guid RequestStatusId { get; set; }
+        public int RequestStatusId { get; set; }
         public string Description {  get; set; }
         public string SeveralLevel { get; set; }
         public string? Reason { get; set; }

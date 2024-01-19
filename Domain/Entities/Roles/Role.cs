@@ -6,8 +6,8 @@ namespace Domain.Entities.Roles
 {
     public class Role
     {
-        public Guid Id { get; set; }
-        public Guid RoleTypeId { get; set; }
+        public int Id { get; set; }
+        public int RoleTypeId { get; set; }
         public string RoleName { get; set; }
         [JsonIgnore]
         public RoleType? RoleTypes { get; set; }

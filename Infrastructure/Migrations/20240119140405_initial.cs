@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -42,8 +44,9 @@ namespace Infrastructure.Migrations
                 name: "RequestStatus",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatusName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ColorCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
@@ -55,8 +58,9 @@ namespace Infrastructure.Migrations
                 name: "RoleTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleTypeName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,9 +91,10 @@ namespace Infrastructure.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleTypeId = table.Column<int>(type: "int", nullable: false),
+                    RoleName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,7 +112,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -143,7 +148,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestStatusId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     SeveralLevel = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
@@ -219,6 +224,43 @@ namespace Infrastructure.Migrations
                         principalTable: "Requests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "RequestStatus",
+                columns: new[] { "Id", "ColorCode", "StatusName" },
+                values: new object[,]
+                {
+                    { 1, "#3300FF", "Open" },
+                    { 2, "#FFFF00", "Assigned" },
+                    { 3, "#FF6600", "Work in progress" },
+                    { 4, "#FF0033", "Need more info" },
+                    { 5, "#FF0000", "Rejected" },
+                    { 6, "#33FF33", "Completed" },
+                    { 7, "#FF0000", "Closed" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RoleTypes",
+                columns: new[] { "Id", "RoleTypeName" },
+                values: new object[,]
+                {
+                    { 1, "End-Users" },
+                    { 2, "Facility-Heads" },
+                    { 3, "Assignees" },
+                    { 4, "Administrator" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "RoleName", "RoleTypeId" },
+                values: new object[,]
+                {
+                    { 1, "Student", 1 },
+                    { 2, "Teacher", 1 },
+                    { 3, "Request Handler", 2 },
+                    { 4, "Assignees", 3 },
+                    { 5, "Admin", 4 }
                 });
 
             migrationBuilder.CreateIndex(
