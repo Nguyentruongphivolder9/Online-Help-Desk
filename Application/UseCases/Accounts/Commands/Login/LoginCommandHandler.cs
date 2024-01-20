@@ -25,7 +25,7 @@ namespace Application.UseCases.Accounts.Commands.Login
 
         public async Task<Result<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _repo.accountRepo.GetByEmail(request.Email);
+            var user = await _repo.accountRepo.GetByEmail(request.AccountId);
             var errorLogin = new Error("Error.Login", "Client errors");
             if (user == null)
                 return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Email or Password.");
