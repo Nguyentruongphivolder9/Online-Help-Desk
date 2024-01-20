@@ -11,24 +11,39 @@ namespace Application.UseCases.Accounts.Commands.Register
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMailService _mailService;
+        private readonly IBCryptService _bCryptService;
 
-        public RegisterCommandHandler(IUnitOfWorkRepository repo, IMailService mailService)
+        public RegisterCommandHandler(IUnitOfWorkRepository repo, IMailService mailService, IBCryptService bCryptService)
         {
             _repo = repo;
             _mailService = mailService;
+            _bCryptService = bCryptService;
         }
 
         public async Task<Result> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            string password = "@abcOHD123";
+            var checkAccountId = await _repo.accountRepo.GetByAccountId(request.AccountId);
+            if (checkAccountId != null)
+                return Result.Failure(new Error("Error.Client", "Data duplication"), "AccountId already exists");
 
+            var checkEmail = await _repo.accountRepo.GetByEmail(request.Email);
+            if (checkEmail != null)
+                return Result.Failure(new Error("Error.Client", "Data duplication"), "Email already exists");
+
+            var checkPhone = await _repo.accountRepo.GetByPhoneNumber(request.PhoneNumber);
+            if (checkPhone != null)
+                return Result.Failure(new Error("Error.Client", "Data duplication"), "Phone number already exists");
+
+            string password = "@abcOHD123";
+            string hashPassword = _bCryptService.EncodeString(password);
 
             var userRegister = new Account
             {
                 AccountId = request.AccountId,
+                RoleId = request.RoleId,
                 FullName = request.FullName,
                 Email = request.Email,
-                Password = "cdsfsdfs",
+                Password = hashPassword,
                 //AvatarPhoto = request.AvatarPhoto,
                 Address = request.Address,
                 PhoneNumber = request.PhoneNumber,
@@ -44,9 +59,11 @@ namespace Application.UseCases.Accounts.Commands.Register
             {
                 ToEmail = request.Email,
                 Subject = "Verify Confirmation",
-                Body = $"<h3>Username: {request.AccountId}</h3>" +
+                Body = "<br/>" + 
+                       $"<h3>Username: {request.AccountId}</h3>" +
                        "<br/>" +
-                       $"<h4>Password: {password}</h4>",
+                       $"<h4>Password: {password}</h4>" +
+                       $"<br/>",
                 Attachments = null
             };
 

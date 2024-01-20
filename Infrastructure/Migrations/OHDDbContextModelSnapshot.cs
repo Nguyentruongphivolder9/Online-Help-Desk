@@ -211,6 +211,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("RequestId")
                         .HasColumnType("uniqueidentifier");
 

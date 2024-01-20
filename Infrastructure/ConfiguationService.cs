@@ -43,7 +43,7 @@ namespace Infrastructure
             services.AddTransient<IRandomService, RandomService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IMailService, MailService>();
-            services.AddTransient<IEncryptService, EncryptService>();
+            services.AddTransient<IBCryptService, BCryptService>();
             return services;
         }
     }

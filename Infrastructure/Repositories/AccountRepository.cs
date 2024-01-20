@@ -10,9 +10,21 @@ namespace Infrastructure.Repositories
        public AccountRepository(OHDDbContext dbContext) 
             : base(dbContext) { }
 
+        public async Task<Account?> GetByAccountId(string accountId)
+        {
+            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.AccountId == accountId);
+            return user;
+        }
+
         public async Task<Account?> GetByEmail(string email)
         {
             var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.Email == email);
+            return user;
+        }
+
+        public async Task<Account?> GetByPhoneNumber(string phone)
+        {
+            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.PhoneNumber == phone);
             return user;
         }
     }

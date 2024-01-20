@@ -20,7 +20,7 @@
         public Error? Error { get; }
 
         public static Result Success(string message) => new(true, message, null);
-        public static Result Failure(Error? error , string message) => new(false, message, (error != null ? error : null));
+        public static Result Failure(Error? error , string message) => new(false, message, error);
         public static Result<TValue> Success<TValue>(TValue data, string? message = "Get data successfully") => new(data, true, message!, null);
         public static Result<TValue> Failure<TValue>(Error error, string? message = "Data retrieval failure") => new(default, false, message!, error);
     }

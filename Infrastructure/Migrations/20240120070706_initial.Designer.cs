@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OHDDbContext))]
-    [Migration("20240119140405_initial")]
+    [Migration("20240120070706_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -213,6 +213,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("RequestId")
                         .HasColumnType("uniqueidentifier");

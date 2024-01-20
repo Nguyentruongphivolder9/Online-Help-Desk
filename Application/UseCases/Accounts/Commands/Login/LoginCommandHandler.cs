@@ -10,12 +10,12 @@ namespace Application.UseCases.Accounts.Commands.Login
     public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, LoginResponse>
     {
         private readonly IUnitOfWorkRepository _repo;
-        private readonly IEncryptService _encryptService;
+        private readonly IBCryptService _encryptService;
         private readonly ITokenService _tokenService;
 
         public LoginCommandHandler(
             IUnitOfWorkRepository repo,
-            IEncryptService encryptService,
+            IBCryptService encryptService,
             ITokenService tokenService)
         {
             _repo = repo;
@@ -30,7 +30,7 @@ namespace Application.UseCases.Accounts.Commands.Login
             if (user == null)
                 return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Email or Password.");
 
-            var checkPassword = _encryptService.EncryptPassword(request.Password, user.Password);
+            var checkPassword = _encryptService.DecryptString(request.Password, user.Password);
             if (!checkPassword)
                 return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Email or Password.");
 
@@ -42,19 +42,15 @@ namespace Application.UseCases.Accounts.Commands.Login
                 case string value when value == StaticVariables.StatusAccountUser[1]:
                     //var userRoles = await _repo.userRoleRepository.GetRoleByUserId(user.Id);
 
-                    /*if(!userRoles.Any())
-                        return Result.Failure<LoginResponse>(errorLogin, "Login faild! Something went wrong! Please try again later.");*/
-
+                    /*if (!userRoles.Any())
+                        return Result.Failure<LoginResponse>(errorLogin, "Login faild! Something went wrong! Please try again later.");
+*/
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.FullName),
                         new Claim(ClaimTypes.Email, user.Email),
+                        //new Claim(ClaimTypes.Role, role.RoleName)
                     };
-
-                    /*foreach (var role in userRoles)
-                    {
-                        claims.Add(new Claim(ClaimTypes.Role, role.RoleName));
-                    }*/
 
                     var token = _tokenService.GetToken(claims);
                     var refreshToken = _tokenService.GetRefreshToken();
