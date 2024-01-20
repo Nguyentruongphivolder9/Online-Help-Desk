@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.UseCases.Request.Commands.CreateRequest
+namespace Application.UseCases.Rooms.Commands.CreateRoom
 {
-    public class CreateRequestCommandValidator
+    internal class CreateRoomCommandValidation
     {
     }
 }
