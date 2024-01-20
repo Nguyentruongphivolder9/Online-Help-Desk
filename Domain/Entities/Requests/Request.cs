@@ -22,6 +22,7 @@ namespace Domain.Entities.Requests
         public Room? Room { get; set; }
         [JsonIgnore]
         public RequestStatus? RequestStatus { get; set; }
+
         public List<ProcessByAssignees>? ProcessByAssignees { get; set; }
         public List<Remark>? Remarks { get; set; }
     }
