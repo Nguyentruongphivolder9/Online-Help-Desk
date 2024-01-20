@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Domain.Repositories
+﻿namespace Domain.Repositories
 {
     public interface IUnitOfWorkRepository
     {
@@ -9,7 +7,6 @@ namespace Domain.Repositories
         IRequestRepository requestRepo { get; }
         IRoleRepository roleRepo { get; }
         IRoleTypeRepository roleTypeRepo { get; }
-        IRequestRepository requestRepo { get; }
         IDepartmentRepository departmentRepo { get; }
         IRoomRepository roomRepo { get; }
 

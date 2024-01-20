@@ -11,7 +11,7 @@
 
         public TValue Data => IsSuccess
             ? _data!
-            : throw new InvalidOperationException("The value of a failure result can't be accessed");
+            : default(TValue)!;
 
         public static implicit operator Result<TValue>(TValue? data) =>
             data is not null ? Success(data) : Failure<TValue>(Error.NullValue);

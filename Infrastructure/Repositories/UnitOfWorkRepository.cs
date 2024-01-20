@@ -14,8 +14,6 @@ namespace Infrastructure.Repositories
 
         public IRoleTypeRepository roleTypeRepo {  get; private set; }
 
-        public IRequestRepository requestRepo { get; private set; }
-
         public IDepartmentRepository departmentRepo { get; private set; }
 
         public IRoomRepository roomRepo { get; private set; }
@@ -27,7 +25,6 @@ namespace Infrastructure.Repositories
             requestRepo = new RequestRepository(dbContext);
             roleRepo = new RoleRepository(dbContext);
             roleTypeRepo = new RoleTypeRepository(dbContext);
-            requestRepo = new RequestRepository(dbContext);
             departmentRepo = new DepartmentRepository(dbContext);
             roomRepo = new RoomRepository(dbContext);
         }

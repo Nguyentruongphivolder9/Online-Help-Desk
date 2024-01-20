@@ -1,17 +1,29 @@
-﻿using Application.UseCases.Request.Commands.CreateRequest;
+﻿using Application.UseCases.Requests.Commands.CreateRequest;
 using Ardalis.ApiEndpoints;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 
 namespace Web_Api.Endpoints.Requests
 {
     public class CreateRequest : EndpointBaseAsync
-        .WithRequest<CreateRequestCommand>
-        .WithActionResult<Result>
+     .WithRequest<CreateRequestCommand>
+     .WithActionResult<Result>
     {
-        public override Task<ActionResult<Result>> HandleAsync(CreateRequestCommand request, CancellationToken cancellationToken = default)
+
+        private readonly IMediator Sender;
+
+        public CreateRequest(IMediator sender)
         {
-            throw new NotImplementedException();
+            Sender = sender;
+        }
+
+
+        [HttpPost("api/request/create_request")]
+        public override async Task<ActionResult<Result>> HandleAsync(CreateRequestCommand command, CancellationToken cancellationToken = default)
+        {
+            var status = await Sender.Send(command);
+            return status;
         }
     }
 }
