@@ -1,14 +1,12 @@
-﻿using Domain.Entities.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Domain.Entities.Accounts;
+using Domain.Entities.Requests;
 
 namespace Domain.Repositories
 {
-    public interface IRequestRepository: IGenericRepository<Request>
+    public interface IRequestRepository : IGenericRepository<Request>
     {
-        Task<Request> CreateRequest(Request body);
+        Task<IEnumerable<Request?>> GetAllRequest();
     }
 }
+

@@ -18,4 +18,16 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="UseCases\Requests\" />
+    <None Remove="UseCases\Requests\Commands\" />
+    <None Remove="UseCases\Requests\Queries\" />
+    <None Remove="DTOs\Requests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UseCases\Requests\" />
+    <Folder Include="UseCases\Requests\Commands\" />
+    <Folder Include="UseCases\Requests\Queries\" />
+    <Folder Include="DTOs\Requests\" />
+  </ItemGroup>
 </Project>

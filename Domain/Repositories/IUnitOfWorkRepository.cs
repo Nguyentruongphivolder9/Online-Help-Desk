@@ -6,6 +6,7 @@ namespace Domain.Repositories
     {
 
         IAccountRepository accountRepo { get; }
+        IRequestRepository requestRepo { get; }
         IRoleRepository roleRepo { get; }
         IRoleTypeRepository roleTypeRepo { get; }
         IRequestRepository requestRepo { get; }

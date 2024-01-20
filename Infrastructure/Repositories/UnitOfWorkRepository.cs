@@ -8,6 +8,8 @@ namespace Infrastructure.Repositories
         private readonly OHDDbContext _dbContext;
         public IAccountRepository accountRepo {  get; private set; }
 
+        public IRequestRepository requestRepo { get; private set; }
+
         public IRoleRepository roleRepo {  get; private set; }
 
         public IRoleTypeRepository roleTypeRepo {  get; private set; }
@@ -22,6 +24,7 @@ namespace Infrastructure.Repositories
         {
             _dbContext = dbContext;
             accountRepo = new AccountRepository(dbContext);
+            requestRepo = new RequestRepository(dbContext);
             roleRepo = new RoleRepository(dbContext);
             roleTypeRepo = new RoleTypeRepository(dbContext);
             requestRepo = new RequestRepository(dbContext);

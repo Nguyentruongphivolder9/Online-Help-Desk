@@ -1,23 +1,23 @@
-﻿using Domain.Entities.Requests;
+﻿using System;
+using Domain.Entities.Accounts;
+using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    internal class RequestRepository : GenericRepository<Request>, IRequestRepository
+    public sealed class RequestRepository : GenericRepository<Request>, IRequestRepository
     {
-
-        public RequestRepository(OHDDbContext dbContext)
-            : base(dbContext) { }
-
-        public Task<Request> CreateRequest(Request body)
+        public RequestRepository(OHDDbContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Request?>> GetAllRequest()
+        {
+            var list = await _dbContext.Set<Request>().Include(u => u.RequestStatus).ToListAsync();
+            return list;
         }
     }
 }
+
