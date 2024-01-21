@@ -6,20 +6,20 @@ using SharedKernel;
 
 namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
 {
-    public sealed class SendMailCommandHandler : ICommandHandler<SendMailCommand>
+    public sealed class SendMailVerifyCodeCommandHandler : ICommandHandler<SendMailVerifyCodeCommand>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMailService _mailService;
         private readonly IRandomService _randomService;
 
-        public SendMailCommandHandler(IUnitOfWorkRepository repo, IMailService mailService, IRandomService randomService)
+        public SendMailVerifyCodeCommandHandler(IUnitOfWorkRepository repo, IMailService mailService, IRandomService randomService)
         {
             _repo = repo;
             _mailService = mailService;
             _randomService = randomService;
         }
 
-        public async Task<Result> Handle(SendMailCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(SendMailVerifyCodeCommand request, CancellationToken cancellationToken)
         {
             var acc = await _repo.accountRepo.GetByEmail(request.Email);
             if (acc == null)

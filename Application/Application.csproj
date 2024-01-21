@@ -25,6 +25,7 @@
     <None Remove="DTOs\Requests\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="UseCases\Accounts\Queries\" />
     <Folder Include="UseCases\Requests\" />
     <Folder Include="UseCases\Requests\Commands\" />
     <Folder Include="UseCases\Requests\Queries\" />

@@ -13,9 +13,19 @@ namespace Application.UseCases.Accounts.Commands.Verify
             _repo = repo;
         }
 
-        public Task<Result> Handle(VerifyCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(VerifyCommand request, CancellationToken cancellationToken)
         {
-            
+            var acc = await _repo.accountRepo.GetByEmail(request.Email);
+            if (acc == null)
+                return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
+
+            if(acc.VerifyCode != request.VerifyCode)
+                return Result.Failure(new Error("Error.Client", "Data comparison errors"), "Incorrect verification code.");
+
+            if(acc.VerifyRefreshExpiry < DateTime.UtcNow)
+                return Result.Failure(new Error("Error.Client", "Data comparison errors"), "Confirmation time has expired.");
+
+            return Result.Success("Successful verification.");
         }
     }
 }

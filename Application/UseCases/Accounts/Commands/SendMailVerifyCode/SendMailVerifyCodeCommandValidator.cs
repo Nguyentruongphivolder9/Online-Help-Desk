@@ -2,9 +2,9 @@
 
 namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
 {
-    internal class SendMailCommandValidator : AbstractValidator<SendMailCommand>
+    internal class SendMailVerifyCodeCommandValidator : AbstractValidator<SendMailVerifyCodeCommand>
     {
-        public SendMailCommandValidator() 
+        public SendMailVerifyCodeCommandValidator() 
         {
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email cannot be left blank.")
