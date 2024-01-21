@@ -2,6 +2,6 @@
 {
     public interface IRandomService
     {
-        Task<string> Random();
+        Task<string> RandomCode();
     }
 }

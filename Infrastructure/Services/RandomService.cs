@@ -4,7 +4,7 @@ namespace Infrastructure.Services
 {
     public class RandomService : IRandomService
     {
-        public Task<string> Random()
+        public Task<string> RandomCode()
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 10000000);

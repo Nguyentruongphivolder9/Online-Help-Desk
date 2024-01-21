@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Accounts.Commands.Login;
+﻿using Application.UseCases.Accounts.Commands.ChangePassword;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -6,22 +6,22 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Auth
 {
-    public class Login : EndpointBaseAsync
-        .WithRequest<LoginCommand>
+    public class ChangePassword : EndpointBaseAsync
+        .WithRequest<ChangePasswordCommand>
         .WithActionResult<Result>
     {
 
         private readonly IMediator Sender;
 
-        public Login(IMediator sender)
+        public ChangePassword(IMediator sender)
         {
             Sender = sender;
         }
 
 
-        [HttpPost("api/auth/login")]
+        [HttpPost("api/auth/change-password")]
         public override async Task<ActionResult<Result>> HandleAsync(
-            LoginCommand command,
+            ChangePasswordCommand command,
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(command);
