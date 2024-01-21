@@ -244,6 +244,9 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Reason")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");

@@ -13,6 +13,8 @@ namespace Domain.Entities.Requests
         public string Description {  get; set; }
         public string SeveralLevel { get; set; }
         public string? Reason { get; set; }
+        public Boolean Enable { get; set; }
+
         public DateTime CreatedAt { get; set;}
         public DateTime? UpdateAt { get; set;}
 

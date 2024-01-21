@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OHDDbContext))]
-    [Migration("20240120161838_initial")]
-    partial class initial
+    [Migration("20240121142130_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -246,6 +246,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Reason")
                         .HasMaxLength(300)

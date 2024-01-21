@@ -22,6 +22,8 @@ namespace Application.UseCases.Departments.Commands.CreateDepartment
                 DepartmentName = request.DepartmentName
             };
 
+            _repo.departmentRepo.Add(department);
+
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);
