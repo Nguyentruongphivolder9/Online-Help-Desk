@@ -7,5 +7,6 @@ namespace Domain.Repositories
         Task<Account?> GetByEmail(string email);
         Task<Account?> GetByPhoneNumber(string phone);
         Task<Account?> GetByAccountId(string accountId);
+        Task<Account?> CheckVerifyCode(string verifyCode);
     }
 }

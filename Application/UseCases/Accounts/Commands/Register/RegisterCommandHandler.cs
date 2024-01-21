@@ -61,7 +61,6 @@ namespace Application.UseCases.Accounts.Commands.Register
                 Subject = "Verify Confirmation",
                 Body = "<br/>" + 
                        $"<h3>Username: {request.AccountId}</h3>" +
-                       "<br/>" +
                        $"<h4>Password: {password}</h4>" +
                        $"<br/>",
                 Attachments = null
