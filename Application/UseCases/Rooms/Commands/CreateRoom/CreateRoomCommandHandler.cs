@@ -28,6 +28,8 @@ namespace Application.UseCases.Rooms.Commands.CreateRoom
                 RoomStatus = request.RoomStatus,
             };
 
+            _repo.roomRepo.Add(room);
+
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);

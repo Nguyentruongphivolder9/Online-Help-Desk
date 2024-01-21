@@ -6,7 +6,7 @@ namespace Application.UseCases.Accounts.Commands.Login
     {
         public LoginCommandValidation()
         {
-            RuleFor(x => x.Email)
+            RuleFor(x => x.AccountId)
                 .NotEmpty().WithMessage("Email cannot be left blank.")
                 .EmailAddress().WithMessage("Please enter the correct Email data type.")
                 .MaximumLength(100);

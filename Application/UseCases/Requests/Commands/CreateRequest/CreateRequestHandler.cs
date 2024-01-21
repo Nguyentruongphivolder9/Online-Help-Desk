@@ -25,6 +25,7 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
                 Description = request.Description,
                 SeveralLevel = request.SeveralLevel,
                 Reason = request.Reason,
+                Enable= true,
                 CreatedAt = DateTime.UtcNow
             };
 
