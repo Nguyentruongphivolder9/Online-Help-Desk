@@ -14,6 +14,17 @@ builder.Services
     .AddApplicationService()
     .AddInfrastructureService(builder.Configuration);
 
+var allowOrigins = builder.Configuration.GetSection("AllowOrigins").Get<string[]>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myAppCors", policy =>
+    {
+        policy.WithOrigins(allowOrigins).AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -22,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("myAppCors");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
