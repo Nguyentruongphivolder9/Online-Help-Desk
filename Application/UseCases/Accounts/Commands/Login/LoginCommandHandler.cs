@@ -29,11 +29,11 @@ namespace Application.UseCases.Accounts.Commands.Login
             var user = await _repo.accountRepo.GetByAccountId(request.AccountId);
             var errorLogin = new Error("Error.Login", "Client errors");
             if (user == null)
-                return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Email or Password.");
+                return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Account code or Password.");
 
             var checkPassword = _encryptService.DecryptString(request.Password, user.Password);
             if (!checkPassword)
-                return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Email or Password.");
+                return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Account code or Password.");
 
             if(user.StatusAccount == StaticVariables.StatusAccountUser[0] ||
                 user.StatusAccount == StaticVariables.StatusAccountUser[1])
@@ -91,7 +91,7 @@ namespace Application.UseCases.Accounts.Commands.Login
             if(user.StatusAccount == StaticVariables.StatusAccountUser[3])
                 return Result.Failure<LoginResponse>(errorLogin, "Your account has been banned from logging in.");
 
-            return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Email or Password.");
+            return Result.Failure<LoginResponse>(errorLogin, "Login faild! Incorrect Account code or Password.");
         }
     }
 }

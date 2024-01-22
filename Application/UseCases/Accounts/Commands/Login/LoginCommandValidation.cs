@@ -7,7 +7,7 @@ namespace Application.UseCases.Accounts.Commands.Login
         public LoginCommandValidation()
         {
             RuleFor(x => x.AccountId)
-                .NotEmpty().WithMessage("Email cannot be left blank.")
+                .NotEmpty().WithMessage("AccountId cannot be left blank.")
                 .MaximumLength(20);
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password cannot be left blank.")
