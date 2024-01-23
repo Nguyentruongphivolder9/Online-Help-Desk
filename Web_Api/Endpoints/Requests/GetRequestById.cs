@@ -7,7 +7,7 @@ using SharedKernel;
 namespace Web_Api.Endpoints.Requests
 {
     public class GetRequestById : EndpointBaseAsync
-        .WithRequest<GetRequestByIdQueries>
+        .WithRequest<Guid>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
@@ -19,9 +19,11 @@ namespace Web_Api.Endpoints.Requests
 
         [HttpGet("api/request/{id:guid}")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] GetRequestByIdQueries request, CancellationToken cancellationToken = default)
+             [FromRoute] Guid id, 
+             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(request);
+            var newRquestQueries = new GetRequestByIdQueries { Id = id };
+            var status = await Sender.Send(newRquestQueries);
             return Ok(status);
         }
     }

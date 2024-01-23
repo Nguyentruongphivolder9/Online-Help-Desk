@@ -26,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UseCases\Accounts\Queries\" />
-    <Folder Include="UseCases\Requests\Commands\" />
     <Folder Include="DTOs\Requests\" />
   </ItemGroup>
 </Project>
