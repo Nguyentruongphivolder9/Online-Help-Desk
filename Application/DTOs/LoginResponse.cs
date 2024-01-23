@@ -11,6 +11,7 @@ namespace Application.DTOs
         public string FullName { get; set; }
         public string Email { get; set; }
         public string RoleName { get; set; }
+        public string RoleTypeName { get; set; }
         public string? AvatarPhoto { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }

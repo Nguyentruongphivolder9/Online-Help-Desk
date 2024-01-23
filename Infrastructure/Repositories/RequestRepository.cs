@@ -15,7 +15,10 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Request?>> GetAllRequest()
         {
-            var list = await _dbContext.Set<Request>().Include(u => u.RequestStatus).ToListAsync();
+            var list = await _dbContext.Set<Request>()
+                .Include(u => u.RequestStatus)
+                .Include(u => u.Account)
+                .ToListAsync();
             return list;
         }
     }

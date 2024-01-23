@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Application.Common.Mapppings;
+using Domain.Entities.Accounts;
 using Domain.Entities.Requests;
 
 namespace Application.DTOs.Requests
@@ -16,8 +17,8 @@ namespace Application.DTOs.Requests
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdateAt { get; set; }
 
-        [JsonIgnore]
         public RequestStatus? RequestStatus { get; set; }
+        public Account? Account { get; set; }
     }
 }
 
