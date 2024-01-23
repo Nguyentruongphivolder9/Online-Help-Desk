@@ -18,6 +18,13 @@ namespace Infrastructure.Repositories
             var list = await _dbContext.Set<Request>().Include(u => u.RequestStatus).ToListAsync();
             return list;
         }
+
+        public async Task<Request?> GetRequestById(Guid id)
+        {
+            var requestObj = await _dbContext.Set<Request>().SingleOrDefaultAsync(r => r.Id == id);
+            return requestObj;
+        }
+
     }
 }
 

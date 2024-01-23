@@ -7,6 +7,7 @@ namespace Domain.Repositories
     public interface IRequestRepository : IGenericRepository<Request>
     {
         Task<IEnumerable<Request?>> GetAllRequest();
+        Task<Request?> GetRequestById(Guid id);
     }
 }
 
