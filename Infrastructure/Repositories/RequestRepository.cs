@@ -21,6 +21,13 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
             return list;
         }
+
+        public async Task<Request?> GetRequestById(Guid id)
+        {
+            var requestObj = await _dbContext.Set<Request>().SingleOrDefaultAsync(r => r.Id == id);
+            return requestObj;
+        }
+
     }
 }
 
