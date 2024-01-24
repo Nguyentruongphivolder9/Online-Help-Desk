@@ -21,9 +21,9 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
 
         public async Task<Result> Handle(SendMailVerifyCodeCommand request, CancellationToken cancellationToken)
         {
-            var acc = await _repo.accountRepo.GetByEmail(request.Email);
+            var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (acc == null)
-                return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
+                return Result.Failure(new Error("Error.Client", "No data exists"), "The account code does not exist. Please double-check your account code.");
 
             acc.VerifyCode = await _randomService.RandomCode();
             acc.VerifyRefreshExpiry = DateTime.UtcNow.AddMinutes(1);
@@ -31,7 +31,7 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
 
             var sendMail = new MailRequest
             {
-                ToEmail = request.Email,
+                ToEmail = acc.Email,
                 Subject = "Verify Confirmation",
                 Body = $"<h3>Code: {acc.VerifyCode}</h3>",
                 Attachments = null
@@ -42,13 +42,13 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
                 await _repo.SaveChangesAsync(cancellationToken);
                 await _mailService.SendMailAsync(sendMail);
 
-                return Result.Success("Email verification is successful. Please check your email");
+                return Result.Success("Account ID verification is successful. Please check your registered email.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Error error = new("Error.SendMailCommand", "There is an error saving data!");
-                return Result.Failure(error, "Email verification errors");
+                return Result.Failure(error, "Account code verification errors");
             }
         }
     }

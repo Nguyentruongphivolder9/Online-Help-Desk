@@ -19,12 +19,12 @@ namespace Web_Api.Endpoints.Auth
         }
 
 
-        [HttpGet("api/auth/send-mail/{email}")]
+        [HttpGet("api/auth/send-mail/{accountId}")]
         public override async Task<ActionResult<Result>> HandleAsync(
-            [FromRoute(Name = "email")]string email,
+            [FromRoute(Name = "accountId")]string accountId,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new SendMailVerifyCodeCommand(email));
+            var status = await Sender.Send(new SendMailVerifyCodeCommand(accountId));
             return Ok(status);
         }
     }

@@ -15,7 +15,7 @@ namespace Application.UseCases.Accounts.Commands.Verify
 
         public async Task<Result> Handle(VerifyCommand request, CancellationToken cancellationToken)
         {
-            var acc = await _repo.accountRepo.GetByEmail(request.Email);
+            var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
 
