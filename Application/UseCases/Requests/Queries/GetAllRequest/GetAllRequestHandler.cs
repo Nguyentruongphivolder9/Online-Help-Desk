@@ -7,7 +7,8 @@ using SharedKernel;
 
 namespace Application.UseCases.Requests.Queries.GetAllRequest
 {
-    public sealed class GetAllRequestHandler : IQueryHandler<GetAllRequestQueries, IEnumerable<RequestResponse>>
+    public sealed class GetAllRequestHandler
+        : IQueryHandler<GetAllRequestQueries, IEnumerable<RequestResponse>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;
