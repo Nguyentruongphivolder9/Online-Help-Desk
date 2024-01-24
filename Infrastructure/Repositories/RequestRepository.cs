@@ -51,7 +51,10 @@ namespace Infrastructure.Repositories
 
         public async Task<Request?> GetRequestById(Guid id)
         {
-            var requestObj = await _dbContext.Set<Request>().SingleOrDefaultAsync(r => r.Id == id);
+            var requestObj = await _dbContext.Set<Request>()
+                .Include(u => u.RequestStatus)
+                .Include(i => i.Account)
+                .SingleOrDefaultAsync(r => r.Id == id);
             return requestObj;
         }
 
