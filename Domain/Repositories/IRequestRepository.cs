@@ -9,6 +9,7 @@ namespace Domain.Repositories
         Task<IEnumerable<Request?>> GetAllRequest();
         Task<IEnumerable<Request?>> SortingRequest();
         Task<IEnumerable<Request?>> SearchRequestsAsync(string keySearch);
+        Task<Request?> GetRequestById(Guid id);
     }
 }
 

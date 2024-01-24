@@ -42,10 +42,17 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<Request>> SortingRequest()
         {
             var list = await _dbContext.Set<Request>()
-                                         .OrderBy(cu => cu.CreatedAt)
-                                       .ToListAsync();
-
+                .Include(u => u.RequestStatus)
+                .Include(i => i.Account)
+                .OrderBy(cu => cu.CreatedAt)
+                .ToListAsync();
             return list;
+        }
+
+        public async Task<Request?> GetRequestById(Guid id)
+        {
+            var requestObj = await _dbContext.Set<Request>().SingleOrDefaultAsync(r => r.Id == id);
+            return requestObj;
         }
 
     }

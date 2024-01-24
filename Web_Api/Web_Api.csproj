@@ -26,7 +26,4 @@
   <ItemGroup>
     <None Remove="Endpoints\Requests\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Endpoints\Requests\" />
-  </ItemGroup>
 </Project>

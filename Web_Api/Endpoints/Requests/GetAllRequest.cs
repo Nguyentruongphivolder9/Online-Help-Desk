@@ -19,8 +19,7 @@ namespace Web_Api.Endpoints.Requests
 
         [HttpGet("api/request/getAll")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery]
-            GetAllRequestQueries request,
+            [FromQuery] GetAllRequestQueries request,
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(request);

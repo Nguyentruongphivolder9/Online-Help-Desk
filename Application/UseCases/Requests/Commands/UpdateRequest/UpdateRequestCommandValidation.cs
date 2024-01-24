@@ -1,10 +1,16 @@
-﻿using FluentValidation;
+﻿using Application.UseCases.Requests.Commands.CreateRequest;
+using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.UseCases.Requests.Commands.CreateRequest
+namespace Application.UseCases.Requests.Commands.UpdateRequest
 {
-    public class CreateRequestCommandValidator : AbstractValidator<CreateRequestCommand>
+    public class UpdateRequestCommandValidation : AbstractValidator<CreateRequestCommand>
     {
-        public CreateRequestCommandValidator()
+        public UpdateRequestCommandValidation()
         {
             RuleFor(aci => aci.AccountId)
                 .NotEmpty().WithMessage("Account ID is required to be filled in");
@@ -21,6 +27,5 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
             RuleFor(r => r.Reason)
                .MaximumLength(50).WithMessage("Reason does not exceed 50 characters");
         }
-
     }
 }

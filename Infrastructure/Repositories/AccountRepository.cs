@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace Infrastructure.Repositories
 {
@@ -10,9 +11,17 @@ namespace Infrastructure.Repositories
        public AccountRepository(OHDDbContext dbContext) 
             : base(dbContext) { }
 
+        public Task<Account?> CheckVerifyCode(string verifyCode)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Account?> GetByAccountId(string accountId)
         {
-            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.AccountId == accountId);
+            var user = await _dbContext.Set<Account>()
+                .Include(a => a.Role)
+                .ThenInclude(c => c.RoleTypes)
+                .SingleOrDefaultAsync(u => u.AccountId == accountId);
             return user;
         }
 
