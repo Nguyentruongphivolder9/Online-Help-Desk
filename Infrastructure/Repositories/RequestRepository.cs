@@ -54,6 +54,8 @@ namespace Infrastructure.Repositories
             var requestObj = await _dbContext.Set<Request>()
                 .Include(u => u.RequestStatus)
                 .Include(i => i.Account)
+                .Include(cu => cu.ProcessByAssignees)
+                .ThenInclude(i => i.Account)
                 .SingleOrDefaultAsync(r => r.Id == id);
             return requestObj;
         }

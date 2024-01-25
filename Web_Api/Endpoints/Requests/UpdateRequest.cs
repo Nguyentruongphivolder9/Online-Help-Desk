@@ -18,12 +18,15 @@ namespace Web_Api.Endpoints.Requests
             Sender = sender;
         }
 
-
-        [HttpPut("api/request/create_request/{id:guid}")]
-        public async override Task<ActionResult<Result>> HandleAsync(UpdateRequestCommand request, CancellationToken cancellationToken = default)
+        //update status name of ticket 
+        [HttpPost("api/request/update_request")]
+        public async override Task<ActionResult<Result>> HandleAsync(
+            UpdateRequestCommand request
+            , CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(request);
             return status;
         }
+
     }
 }

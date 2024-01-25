@@ -18,6 +18,8 @@ namespace Infrastructure.Repositories
 
         public IRoomRepository roomRepo { get; private set; }
 
+        public IAssigneesRepository assigneesRepo { get; private set; }
+
         public UnitOfWorkRepository(OHDDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -27,6 +29,7 @@ namespace Infrastructure.Repositories
             roleTypeRepo = new RoleTypeRepository(dbContext);
             departmentRepo = new DepartmentRepository(dbContext);
             roomRepo = new RoomRepository(dbContext);
+            assigneesRepo = new AssigneesRepository(dbContext);
         }
 
 
