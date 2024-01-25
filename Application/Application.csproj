@@ -25,11 +25,19 @@
     <None Remove="DTOs\Requests\" />
     <None Remove="UseCases\Requests\Queries\SortingRequest\" />
     <None Remove="UseCases\Requests\Queries\SearchRequest\" />
+    <None Remove="UseCases\Assigness\" />
+    <None Remove="UseCases\Assigness\Queries\" />
+    <None Remove="UseCases\Assigness\Queries\GetAllAssignees\" />
+    <None Remove="UseCases\Requests\Commands\CreateProcessForAssignees\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UseCases\Accounts\Queries\" />
     <Folder Include="DTOs\Requests\" />
     <Folder Include="UseCases\Requests\Queries\SortingRequest\" />
     <Folder Include="UseCases\Requests\Queries\SearchRequest\" />
+    <Folder Include="UseCases\Assigness\" />
+    <Folder Include="UseCases\Assigness\Queries\" />
+    <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
+    <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
   </ItemGroup>
 </Project>
