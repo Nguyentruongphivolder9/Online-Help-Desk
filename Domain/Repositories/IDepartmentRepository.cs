@@ -4,7 +4,7 @@ namespace Domain.Repositories
 {
     public interface IDepartmentRepository : IGenericRepository<Department>
     {
-        Task<Department?> GetDepartmentById(Guid id);  
-
+        Task<Department?> GetDepartmentById(Guid id);
+        Task<IEnumerable<Department?>> GetAllDepartment();
     }
 }

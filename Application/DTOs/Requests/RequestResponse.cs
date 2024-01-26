@@ -1,4 +1,5 @@
 using Application.Common.Mapppings;
+using Application.DTOs.Departments;
 using Domain.Entities.Requests;
 
 namespace Application.DTOs.Requests
@@ -12,6 +13,7 @@ namespace Application.DTOs.Requests
         public Boolean Enable { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        public RoomDTO Room { get; set; }
         public RequestStatusDTO RequestStatus { get; set; }
         public AccountDTO Account { get; set; }
         public List<ProcessByAssigneesDTO> ProcessByAssignees { get; set; }

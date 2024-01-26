@@ -19,6 +19,7 @@ namespace Infrastructure.Repositories
               .Include(i => i.Account)
               .Include(cu => cu.ProcessByAssignees)
               .ThenInclude(i => i.Account)
+              .Include(r => r.Room).ThenInclude(de => de.Departments)
               .OrderByDescending(cu => cu.CreatedAt)
               .ToListAsync();
             return list;
@@ -56,6 +57,7 @@ namespace Infrastructure.Repositories
             var requestObj = await _dbContext.Set<Request>()
                 .Include(u => u.RequestStatus)
                 .Include(i => i.Account)
+                .Include(r => r.Room).ThenInclude(de => de.Departments)
                 .Include(cu => cu.ProcessByAssignees)
                 .ThenInclude(i => i.Account)
                 .SingleOrDefaultAsync(r => r.Id == id);
