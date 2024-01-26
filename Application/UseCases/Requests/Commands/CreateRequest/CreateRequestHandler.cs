@@ -16,22 +16,31 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
 
         public async Task<Result> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
-            var requestData = new Request
-            {
-                AccountId = request.AccountId,
-                RoomId = request.RoomId,
-                RequestStatusId = request.RequestStatusId,
-                Description = request.Description,
-                SeveralLevel = request.SeveralLevel,
-                Reason = request.Reason,
-                Enable= true,
-                CreatedAt = DateTime.UtcNow
-            };
+
+            
 
             var accountId = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if(accountId != null)
             {
+                int requestStatusId = 1;
+
+                var requestData = new Request
+                {
+                    AccountId = request.AccountId,
+                    RoomId = request.RoomId,
+                    RequestStatusId = requestStatusId,
+                    Description = request.Description,
+                    SeveralLevel = request.SeveralLevel,
+                    Reason = request.Reason,
+                    Enable = true,
+                    CreatedAt = DateTime.UtcNow
+                };
                 _repo.requestRepo.Add(requestData);
+            }
+            else
+            {
+                Error error = new("Error.RequestCommandHandler", "There is an error saving data!");
+                return Result.Failure(error, "Create request failed!");
             }
 
             try

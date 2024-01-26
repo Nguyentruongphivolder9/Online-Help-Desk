@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Requests.Queries.GetAllRequest;
+﻿using Application.UseCases.Assigness.Queries.GetAllAssignees;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -6,20 +6,20 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Requests
 {
-    public class GetAllRequest : EndpointBaseAsync
-        .WithRequest<GetAllRequestQueries>
+    public class ListAssigneesRequest : EndpointBaseAsync
+        .WithRequest<GetAllAssigneesQueries>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public GetAllRequest(IMediator sender)
+        public ListAssigneesRequest(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/request/getAll")]
+        [HttpGet("api/Assignees/GetListProcessByAssignees")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] GetAllRequestQueries request,
+            [FromQuery] GetAllAssigneesQueries request,
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(request);
