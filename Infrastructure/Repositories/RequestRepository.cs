@@ -17,6 +17,7 @@ namespace Infrastructure.Repositories
             var list = await _dbContext.Set<Request>()
               .Include(u => u.RequestStatus)
               .Include(i => i.Account)
+              .Include(r => r.Room).ThenInclude(de => de.Departments)
               .OrderByDescending(cu => cu.CreatedAt)
               .ToListAsync();
             return list;
@@ -54,6 +55,7 @@ namespace Infrastructure.Repositories
             var requestObj = await _dbContext.Set<Request>()
                 .Include(u => u.RequestStatus)
                 .Include(i => i.Account)
+                .Include(r => r.Room).ThenInclude(de => de.Departments)
                 .SingleOrDefaultAsync(r => r.Id == id);
             return requestObj;
         }
