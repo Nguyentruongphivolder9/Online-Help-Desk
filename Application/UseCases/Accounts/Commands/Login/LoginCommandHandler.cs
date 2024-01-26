@@ -64,6 +64,7 @@ namespace Application.UseCases.Accounts.Commands.Login
                         FullName = user.FullName,
                         Email = user.Email,
                         RoleName = user.Role.RoleName,
+                        RoleTypeName = user.Role.RoleTypes.RoleTypeName,
                         AvatarPhoto = user.AvatarPhoto,
                         Address = user.Address,
                         PhoneNumber = user.PhoneNumber,

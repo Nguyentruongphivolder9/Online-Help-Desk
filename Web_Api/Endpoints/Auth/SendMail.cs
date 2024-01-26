@@ -7,7 +7,7 @@ using SharedKernel;
 namespace Web_Api.Endpoints.Auth
 {
     public class SendMail : EndpointBaseAsync
-    .WithRequest<SendMailVerifyCodeCommand>
+    .WithRequest<string>
     .WithActionResult<Result>
     {
 
@@ -19,12 +19,12 @@ namespace Web_Api.Endpoints.Auth
         }
 
 
-        [HttpPost("api/auth/send-mail")]
+        [HttpGet("api/auth/send-mail/{accountId}")]
         public override async Task<ActionResult<Result>> HandleAsync(
-            SendMailVerifyCodeCommand command,
+            [FromRoute(Name = "accountId")]string accountId,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(command);
+            var status = await Sender.Send(new SendMailVerifyCodeCommand(accountId));
             return Ok(status);
         }
     }
