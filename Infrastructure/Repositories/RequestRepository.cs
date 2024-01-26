@@ -17,6 +17,8 @@ namespace Infrastructure.Repositories
             var list = await _dbContext.Set<Request>()
               .Include(u => u.RequestStatus)
               .Include(i => i.Account)
+              .Include(cu => cu.ProcessByAssignees)
+              .ThenInclude(i => i.Account)
               .Include(r => r.Room).ThenInclude(de => de.Departments)
               .OrderByDescending(cu => cu.CreatedAt)
               .ToListAsync();
