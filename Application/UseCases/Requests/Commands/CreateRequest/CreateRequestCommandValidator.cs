@@ -9,7 +9,7 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
             RuleFor(aci => aci.AccountId)
                 .NotEmpty().WithMessage("Account ID is required to be filled in");
             RuleFor(rid => rid.RoomId)
-               .NotEmpty().WithMessage("Room id cannot be blank");
+               .NotEmpty().WithMessage("Room cannot be blank");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description cannot be left blank.")

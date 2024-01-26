@@ -15,6 +15,14 @@ namespace Infrastructure.Repositories
         public DepartmentRepository(OHDDbContext dbContext)
             : base(dbContext) { }
 
+        public async Task<IEnumerable<Department?>> GetAllDepartment()
+        {
+            var list = await _dbContext.Set<Department>()
+              .Include(r => r.Rooms)
+              .ToListAsync();
+            return list;
+        }
+
         public Task<Department?> GetDepartmentById(Guid id)
         {
             var department = _dbContext.Set<Department>().SingleOrDefaultAsync(d => d.Id == id);
