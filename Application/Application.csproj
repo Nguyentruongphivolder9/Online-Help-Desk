@@ -31,7 +31,6 @@
     <None Remove="UseCases\Requests\Commands\CreateProcessForAssignees\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UseCases\Accounts\Queries\" />
     <Folder Include="DTOs\Requests\" />
     <Folder Include="UseCases\Requests\Queries\SortingRequest\" />
     <Folder Include="UseCases\Requests\Queries\SearchRequest\" />
