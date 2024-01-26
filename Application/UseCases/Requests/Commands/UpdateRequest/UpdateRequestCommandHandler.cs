@@ -21,27 +21,23 @@ namespace Application.UseCases.Requests.Commands.UpdateRequest
 
         public async Task<Result> Handle(UpdateRequestCommand request, CancellationToken cancellationToken)
         {
-            Guid id = request.Id;
-            var oldRequest = await _repo.requestRepo.GetRequestById(id);
+            var oldRequest = await _repo.requestRepo.GetRequestById(request.Id);
             if (oldRequest == null)
             {
-                return Result.Failure(new Error("Error", "No data exists"), "Request does not exists");
+                return Result.Failure(new Error("Error", "No data exists"), "Can not GetRequestById ");
             }
-            oldRequest.Reason = request.Reason;
-            oldRequest.SeveralLevel = request.SeveralLevel;
-            oldRequest.Description = request.Description;
+            oldRequest.RequestStatusId = request.RequestStatusID;
             _repo.requestRepo.Update(oldRequest);
-
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);
-                return Result.Success("Updated request successfully");
+                return Result.Success("Updated request successfully by Facility-Header ");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Error error = new("Error.UpdateCommandHandler", "There is an error saving data!");
-                return Result.Failure(error, "Update request failed");
+                return Result.Failure(error, "Update request failed by Facility-Header ");
             }
 
         }

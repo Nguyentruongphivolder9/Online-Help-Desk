@@ -56,6 +56,8 @@ namespace Infrastructure.Repositories
                 .Include(u => u.RequestStatus)
                 .Include(i => i.Account)
                 .Include(r => r.Room).ThenInclude(de => de.Departments)
+                .Include(cu => cu.ProcessByAssignees)
+                .ThenInclude(i => i.Account)
                 .SingleOrDefaultAsync(r => r.Id == id);
             return requestObj;
         }

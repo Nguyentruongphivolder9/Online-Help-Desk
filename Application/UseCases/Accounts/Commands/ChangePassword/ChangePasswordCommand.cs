@@ -2,5 +2,5 @@
 
 namespace Application.UseCases.Accounts.Commands.ChangePassword
 {
-    public sealed record ChangePasswordCommand(string Email, string Newpassword, string ConfirmPassword) : ICommand;
+    public sealed record ChangePasswordCommand(string AccountId, string NewPassword, string ConfirmPassword) : ICommand;
 }

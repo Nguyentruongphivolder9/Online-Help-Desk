@@ -15,7 +15,7 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
 
         public async Task<Result> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var acc = await _repo.accountRepo.GetByEmail(request.Email);
+            var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
 
@@ -24,7 +24,7 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
                 acc.Enable = true;
             }
 
-            acc.Password = request.Newpassword;
+            acc.Password = request.NewPassword;
             acc.UpdatedAt = DateTime.UtcNow;
             _repo.accountRepo.Update(acc);
 

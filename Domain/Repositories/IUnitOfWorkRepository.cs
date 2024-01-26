@@ -9,6 +9,7 @@
         IRoleTypeRepository roleTypeRepo { get; }
         IDepartmentRepository departmentRepo { get; }
         IRoomRepository roomRepo { get; }
+        IAssigneesRepository assigneesRepo { get; }
 
         Task SaveChangesAsync(CancellationToken cancellationToken);
     }
