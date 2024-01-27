@@ -1,10 +1,11 @@
 ﻿using Application.Common.Messaging;
 using Application.DTOs;
+using Application.DTOs.Accounts;
 using AutoMapper;
 using Domain.Repositories;
 using SharedKernel;
 
-namespace Application.UseCases.Accounts.Queries
+namespace Application.UseCases.Accounts.Queries.GetAllAccount
 {
     public sealed class GetAllAccountQueryHandler : IQueryHandler<GetAllAccountQuery, PagedList<AccountResponse>>
     {
@@ -19,9 +20,9 @@ namespace Application.UseCases.Accounts.Queries
 
         public async Task<Result<PagedList<AccountResponse>>> Handle(GetAllAccountQuery request, CancellationToken cancellationToken)
         {
-            var listAccount = await _repo.accountRepo.GetAllAccountSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.PageSize, cancellationToken);
+            var listAccount = await _repo.accountRepo.GetAllAccountSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit, cancellationToken);
 
-            if (listAccount == null)
+            if (listAccount.Items == null)
             {
                 return Result.Failure<PagedList<AccountResponse>>(new Error("Error.Empty", "data null"), "List Account is Null");
             }
@@ -30,10 +31,10 @@ namespace Application.UseCases.Accounts.Queries
             {
                 Items = resultList,
                 Page = request.Page,
-                PageSize = request.PageSize,
+                Limit = request.Limit,
                 TotalCount = listAccount.TotalCount
             };
-            return Result.Success<PagedList<AccountResponse>>(resultPageList, "Get List Account successfully !");
+            return Result.Success(resultPageList, "Get List Account successfully !");
         }
     }
 }

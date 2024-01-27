@@ -2,6 +2,7 @@
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using SharedKernel;
 using System.Linq.Expressions;
 
@@ -17,9 +18,17 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<DataResponse<Account>> GetAllAccountSSFP(
+            string? searchTerm, 
+            string? sortColumn, 
+            string? sortOrder, 
+            int page,
+            int pageSize,
+            CancellationToken cancellationToken)
         {
-            IQueryable<Account> accountQuery = _dbContext.Set<Account>();
+            IQueryable<Account> accountQuery = _dbContext.Set<Account>()
+                .Include(a => a.Role)
+                .ThenInclude(r => r!.RoleTypes);
 
             if(!string.IsNullOrEmpty(searchTerm) )
             {
