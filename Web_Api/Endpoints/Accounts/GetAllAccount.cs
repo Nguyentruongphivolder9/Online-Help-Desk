@@ -22,7 +22,9 @@ namespace Web_Api.Endpoints.Accounts
             [FromQuery] FieldSSFP request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send( new GetAllAccountQuery(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.PageSize) );
+            var status = await Sender.Send( new GetAllAccountQuery
+                (request.SearchTerm, request.SortColumn,
+                request.SortOrder, request.Page, request.PageSize) );
             return Ok(status);
         }
     }

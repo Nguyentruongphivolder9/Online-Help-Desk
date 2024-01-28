@@ -7,7 +7,7 @@ using SharedKernel;
 namespace Web_Api.Endpoints.Requests
 {
     public class GetAllRequest : EndpointBaseAsync
-        .WithRequest<GetAllRequestQueries>
+        .WithRequest<FieldSSFP2>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
@@ -17,14 +17,26 @@ namespace Web_Api.Endpoints.Requests
             Sender = sender;
         }
 
-        [HttpGet("api/request/getAll")]
+        [HttpGet("api/request/getAllRequest")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] GetAllRequestQueries request,
+            [FromQuery] FieldSSFP2 request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(request);
+            var status = await Sender.Send
+                (new GetAllRequestQueries(
+                request.SearchTerm, request.SortColumn,
+                request.SortOrder, request.Page, request.PageSize));
             return Ok(status);
         }
+    }
+
+    public class FieldSSFP2
+    {
+        public string? SearchTerm { get; set; }
+        public string? SortColumn { get; set; }
+        public string? SortOrder { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
     }
 }
 
