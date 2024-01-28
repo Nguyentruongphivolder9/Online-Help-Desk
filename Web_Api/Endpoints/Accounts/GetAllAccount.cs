@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Accounts.Queries;
+﻿using Application.UseCases.Accounts.Queries.GetAllAccount;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +17,12 @@ namespace Web_Api.Endpoints.Accounts
             Sender = sender;
         }
 
-        [HttpGet("api/account/getAll")]
+        [HttpGet("api/accounts/getAll")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery] FieldSSFP request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send( new GetAllAccountQuery
-                (request.SearchTerm, request.SortColumn,
-                request.SortOrder, request.Page, request.PageSize) );
+            var status = await Sender.Send( new GetAllAccountQuery(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit) );
             return Ok(status);
         }
     }
@@ -35,6 +33,6 @@ namespace Web_Api.Endpoints.Accounts
         public string? SortColumn { get; set; }
         public string? SortOrder { get; set; }
         public int Page {  get; set; }
-        public int PageSize {  get; set; }
+        public int Limit {  get; set; }
     }
 }
