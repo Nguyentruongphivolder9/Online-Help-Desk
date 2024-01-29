@@ -22,16 +22,48 @@ namespace Application.UseCases.Requests.Commands.UpdateRequest
         public async Task<Result> Handle(UpdateRequestCommand request, CancellationToken cancellationToken)
         {
             var oldRequest = await _repo.requestRepo.GetRequestById(request.Id);
+            var account = await _repo.accountRepo.GetByAccountId(request.AccountId);
+
+
             if (oldRequest == null)
             {
                 return Result.Failure(new Error("Error", "No data exists"), "Can not GetRequestById ");
             }
-            oldRequest.RequestStatusId = request.RequestStatusID;
+
+            if (account.Role.RoleTypeId == 1) // End-User
+            {
+                if (request.Enable.HasValue && !(request.RequestStatusId.HasValue))
+                {
+                    oldRequest.Enable = (bool)request.Enable;
+                    oldRequest.RequestStatusId = oldRequest.RequestStatusId;
+                    oldRequest.UpdateAt = DateTime.UtcNow;
+                }
+            }
+            else if(
+                account.Role.RoleTypeId == 2 || 
+                account.Role.RoleTypeId == 3 || 
+                account.Role.RoleTypeId == 4) // Facility, Assignees , Admin
+            {
+                if (request.RequestStatusId.HasValue && !(request.Enable.HasValue))
+                {
+                    oldRequest.Enable = oldRequest.Enable;
+                    oldRequest.RequestStatusId = (int)request.RequestStatusId;
+                    oldRequest.UpdateAt = DateTime.UtcNow;
+                }
+            }
+         
             _repo.requestRepo.Update(oldRequest);
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);
-                return Result.Success("Updated request successfully by Facility-Header ");
+                if (account.Role.RoleTypeId == 2 || account.Role.RoleTypeId == 3 || account.Role.RoleTypeId == 4)
+                {
+                    return Result.Success("Updated request successfully by Facility-Header ");
+                }
+                else {
+                    return Result.Success("You have archived a request successfully");
+
+                }
             }
             catch (Exception ex)
             {
