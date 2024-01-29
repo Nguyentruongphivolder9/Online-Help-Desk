@@ -11,8 +11,6 @@ namespace Domain.Repositories
             (string? searchTerm, string? sortColumn, string? sortOrder,
             int page, int pageSize, CancellationToken cancellationToken);
 
-        Task<IEnumerable<Request?>> SortingRequest();
-        Task<IEnumerable<Request?>> SearchRequestsAsync(string keySearch);
         Task<Request?> GetRequestById(Guid id);
     }
 }

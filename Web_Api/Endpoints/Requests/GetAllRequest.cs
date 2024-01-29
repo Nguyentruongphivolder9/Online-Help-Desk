@@ -17,7 +17,7 @@ namespace Web_Api.Endpoints.Requests
             Sender = sender;
         }
 
-        [HttpGet("api/request/getAllRequest")]
+        [HttpGet("api/request/getAll")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery] FieldSSFP2 request,
             CancellationToken cancellationToken = default)

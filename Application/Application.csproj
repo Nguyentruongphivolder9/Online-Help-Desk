@@ -23,8 +23,6 @@
     <None Remove="UseCases\Requests\Commands\" />
     <None Remove="UseCases\Requests\Queries\" />
     <None Remove="DTOs\Requests\" />
-    <None Remove="UseCases\Requests\Queries\SortingRequest\" />
-    <None Remove="UseCases\Requests\Queries\SearchRequest\" />
     <None Remove="UseCases\Assigness\" />
     <None Remove="UseCases\Assigness\Queries\" />
     <None Remove="UseCases\Assigness\Queries\GetAllAssignees\" />
@@ -32,8 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\Requests\" />
-    <Folder Include="UseCases\Requests\Queries\SortingRequest\" />
-    <Folder Include="UseCases\Requests\Queries\SearchRequest\" />
     <Folder Include="UseCases\Assigness\" />
     <Folder Include="UseCases\Assigness\Queries\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
