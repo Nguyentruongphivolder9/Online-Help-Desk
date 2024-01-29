@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using SharedKernel;
 using System.Linq.Expressions;
+using System.Numerics;
 
 namespace Infrastructure.Repositories
 {
@@ -87,6 +88,18 @@ namespace Infrastructure.Repositories
         public async Task<Account?> GetByPhoneNumber(string phone)
         {
             var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user;
+        }
+
+        public async Task<Account?> GetStaySignIn(string accountId, string refreshToken)
+        {
+            var user = await _dbContext.Set<Account>()
+                .Include(a => a.Role)
+                .ThenInclude(c => c.RoleTypes)
+                .SingleOrDefaultAsync(u =>
+                    u.AccountId == accountId &&
+                    u.RefreshToken == refreshToken
+                );
             return user;
         }
     }

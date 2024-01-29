@@ -10,5 +10,6 @@ namespace Domain.Repositories
         Task<Account?> GetByAccountId(string accountId);
         Task<Account?> CheckVerifyCode(string verifyCode);
         Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, int page, int pageSize, CancellationToken cancellationToken);
+        Task<Account?> GetStaySignIn(string accountId, string refreshToken);
     }
 }

@@ -8,10 +8,11 @@ namespace Application.UseCases.Accounts.Commands.Login
         {
             RuleFor(x => x.AccountId)
                 .NotEmpty().WithMessage("AccountId cannot be left blank.")
+                .Must(username => !username.Contains(" ")).WithMessage("AccountId cannot contain spaces.")
                 .MaximumLength(20);
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password cannot be left blank.")
-                .Must(username => !username.Contains(" ")).WithMessage("Password cannot contain spaces."); ;
+                .Must(username => !username.Contains(" ")).WithMessage("Password cannot contain spaces.");
         }
     }
 }
