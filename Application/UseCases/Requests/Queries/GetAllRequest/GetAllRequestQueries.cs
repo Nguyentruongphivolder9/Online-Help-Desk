@@ -1,9 +1,12 @@
 ﻿
 using Application.Common.Messaging;
+using Application.DTOs;
 using Application.DTOs.Requests;
 
 namespace Application.UseCases.Requests.Queries.GetAllRequest
 {
-    public sealed record GetAllRequestQueries : IQuery<IEnumerable<RequestResponse>>;
+    public sealed record GetAllRequestQueries
+        (string? SearchTerm, string? SortColumn, string? SortOrder, int Page, int Limit)
+        : IQuery<PagedList<RequestResponse>>;
 }
 
