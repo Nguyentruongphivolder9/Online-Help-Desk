@@ -2,5 +2,6 @@
 
 namespace Application.UseCases.Requests.Commands.UpdateRequest
 {
-    public sealed record class UpdateRequestCommand(Guid Id ,int RequestStatusID ) : ICommand ;
+    public sealed record class UpdateRequestCommand(
+        Guid Id , string AccountId ,int? RequestStatusId, Boolean? Enable) : ICommand ;
 }
