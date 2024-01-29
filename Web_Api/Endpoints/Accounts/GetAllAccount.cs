@@ -1,6 +1,7 @@
 ﻿using Application.UseCases.Accounts.Queries.GetAllAccount;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 
@@ -18,6 +19,7 @@ namespace Web_Api.Endpoints.Accounts
         }
 
         [HttpGet("api/accounts/getAll")]
+        [Authorize(Roles = "End-Users")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery] FieldSSFP request,
             CancellationToken cancellationToken = default)

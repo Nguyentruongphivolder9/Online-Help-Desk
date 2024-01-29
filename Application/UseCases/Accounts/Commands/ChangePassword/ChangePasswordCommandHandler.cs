@@ -1,4 +1,5 @@
 ﻿using Application.Common.Messaging;
+using Application.Services;
 using Domain.Repositories;
 using SharedKernel;
 
@@ -7,14 +8,17 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
     public sealed class ChangePasswordCommandHandler : ICommandHandler<ChangePasswordCommand>
     {
         private readonly IUnitOfWorkRepository _repo;
+        private readonly IBCryptService _bCryptService;
 
-        public ChangePasswordCommandHandler(IUnitOfWorkRepository repo)
+        public ChangePasswordCommandHandler(IUnitOfWorkRepository repo, IBCryptService bCryptService)
         {
             _repo = repo;
+            _bCryptService = bCryptService;
         }
 
         public async Task<Result> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
+            var newPassword = request.NewPassword;
             var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
@@ -22,9 +26,30 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
             if (!acc.Enable)
             {
                 acc.Enable = true;
+                acc.StatusAccount = StaticVariables.StatusAccountUser[1];
             }
 
-            acc.Password = request.NewPassword;
+
+            if (string.IsNullOrWhiteSpace(newPassword) &&
+                newPassword.Length < 8 || newPassword.Length > 16 &&
+                !newPassword.Any(char.IsDigit) &&
+                !newPassword.Any(char.IsUpper) &&
+                !newPassword.Any(char.IsLower) &&
+                !newPassword.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                    return Result.Failure(new Error("Error.Client", "No data exists"), 
+                        "Non-empty password. " +
+                        "No whitespace in the password. " +
+                        "At least one digit. " +
+                        "At least one uppercase letter. " +
+                        "At least one lowercase letter. " +
+                        "At least one special character (letter or digit). " +
+                        "Length between 8 and 16 characters");
+            }
+
+            var hasPassword = _bCryptService.EncodeString(newPassword);
+
+            acc.Password = hasPassword;
             acc.UpdatedAt = DateTime.UtcNow;
             _repo.accountRepo.Update(acc);
 
@@ -36,8 +61,8 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Error error = new("Error.SendMailCommand", "There is an error saving data!");
-                return Result.Failure(error, "Email verification errors");
+                Error error = new("Error.ChangePassword", "There is an error saving data!");
+                return Result.Failure(error, "ChangePassword errors");
             }
         }
     }

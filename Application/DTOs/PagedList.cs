@@ -7,6 +7,6 @@
         public int Limit { get; set; }
         public int TotalCount { get; set; }
         public bool HasNextPage => Page * Limit < TotalCount;
-        public bool HasPreviousPage => Limit > 1;
+        public bool HasPreviousPage => Page > 1;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Application.Common.Messaging;
 using Application.DTOs;
 using Application.Services;
-using AutoMapper;
 using Domain.Repositories;
 using SharedKernel;
 using System.Security.Claims;
@@ -61,22 +60,15 @@ namespace Application.UseCases.Accounts.Commands.Login
                     var loginResponse = new LoginResponse
                     {
                         AccountId = user.AccountId,
-                        FullName = user.FullName,
-                        Email = user.Email,
                         RoleName = user.Role.RoleName,
                         RoleTypeName = user.Role.RoleTypes.RoleTypeName,
-                        AvatarPhoto = user.AvatarPhoto,
-                        Address = user.Address,
-                        PhoneNumber = user.PhoneNumber,
-                        Gender = user.Gender,
-                        Birthday = user.Birthday,
                         Enable = user.Enable,
-                        Token = token.TokenString!,
-                        RefreshToken = refreshToken,
+                        Access_token = token.TokenString!,
+                        Refresh_token = refreshToken,
                         Expiration = token.ValidTo
                     };
 
-                    return Result.Success(loginResponse, "Login Successfully!");
+                    return Result.Success<LoginResponse>(loginResponse, "Login Successfully!");
                 }
                 catch (Exception ex)
                 {
