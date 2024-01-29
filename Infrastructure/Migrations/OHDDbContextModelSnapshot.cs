@@ -101,6 +101,83 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            AccountId = "ST729729",
+                            Address = "Bình Chánh",
+                            Birthday = "30/04/1975",
+                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7139),
+                            Email = "student@gmail.com",
+                            Enable = true,
+                            FullName = "Johnny Depp",
+                            Gender = "Male",
+                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
+                            PhoneNumber = "0909009009",
+                            RoleId = 1,
+                            StatusAccount = "Active"
+                        },
+                        new
+                        {
+                            AccountId = "TC729729",
+                            Address = "Bình Dương",
+                            Birthday = "02/09/1945",
+                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7143),
+                            Email = "teacher@gmail.com",
+                            Enable = true,
+                            FullName = "Johnny Dark",
+                            Gender = "Female",
+                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
+                            PhoneNumber = "0909009009",
+                            RoleId = 2,
+                            StatusAccount = "Verifying"
+                        },
+                        new
+                        {
+                            AccountId = "AS729729",
+                            Address = "Bình Định",
+                            Birthday = "07/05/1954",
+                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7145),
+                            Email = "assignees@gmail.com",
+                            Enable = true,
+                            FullName = "Johnny Đãng",
+                            Gender = "Orther",
+                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
+                            PhoneNumber = "0909009009",
+                            RoleId = 3,
+                            StatusAccount = "Active"
+                        },
+                        new
+                        {
+                            AccountId = "FH729729",
+                            Address = "Alaska",
+                            Birthday = "30/04/1945",
+                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7147),
+                            Email = "facility@gmail.com",
+                            Enable = true,
+                            FullName = "Johnny Bruno",
+                            Gender = "Orther",
+                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
+                            PhoneNumber = "0909009009",
+                            RoleId = 4,
+                            StatusAccount = "Active"
+                        },
+                        new
+                        {
+                            AccountId = "AD729729",
+                            Address = "Alaska",
+                            Birthday = "30/04/1945",
+                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7148),
+                            Email = "nguyentruongphi15032003@gmail.com",
+                            Enable = true,
+                            FullName = "Johnny Đặng",
+                            Gender = "Orther",
+                            Password = "$2a$12$tGpNXYvvyOQcRNDXepEZe.umYLLDzFYGTN3zDJ3JE0TC7EafEVVF6",
+                            PhoneNumber = "0937888707",
+                            RoleId = 5,
+                            StatusAccount = "Active"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Departments.Department", b =>
