@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Application.Common.Messaging;
+﻿using Application.Common.Messaging;
 using Application.DTOs;
 using Application.DTOs.Requests;
 using AutoMapper;
@@ -22,7 +21,7 @@ namespace Application.UseCases.Requests.Queries.GetAllRequest
 
         public async Task<Result<PagedList<RequestResponse>>> Handle(GetAllRequestQueries request, CancellationToken cancellationToken)
         {
-            var list = await _repo.requestRepo.GetAllRequestSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.PageSize, cancellationToken);
+            var list = await _repo.requestRepo.GetAllRequestSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit, cancellationToken);
             if (list == null)
             {
                 return Result.Failure<PagedList<RequestResponse>>(new Error("Error.Empty", "data null"), "List Request is Null");
@@ -32,7 +31,7 @@ namespace Application.UseCases.Requests.Queries.GetAllRequest
             {
                 Items = resultList,
                 Page = request.Page,
-                PageSize = request.PageSize,
+                Limit = request.Limit,
                 TotalCount = list.TotalCount
             };
 

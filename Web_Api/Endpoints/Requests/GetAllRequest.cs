@@ -25,7 +25,7 @@ namespace Web_Api.Endpoints.Requests
             var status = await Sender.Send
                 (new GetAllRequestQueries(
                 request.SearchTerm, request.SortColumn,
-                request.SortOrder, request.Page, request.PageSize));
+                request.SortOrder, request.Page, request.Limit));
             return Ok(status);
         }
     }
@@ -36,7 +36,7 @@ namespace Web_Api.Endpoints.Requests
         public string? SortColumn { get; set; }
         public string? SortOrder { get; set; }
         public int Page { get; set; }
-        public int PageSize { get; set; }
+        public int Limit { get; set; }
     }
 }
 
