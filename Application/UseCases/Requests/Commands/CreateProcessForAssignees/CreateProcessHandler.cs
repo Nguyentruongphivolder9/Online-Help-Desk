@@ -25,7 +25,7 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                 return Result.Failure(new Error("Error.CreateProcessHandler", "Data is null!"),
                     "Account does not exsit!");
             }
-            if(account.RoleId != 3)
+            if(account.RoleId != 4)
             {
                 return Result.Failure(new Error("Error.CreateProcessHandler", "RoleID is null!"),
                     "Assignees does not exsit !");
@@ -35,29 +35,43 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                 return Result.Failure(new Error("Error.CreateProcessHandler", "StatusAccount is error!"),
                     "Assignees Status is InActive or Banned  !");
             }
+
+
             var requestItem = await _repo.requestRepo.GetRequestById(request.RequestId);
             if(requestItem == null)
             {
                 return Result.Failure(new Error("Error.CreateProcessHandler", "Something is null!"),
                    "Request does not exsit !");
             }
+
+            if (requestItem.RequestStatusId != 1 || requestItem.RequestStatus.StatusName != "Open")
+            {
+                return Result.Failure(new Error("Error.CreateProcessHandler", "Status Name is error!"),
+                   "Status Name is error !");
+            }
+
+            requestItem.RequestStatusId = request.RequestStatusId;
+            requestItem.UpdateAt = DateTime.UtcNow;
+
+            
             var processByAssignee = await _repo.assigneesRepo
                 .GetByAssigneeHandleRequest(request.AccountId , request.RequestId);
             if (processByAssignee != null)
             {
                 return Result.Failure(new Error("Error.CreateProcessHandler", "Something is null!"),
-                   "RequestId or AccountId is exsit !");
+                   "RequestId or AccountId is duplicate !");
             }
 
             var processByAssigneesData = new ProcessByAssignees
             {
                 RequestId = request.RequestId,
                 AccountId = request.AccountId,
-
             };
-            
+
             try
             {
+                _repo.requestRepo.Update(requestItem);
+                await _repo.SaveChangesAsync(cancellationToken);
                 _repo.assigneesRepo.Add(processByAssigneesData);
                 await _repo.SaveChangesAsync(cancellationToken);
 
@@ -69,6 +83,8 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                 Error error = new("Error.CreateProcessHandler", "There is an error saving data!");
                 return Result.Failure(error, "Create request processByAssigneesData FAILED !");
             }
+
+
         }
     }
 }
