@@ -27,6 +27,8 @@
     <None Remove="UseCases\Assigness\Queries\" />
     <None Remove="UseCases\Assigness\Queries\GetAllAssignees\" />
     <None Remove="UseCases\Requests\Commands\CreateProcessForAssignees\" />
+    <None Remove="UseCases\Assigness\Queries\GetTotalRequest\" />
+    <None Remove="UseCases\Assigness\Queries\GetAssigneeById\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\Requests\" />
@@ -34,5 +36,7 @@
     <Folder Include="UseCases\Assigness\Queries\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
     <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
+    <Folder Include="UseCases\Assigness\Queries\GetTotalRequest\" />
+    <Folder Include="UseCases\Assigness\Queries\GetAssigneeById\" />
   </ItemGroup>
 </Project>

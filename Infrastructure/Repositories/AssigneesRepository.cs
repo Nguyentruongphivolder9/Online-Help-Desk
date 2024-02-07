@@ -13,20 +13,21 @@ namespace Infrastructure.Repositories
 
         public async Task<ProcessByAssignees?> GetByAssigneeHandleRequest(string assigneesId, Guid requestId)
         {
-            var processRequest = await _dbContext.ProcessByAssignees.SingleOrDefaultAsync
+            var processRequest = await _dbContext.Set<ProcessByAssignees>().SingleOrDefaultAsync
                 (u => u.AccountId == assigneesId && u.RequestId == requestId);
             return processRequest;    
         }
 
-        //show all list assigness
-        public async Task<IEnumerable<ProcessByAssignees?>> GetListAssignees()
+        public async Task<int> GetTotalRequestofAssignee(string AccountId)
         {
-            var listAssignees = await _dbContext.Set<ProcessByAssignees>()
-                .Include(i => i.Account)
-                .Include( acc => acc.Account)
-                .ToListAsync();
-            return listAssignees;
+            var totalRequests = await _dbContext.Set<ProcessByAssignees>()
+                .Where(u => u.AccountId == AccountId)
+                .GroupBy(u => u.RequestId)
+                .CountAsync()
+                ;
+            return totalRequests;
         }
+
     }
 }
 

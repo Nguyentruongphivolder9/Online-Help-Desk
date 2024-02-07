@@ -7,7 +7,7 @@ using SharedKernel;
 namespace Application.UseCases.Assigness.Queries.GetAllAssignees
 {
     public sealed class GetAllAssigneesHandler
-         : IQueryHandler<GetAllAssigneesQueries, IEnumerable<ProcessByAssigneesDTO>>
+         : IQueryHandler<GetAllAssigneesQueries, IEnumerable<AccountDTO>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;
@@ -18,18 +18,19 @@ namespace Application.UseCases.Assigness.Queries.GetAllAssignees
             _mapper = mapper;
         }
 
-        public async Task<Result<IEnumerable<ProcessByAssigneesDTO>>> Handle(
+        public async Task<Result<IEnumerable<AccountDTO>>> Handle(
             GetAllAssigneesQueries request,
             CancellationToken cancellationToken)
         {
-            var list = await _repo.assigneesRepo.GetListAssignees();
+            var list = await _repo.accountRepo.GetListAssignees();
             if (list == null)
             {
-                return Result.Failure <IEnumerable<ProcessByAssigneesDTO>>
+                return Result.Failure <IEnumerable<AccountDTO>>
                     (new Error("Error.Empty", "data null"), "List Assignees Data is Null");
             }
-            var resultList = _mapper.Map<IEnumerable<ProcessByAssigneesDTO>>(list);
-            return Result.Success<IEnumerable<ProcessByAssigneesDTO>>
+            var resultList = _mapper.Map<IEnumerable<AccountDTO>>(list);
+
+            return Result.Success<IEnumerable<AccountDTO>>
                 (resultList, "Get List Assignees data successfully !");
         }
     }
