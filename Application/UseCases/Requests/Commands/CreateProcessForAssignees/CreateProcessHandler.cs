@@ -30,7 +30,7 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                 return Result.Failure(new Error("Error.CreateProcessHandler", "RoleID is null!"),
                     "Assignees does not exsit !");
             }
-            if(account.StatusAccount == "InActive" || account.StatusAccount == "Banned")
+            if(account.StatusAccount != "Active")
             {
                 return Result.Failure(new Error("Error.CreateProcessHandler", "StatusAccount is error!"),
                     "Assignees Status is InActive or Banned  !");

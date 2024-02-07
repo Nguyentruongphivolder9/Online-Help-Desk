@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Accounts;
+using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -90,6 +91,16 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.PhoneNumber == phone);
             return user;
         }
+
+        public async Task<IEnumerable<Account?>> GetListAssignees()
+        {
+            var listAssignees = await _dbContext.Set<Account>()
+                .Where(u => u.RoleId == 4 && u.StatusAccount == "Active")
+                .ToListAsync();
+
+            return listAssignees;
+        }
+
 
         public async Task<Account?> GetStaySignIn(string accountId, string refreshToken)
         {

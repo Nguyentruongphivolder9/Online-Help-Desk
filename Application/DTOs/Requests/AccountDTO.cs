@@ -1,6 +1,7 @@
 ﻿
 using Application.Common.Mapppings;
 using Domain.Entities.Accounts;
+using Domain.Entities.Requests;
 using Domain.Entities.Roles;
 
 namespace Application.DTOs.Requests
@@ -11,6 +12,9 @@ namespace Application.DTOs.Requests
         public string FullName { get; set; }
         public string Email { get; set; }
         public int RoleId { get; set; }
+        public string StatusAccount { get; set; }
+
+        public List<ProcessByAssignees> ProcessByAssignees { get; set; }
     }
 }
 

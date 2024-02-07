@@ -4,6 +4,6 @@ using Application.DTOs.Requests;
 
 namespace Application.UseCases.Assigness.Queries.GetAllAssignees
 {
- public sealed record GetAllAssigneesQueries : IQuery<IEnumerable<ProcessByAssigneesDTO>>;
+ public sealed record GetAllAssigneesQueries : IQuery<IEnumerable<AccountDTO>>;
 }
 

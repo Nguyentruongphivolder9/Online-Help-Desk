@@ -14,6 +14,8 @@ namespace Domain.Repositories
            (string? searchTerm, string? sortColumn, string? sortOrder,
            int page, int pageSize, CancellationToken cancellationToken);
         Task<Request?> GetRequestById(Guid id);
+
+
     }
 }
 
