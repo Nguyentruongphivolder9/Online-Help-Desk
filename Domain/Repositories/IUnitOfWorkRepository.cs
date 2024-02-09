@@ -12,5 +12,6 @@
         IAssigneesRepository assigneesRepo { get; }
 
         Task SaveChangesAsync(CancellationToken cancellationToken);
+        Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
     }
 }

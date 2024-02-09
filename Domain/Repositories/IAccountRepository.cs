@@ -8,8 +8,8 @@ namespace Domain.Repositories
         Task<Account?> GetByEmail(string email);
         Task<Account?> GetByPhoneNumber(string phone);
         Task<Account?> GetByAccountId(string accountId);
-        Task<Account?> CheckVerifyCode(string verifyCode);
-        Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, int page, int pageSize, CancellationToken cancellationToken);
+        Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? RoleType, int page, int pageSize, CancellationToken cancellationToken);
         Task<Account?> GetStaySignIn(string accountId, string refreshToken);
+        Task<bool> CheckRegisterAccount(string accountId);
     }
 }

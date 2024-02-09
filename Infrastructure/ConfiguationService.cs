@@ -1,5 +1,6 @@
 ﻿using Application.Services;
 using DemoSendMail.Services;
+using Domain.Entities.Settings;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -39,11 +40,15 @@ namespace Infrastructure
                     };
                 });
 
+            services.Configure<AsuzeOptions>(configuration.GetSection("CloudStorage"));
+
             services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
             services.AddTransient<IRandomService, RandomService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IBCryptService, BCryptService>();
+            services.AddTransient<IFileService, FileService>();
+
             return services;
         }
     }
