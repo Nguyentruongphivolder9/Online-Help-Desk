@@ -9,6 +9,7 @@ namespace Application.DTOs.Requests
         public Guid Id { get; set; }
         public string Description { get; set; }
         public string SeveralLevel { get; set; }
+        public int RequestStatusId { get; set; }
         public string Reason { get; set; }
         public Boolean Enable { get; set; }
         public DateTime? Date { get; set; }

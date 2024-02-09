@@ -17,7 +17,8 @@ namespace Application.UseCases.Requests.Queries.GetRequestById
             _mapper = mapper;
         }
 
-        public async Task<Result<RequestResponse>> Handle(GetRequestByIdQueries request, CancellationToken cancellationToken)
+        public async Task<Result<RequestResponse>> Handle
+            (GetRequestByIdQueries request, CancellationToken cancellationToken)
         {
             Guid id = request.Id;
             var requestQueryObj = await _repo.requestRepo.GetRequestById(id);

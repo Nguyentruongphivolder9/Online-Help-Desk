@@ -40,6 +40,7 @@ namespace Infrastructure.Repositories
             Expression<Func<Request, object>> keySelector = sortColumn?.ToLower() switch
             {
                 "CreatedAt" => request => request.CreatedAt,
+                "RequestStatusId" => request => request.RequestStatusId ,
                 _ => request => request.CreatedAt
             };
 
@@ -234,6 +235,8 @@ namespace Infrastructure.Repositories
                 .SingleOrDefaultAsync(r => r.RoomId == id);
             return requestObj;
         }
+
+
     }
 }
 

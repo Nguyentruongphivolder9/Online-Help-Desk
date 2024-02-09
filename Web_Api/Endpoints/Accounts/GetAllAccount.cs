@@ -24,7 +24,7 @@ namespace Web_Api.Endpoints.Accounts
             [FromQuery] FieldSSFP request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send( new GetAllAccountQuery(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit) );
+            var status = await Sender.Send( new GetAllAccountQuery(request.SearchTerm, request.SortColumn, request.SortOrder, request.RoleType, request.Page, request.Limit) );
             return Ok(status);
         }
     }
@@ -34,6 +34,7 @@ namespace Web_Api.Endpoints.Accounts
         public string? SearchTerm { get; set; }
         public string? SortColumn { get; set; }
         public string? SortOrder { get; set; }
+        public string? RoleType { get; set; }
         public int Page {  get; set; }
         public int Limit {  get; set; }
     }

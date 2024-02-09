@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Accounts.Queries.GetAllRole;
+﻿using Application.UseCases.Accounts.Queries.GetAllRoleType;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -7,24 +7,24 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Accounts
 {
-    public class GetAllRole : EndpointBaseAsync
-        .WithRequest<GetAllRoleQuery>
+    public class GetAllRoleType : EndpointBaseAsync
+        .WithRequest<GetAllRoleTypeQuery>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public GetAllRole(IMediator sender)
+        public GetAllRoleType(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/role/get-all")]
+        [HttpGet("api/accounts/role-type/get-all")]
         [Authorize(Roles = "Administrator")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] GetAllRoleQuery request,
+            [FromQuery] GetAllRoleTypeQuery request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new GetAllRoleQuery());
+            var status = await Sender.Send(new GetAllRoleTypeQuery());
             return Ok(status);
         }
     }
