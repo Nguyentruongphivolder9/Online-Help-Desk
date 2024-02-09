@@ -75,6 +75,8 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Set<Account>()
                 .Include(a => a.Role)
                 .ThenInclude(c => c.RoleTypes)
+                .Include(r => r.Requests)
+                .Include(rem => rem.Remarks)
                 .SingleOrDefaultAsync(u => u.AccountId == accountId);
             return user;
         }

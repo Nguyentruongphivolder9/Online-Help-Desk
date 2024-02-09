@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -153,6 +153,7 @@ namespace Infrastructure.Migrations
                     SeveralLevel = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     Enable = table.Column<bool>(type: "bit", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -270,11 +271,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "AccountId", "Address", "AvatarPhoto", "Birthday", "CreatedAt", "Email", "Enable", "FullName", "Gender", "Password", "PhoneNumber", "RefreshToken", "RefreshTokenExpiry", "RoleId", "StatusAccount", "UpdatedAt", "VerifyCode", "VerifyRefreshExpiry" },
                 values: new object[,]
                 {
-                    { "AD729729", "Alaska", null, "30/04/1945", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7148), "nguyentruongphi15032003@gmail.com", true, "Johnny Đặng", "Orther", "$2a$12$tGpNXYvvyOQcRNDXepEZe.umYLLDzFYGTN3zDJ3JE0TC7EafEVVF6", "0937888707", null, null, 5, "Active", null, null, null },
-                    { "AS729729", "Bình Định", null, "07/05/1954", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7145), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 3, "Active", null, null, null },
-                    { "FH729729", "Alaska", null, "30/04/1945", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7147), "facility@gmail.com", true, "Johnny Bruno", "Orther", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 4, "Active", null, null, null },
-                    { "ST729729", "Bình Chánh", null, "30/04/1975", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7139), "student@gmail.com", true, "Johnny Depp", "Male", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 1, "Active", null, null, null },
-                    { "TC729729", "Bình Dương", null, "02/09/1945", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7143), "teacher@gmail.com", true, "Johnny Dark", "Female", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 2, "Verifying", null, null, null }
+                    { "AD729729", "Alaska", null, "30/04/1945", new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1177), "nguyentruongphi15032003@gmail.com", true, "Johnny Đặng", "Orther", "$2a$12$tGpNXYvvyOQcRNDXepEZe.umYLLDzFYGTN3zDJ3JE0TC7EafEVVF6", "0937888707", null, null, 5, "Active", null, null, null },
+                    { "AS729729", "Bình Định", null, "07/05/1954", new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1174), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 3, "Active", null, null, null },
+                    { "FH729729", "Alaska", null, "30/04/1945", new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1175), "facility@gmail.com", true, "Johnny Bruno", "Orther", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 4, "Active", null, null, null },
+                    { "ST729729", "Bình Chánh", null, "30/04/1975", new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1167), "student@gmail.com", true, "Johnny Depp", "Male", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 1, "Active", null, null, null },
+                    { "TC729729", "Bình Dương", null, "02/09/1945", new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1172), "teacher@gmail.com", true, "Johnny Dark", "Female", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 2, "Verifying", null, null, null }
                 });
 
             migrationBuilder.CreateIndex(
