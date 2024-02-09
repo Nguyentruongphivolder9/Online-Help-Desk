@@ -9,10 +9,10 @@ namespace Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Account> builder)
         {
             builder.HasKey(acc => acc.AccountId);
-            builder.Property(acc => acc.FullName).HasMaxLength(20);
-            builder.Property(acc => acc.Email).HasMaxLength(100);
+            builder.Property(acc => acc.FullName).HasMaxLength(30);
+            builder.Property(acc => acc.Email).HasMaxLength(200);
             builder.Property(acc => acc.AvatarPhoto).HasMaxLength(255);
-            builder.Property(acc => acc.Address).HasMaxLength(100);
+            builder.Property(acc => acc.Address).HasMaxLength(200);
             builder.Property(acc => acc.PhoneNumber).HasMaxLength(11);
             builder.Property(acc => acc.Gender).HasMaxLength(20);
             builder.Property(acc => acc.Birthday).HasMaxLength(15);

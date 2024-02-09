@@ -3,10 +3,8 @@ using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using SharedKernel;
 using System.Linq.Expressions;
-using System.Numerics;
 
 namespace Infrastructure.Repositories
 {
@@ -15,15 +13,20 @@ namespace Infrastructure.Repositories
        public AccountRepository(OHDDbContext dbContext) 
             : base(dbContext) { }
 
-        public Task<Account?> CheckVerifyCode(string verifyCode)
+        public async Task<bool> CheckRegisterAccount(string accountId)
         {
-            throw new NotImplementedException();
+            var acc = await _dbContext.Set<Account>()
+                .SingleOrDefaultAsync(u => u.AccountId == accountId);
+            if (acc != null)
+                return false;
+            return true;
         }
 
         public async Task<DataResponse<Account>> GetAllAccountSSFP(
             string? searchTerm, 
             string? sortColumn, 
-            string? sortOrder, 
+            string? sortOrder,
+            string? roleType,
             int page,
             int pageSize,
             CancellationToken cancellationToken)
@@ -40,11 +43,19 @@ namespace Infrastructure.Repositories
                 a.FullName.Contains(searchTerm));
             }
 
+            if (!string.IsNullOrEmpty(roleType))
+            {
+                accountQuery = accountQuery.Where(a =>
+                a.Role!.RoleTypes!.RoleTypeName == roleType);
+            }
+
             Expression<Func<Account, object>> keySelector = sortColumn?.ToLower() switch
             {
-                "accountId" => account => account.AccountId,
-                "fullName" => account => account.FullName,
+                "accountid" => account => account.AccountId,
+                "fullname" => account => account.FullName,
                 "birthday" => account => account.Birthday,
+                "statusaccount" => account => account.StatusAccount,
+                "rolename" => account => account.Role!.RoleName,
                 _ => account => account.CreatedAt,
 
             };
@@ -62,7 +73,7 @@ namespace Infrastructure.Repositories
             var accounts = await accountQuery
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             return new DataResponse<Account>
             {
@@ -88,7 +99,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Account?> GetByPhoneNumber(string phone)
         {
-            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.PhoneNumber == phone);
+            var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phone);
             return user;
         }
 

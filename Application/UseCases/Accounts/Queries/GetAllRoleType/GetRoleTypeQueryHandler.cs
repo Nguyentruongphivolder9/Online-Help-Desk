@@ -22,10 +22,10 @@ namespace Application.UseCases.Accounts.Queries.GetAllRoleType
             var roleTypes = await _repo.roleTypeRepo.GetAllAsync();
             if (roleTypes == null)
             {
-                return Result.Failure<List<RoleTypeResponse>>(new Error("Error.Empty", "data null"), "List Account is Null");
+                return Result.Failure<List<RoleTypeResponse>>(new Error("Error.Empty", "data null"), "Empty account role type data.");
             }
             var resultList = _mapper.Map<List<RoleTypeResponse>>(roleTypes);
-            return Result.Success<List<RoleTypeResponse>>(resultList, "Get List Account successfully!");
+            return Result.Success<List<RoleTypeResponse>>(resultList, "Get successful account role type data!");
         }
     }
 }
