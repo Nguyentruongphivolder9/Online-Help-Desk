@@ -11,5 +11,7 @@ namespace Domain.Repositories
         Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? RoleType, int page, int pageSize, CancellationToken cancellationToken);
         Task<Account?> GetStaySignIn(string accountId, string refreshToken);
         Task<bool> CheckRegisterAccount(string accountId);
+        //nhi
+        Task<IEnumerable<Account?>> GetListAssignees();
     }
 }

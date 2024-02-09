@@ -6,8 +6,8 @@ namespace Domain.Repositories
 {
 	public interface IAssigneesRepository : IGenericRepository<ProcessByAssignees>
     {
-        Task<IEnumerable<ProcessByAssignees?>> GetListAssignees();
         Task<ProcessByAssignees?> GetByAssigneeHandleRequest(string assigneesId , Guid requestId);
+        Task<int> GetTotalRequestofAssignee(string AccountId);
     }
 }
 

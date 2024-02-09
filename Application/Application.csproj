@@ -23,20 +23,20 @@
     <None Remove="UseCases\Requests\Commands\" />
     <None Remove="UseCases\Requests\Queries\" />
     <None Remove="DTOs\Requests\" />
-    <None Remove="UseCases\Requests\Queries\SortingRequest\" />
-    <None Remove="UseCases\Requests\Queries\SearchRequest\" />
     <None Remove="UseCases\Assigness\" />
     <None Remove="UseCases\Assigness\Queries\" />
     <None Remove="UseCases\Assigness\Queries\GetAllAssignees\" />
     <None Remove="UseCases\Requests\Commands\CreateProcessForAssignees\" />
+    <None Remove="UseCases\Assigness\Queries\GetTotalRequest\" />
+    <None Remove="UseCases\Assigness\Queries\GetAssigneeById\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\Requests\" />
-    <Folder Include="UseCases\Requests\Queries\SortingRequest\" />
-    <Folder Include="UseCases\Requests\Queries\SearchRequest\" />
     <Folder Include="UseCases\Assigness\" />
     <Folder Include="UseCases\Assigness\Queries\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
     <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
+    <Folder Include="UseCases\Assigness\Queries\GetTotalRequest\" />
+    <Folder Include="UseCases\Assigness\Queries\GetAssigneeById\" />
   </ItemGroup>
 </Project>

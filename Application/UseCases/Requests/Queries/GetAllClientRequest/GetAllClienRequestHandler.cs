@@ -1,27 +1,28 @@
 ﻿using Application.Common.Messaging;
 using Application.DTOs;
 using Application.DTOs.Requests;
+using Application.UseCases.Requests.Queries.GetAllRequest;
 using AutoMapper;
 using Domain.Repositories;
 using SharedKernel;
 
-namespace Application.UseCases.Requests.Queries.GetAllRequest
+namespace Application.UseCases.Requests.Queries.GetAllClientRequest
 {
-    public sealed class GetAllRequestHandler
-        : IQueryHandler<GetAllRequestQueries, PagedList<RequestResponse>>
+    public sealed class GetAllClientRequestHandler
+        : IQueryHandler<GetAllClienRequestQueries, PagedList<RequestResponse>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;
 
-        public GetAllRequestHandler(IUnitOfWorkRepository repo, IMapper mapper)
+        public GetAllClientRequestHandler(IUnitOfWorkRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<RequestResponse>>> Handle(GetAllRequestQueries request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<RequestResponse>>> Handle(GetAllClienRequestQueries request, CancellationToken cancellationToken)
         {
-            var list = await _repo.requestRepo.GetAllRequestSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit, cancellationToken);
+            var list = await _repo.requestRepo.GetAllClientRequestSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit, cancellationToken);
             if (list == null)
             {
                 return Result.Failure<PagedList<RequestResponse>>(new Error("Error.Empty", "data null"), "List Request is Null");
@@ -39,4 +40,3 @@ namespace Application.UseCases.Requests.Queries.GetAllRequest
         }
     }
 }
-

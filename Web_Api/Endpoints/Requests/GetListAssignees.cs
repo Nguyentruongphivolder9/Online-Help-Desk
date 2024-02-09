@@ -17,7 +17,7 @@ namespace Web_Api.Endpoints.Requests
             Sender = sender;
         }
 
-        [HttpGet("api/Assignees/GetListProcessByAssignees")]
+        [HttpGet("api/Assignees/GetListAssignees")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery] GetAllAssigneesQueries request,
             CancellationToken cancellationToken = default)
