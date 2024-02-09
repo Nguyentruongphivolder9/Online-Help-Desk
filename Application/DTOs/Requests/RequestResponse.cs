@@ -12,10 +12,9 @@ namespace Application.DTOs.Requests
         public int RequestStatusId { get; set; }
         public string Reason { get; set; }
         public Boolean Enable { get; set; }
-
+        public DateTime? Date { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
-
+        public DateTime? UpdateAt { get; set; }
         public RoomDTO Room { get; set; }
         public RequestStatusDTO RequestStatus { get; set; }
         public AccountDTO Account { get; set; }

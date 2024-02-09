@@ -13,6 +13,7 @@ namespace Infrastructure.Data.Configurations
             builder.Property(r => r.SeveralLevel).HasMaxLength(20);
             builder.Property(r => r.Reason).HasMaxLength(300);
             builder.Property(e => e.Enable).IsRequired();
+            builder.Property(r => r.Date);
             builder.HasOne(r => r.Account)
                 .WithMany(a => a.Requests)
                 .HasForeignKey(r => r.AccountId)

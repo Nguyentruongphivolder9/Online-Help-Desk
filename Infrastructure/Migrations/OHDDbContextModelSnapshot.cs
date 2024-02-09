@@ -108,7 +108,7 @@ namespace Infrastructure.Migrations
                             AccountId = "ST729729",
                             Address = "Bình Chánh",
                             Birthday = "30/04/1975",
-                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7139),
+                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1167),
                             Email = "student@gmail.com",
                             Enable = true,
                             FullName = "Johnny Depp",
@@ -123,7 +123,7 @@ namespace Infrastructure.Migrations
                             AccountId = "TC729729",
                             Address = "Bình Dương",
                             Birthday = "02/09/1945",
-                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7143),
+                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1172),
                             Email = "teacher@gmail.com",
                             Enable = true,
                             FullName = "Johnny Dark",
@@ -138,7 +138,7 @@ namespace Infrastructure.Migrations
                             AccountId = "AS729729",
                             Address = "Bình Định",
                             Birthday = "07/05/1954",
-                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7145),
+                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1174),
                             Email = "assignees@gmail.com",
                             Enable = true,
                             FullName = "Johnny Đãng",
@@ -153,7 +153,7 @@ namespace Infrastructure.Migrations
                             AccountId = "FH729729",
                             Address = "Alaska",
                             Birthday = "30/04/1945",
-                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7147),
+                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1175),
                             Email = "facility@gmail.com",
                             Enable = true,
                             FullName = "Johnny Bruno",
@@ -168,7 +168,7 @@ namespace Infrastructure.Migrations
                             AccountId = "AD729729",
                             Address = "Alaska",
                             Birthday = "30/04/1945",
-                            CreatedAt = new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7148),
+                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1177),
                             Email = "nguyentruongphi15032003@gmail.com",
                             Enable = true,
                             FullName = "Johnny Đặng",
@@ -314,6 +314,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
