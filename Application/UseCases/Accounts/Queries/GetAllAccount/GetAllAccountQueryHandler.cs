@@ -7,7 +7,9 @@ using SharedKernel;
 
 namespace Application.UseCases.Accounts.Queries.GetAllAccount
 {
-    public sealed class GetAllAccountQueryHandler : IQueryHandler<GetAllAccountQuery, PagedList<AccountResponse>>
+    public sealed class GetAllAccountQueryHandler :
+        IQueryHandler<GetAllAccountQuery,
+            PagedList<AccountResponse>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;

@@ -1,4 +1,6 @@
 ﻿using Application.Common.Messaging;
+using Application.DTOs;
+using Application.DTOs.Accounts;
 using Application.DTOs.Requests;
 using AutoMapper;
 using Domain.Repositories;
@@ -7,7 +9,7 @@ using SharedKernel;
 namespace Application.UseCases.Assigness.Queries.GetAllAssignees
 {
     public sealed class GetAllAssigneesHandler
-         : IQueryHandler<GetAllAssigneesQueries, IEnumerable<AccountDTO>>
+         : IQueryHandler<GetAllAssigneesQueries, PagedList<AccountDTO>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;
@@ -18,20 +20,26 @@ namespace Application.UseCases.Assigness.Queries.GetAllAssignees
             _mapper = mapper;
         }
 
-        public async Task<Result<IEnumerable<AccountDTO>>> Handle(
+        public async Task<Result<PagedList<AccountDTO>>> Handle(
             GetAllAssigneesQueries request,
             CancellationToken cancellationToken)
         {
-            var list = await _repo.accountRepo.GetListAssignees();
-            if (list == null)
+            var list = await _repo.accountRepo.GetListAssigneesSSFP(request.SearchTerm, request.Page, request.Limit, cancellationToken);
+            if (list.Items == null)
             {
-                return Result.Failure <IEnumerable<AccountDTO>>
-                    (new Error("Error.Empty", "data null"), "List Assignees Data is Null");
-            }
-            var resultList = _mapper.Map<IEnumerable<AccountDTO>>(list);
+                return Result.Failure<PagedList<AccountDTO>>(new Error("Error.Empty", "data null"),
+                    "List Account Assignees is Null");
 
-            return Result.Success<IEnumerable<AccountDTO>>
-                (resultList, "Get List Assignees data successfully !");
+            }
+            var resultList = _mapper.Map<List<AccountDTO>>(list.Items);
+            var resultPageList = new PagedList<AccountDTO>
+            {
+                Items = resultList,
+                Page = request.Page,
+                Limit = request.Limit,
+                TotalCount = list.TotalCount
+            };
+            return Result.Success(resultPageList, "Get List Account Assignees successfully !");
         }
     }
 }

@@ -223,20 +223,19 @@ namespace Infrastructure.Repositories
                 TotalCount = totalCount,
             };
         }
-
-        public async Task<Request?> GetRequestByRoomId(Guid id)
+        
+        public async Task<IEnumerable<Request?>> GetRequestByReStatusId(int id)
         {
-            var requestObj = await _dbContext.Set<Request>()
+            var result = await _dbContext.Set<Request>()
                 .Include(u => u.RequestStatus)
                 .Include(i => i.Account)
                 .Include(r => r.Room).ThenInclude(de => de!.Departments)
                 .Include(cu => cu.ProcessByAssignees!)
                 .ThenInclude(i => i.Account)
-                .SingleOrDefaultAsync(r => r.RoomId == id);
-            return requestObj;
+                .Where(u => u.RequestStatusId == id)
+                .ToListAsync();
+            return result;
         }
-
-
     }
 }
 
