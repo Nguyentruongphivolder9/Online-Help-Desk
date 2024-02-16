@@ -25,7 +25,7 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The account code does not exist. Please double-check your account code.");
             
-            var codeRandom = await _randomService.RandomCode();
+            var codeRandom = await _randomService.RandomSixNumberCode();
             acc.VerifyCode = codeRandom;
             acc.VerifyRefreshExpiry = DateTime.UtcNow.AddMinutes(2);
             _repo.accountRepo.Update(acc);

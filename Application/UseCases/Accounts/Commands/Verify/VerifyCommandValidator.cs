@@ -13,7 +13,7 @@ namespace Application.UseCases.Accounts.Commands.Verify
             RuleFor(x => x.VerifyCode)
                 .NotEmpty().WithMessage("Code cannot be left blank.")
                 .Matches("^[0-9]+$").WithMessage("The verification code should contain only numbers.")
-                .Length(7);
+                .Length(6);
         } 
     }
 }
