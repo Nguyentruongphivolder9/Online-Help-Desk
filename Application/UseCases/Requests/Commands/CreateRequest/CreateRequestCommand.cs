@@ -2,5 +2,6 @@
 
 namespace Application.UseCases.Requests.Commands.CreateRequest
 {
-    public record class CreateRequestCommand(string AccountId, Guid RoomId, int RequestStatusId,  string Description, string SeveralLevel) : ICommand;
+    public record class CreateRequestCommand(string AccountId, string RoomId, int RequestStatusId,
+        string Description, string SeveralLevel, DateTime? Date) : ICommand;
 }

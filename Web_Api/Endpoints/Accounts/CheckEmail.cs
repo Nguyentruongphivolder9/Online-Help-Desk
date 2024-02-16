@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Accounts.Queries.GetAllRole;
+﻿using Application.UseCases.Accounts.Queries.CheckEmail;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -7,24 +7,24 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Accounts
 {
-    public class GetAllRole : EndpointBaseAsync
-        .WithRequest<GetAllRoleQuery>
+    public class CheckEmail : EndpointBaseAsync
+        .WithRequest<string>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public GetAllRole(IMediator sender)
+        public CheckEmail(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/role/get-all")]
+        [HttpGet("api/accounts/checkEmail/{email}")]
         [Authorize(Roles = "Administrator")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] GetAllRoleQuery request,
+            [FromRoute(Name = "email")] string email,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new GetAllRoleQuery());
+            var status = await Sender.Send(new CheckEmailQuery(email));
             return Ok(status);
         }
     }

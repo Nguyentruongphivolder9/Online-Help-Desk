@@ -24,8 +24,9 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
             var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The account code does not exist. Please double-check your account code.");
-
-            acc.VerifyCode = await _randomService.RandomCode();
+            
+            var codeRandom = await _randomService.RandomCode();
+            acc.VerifyCode = codeRandom;
             acc.VerifyRefreshExpiry = DateTime.UtcNow.AddMinutes(2);
             _repo.accountRepo.Update(acc);
 
@@ -33,7 +34,7 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
             {
                 ToEmail = acc.Email,
                 Subject = "Verify Confirmation",
-                Body = $"<h3>Code: {acc.VerifyCode}</h3>",
+                Body = $"<h3>Code: {codeRandom}</h3>",
                 Attachments = null
             };
 

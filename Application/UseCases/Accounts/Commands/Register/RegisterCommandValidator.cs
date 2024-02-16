@@ -6,20 +6,17 @@ namespace Application.UseCases.Accounts.Commands.Register
     {
         public RegisterCommandValidator()
         {
-            RuleFor(x => x.AccountId)
-                .NotEmpty().WithMessage("AccountId cannot be left blank.")
-                .MaximumLength(15).WithMessage("AccountId must not exceed 15 characters.")
-                .Must(accountId => !accountId.Contains(" ")).WithMessage("AccountId cannot contain spaces.");
             RuleFor(x => x.FullName)
                 .NotEmpty().WithMessage("FullName cannot be left blank.")
-                .MaximumLength(20).WithMessage("FullName must not exceed 20 characters.");
+                .MaximumLength(30).WithMessage("FullName must not exceed 20 characters.");
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("Email cannot be left blank.")
-                .EmailAddress().WithMessage("Please enter the correct Email data type.")
-                .MaximumLength(100).WithMessage("Up to 100 characters");
+                .Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").WithMessage("Please enter a valid email address.");
             RuleFor(x => x.Address)
                 .NotEmpty().WithMessage("Address cannot be left blank.")
-                .MaximumLength(100).WithMessage("Up to 100 characters");
+                .MaximumLength(200).WithMessage("Up to 100 characters");
+            RuleFor(x => x.ImageFile.FileName)
+                .NotEmpty().WithMessage("Profile picture cannot be left blank.");
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("PhoneNumber cannot be left blank.")
                 .Must(phoneNumber => phoneNumber.All(char.IsDigit)).WithMessage("PhoneNumber must contain only digits.")

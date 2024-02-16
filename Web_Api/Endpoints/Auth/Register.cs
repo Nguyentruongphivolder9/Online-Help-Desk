@@ -1,6 +1,7 @@
 ﻿using Application.UseCases.Accounts.Commands.Register;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 
@@ -18,8 +19,9 @@ namespace Web_Api.Endpoints.Auth
         }
 
         [HttpPost("api/auth/register")]
+        [Authorize(Roles = "Administrator")]
         public override async Task<ActionResult<Result>> HandleAsync(
-            RegisterCommand command, 
+            [FromForm] RegisterCommand command, 
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(command);

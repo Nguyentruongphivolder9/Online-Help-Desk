@@ -40,5 +40,17 @@ namespace Infrastructure.Repositories
         {
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                await _dbContext.Database.RollbackTransactionAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error rolling back transaction: {ex.Message}");
+            }
+        }
     }
 }
