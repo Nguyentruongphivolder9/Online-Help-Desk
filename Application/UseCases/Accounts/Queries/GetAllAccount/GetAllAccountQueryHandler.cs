@@ -36,7 +36,7 @@ namespace Application.UseCases.Accounts.Queries.GetAllAccount
                 Limit = request.Limit,
                 TotalCount = listAccount.TotalCount
             };
-            return Result.Success(resultPageList, "Get List Account successfully !");
+            return Result.Success<PagedList<AccountResponse>>(resultPageList, "Get list account successfully!");
         }
     }
 }
