@@ -124,7 +124,18 @@ namespace Infrastructure.Repositories
             };
         }
 
-
+        public async Task<IEnumerable<Request?>> GetRequestByReStatusId(int id)
+        {
+            var result = await _dbContext.Set<Request>()
+                .Include(u => u.RequestStatus)
+                .Include(i => i.Account)
+                .Include(r => r.Room).ThenInclude(de => de!.Departments)
+                .Include(cu => cu.ProcessByAssignees!)
+                .ThenInclude(i => i.Account)
+                .Where(u => u.RequestStatusId == id)
+                .ToListAsync();
+            return result;
+        }
     }
 }
 

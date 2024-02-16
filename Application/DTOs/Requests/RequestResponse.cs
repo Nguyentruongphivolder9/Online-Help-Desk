@@ -22,4 +22,3 @@ namespace Application.DTOs.Requests
         public List<ProcessByAssigneesDTO> ProcessByAssignees { get; set; }
     }
 }
-

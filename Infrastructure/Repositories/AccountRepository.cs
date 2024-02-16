@@ -92,13 +92,35 @@ namespace Infrastructure.Repositories
             return user;
         }
 
-        public async Task<IEnumerable<Account?>> GetListAssignees()
+        public async Task<DataResponse<Account?>> GetListAssigneesSSFP(
+            string? searchTerm,
+            int page,
+            int pageSize,
+            CancellationToken cancellationToken)
         {
-            var listAssignees = await _dbContext.Set<Account>()
-                .Where(u => u.RoleId == 4 && u.StatusAccount == "Active")
-                .ToListAsync();
+            IQueryable<Account> accountQuery = _dbContext.Set<Account>()
+                .Where(u => u.RoleId == 4 && u.StatusAccount == "Active");
 
-            return listAssignees;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                accountQuery = accountQuery.Where(a =>
+                    a.AccountId.Contains(searchTerm) ||
+                    a.Email.Contains(searchTerm) ||
+                    a.FullName.Contains(searchTerm));
+            }
+
+            var totalCount = await accountQuery.CountAsync(cancellationToken);
+
+            var accounts = await accountQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            return new DataResponse<Account>
+            {
+                Items = accounts,
+                TotalCount = totalCount
+            };
         }
 
 
