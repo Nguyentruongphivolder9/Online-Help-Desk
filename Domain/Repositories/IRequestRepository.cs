@@ -18,8 +18,10 @@ namespace Domain.Repositories
             string? FCondition, string? SCondition, string? TCondition,
             string? searchTerm, string? sortColumn, string? sortOrder,
            int page, int pageSize, CancellationToken cancellationToken);
+
         Task<Request?> GetRequestById(Guid id);
-        Task<IEnumerable<Request?>> GetRequestByReStatusId(int id);
+        Task<RequestCountRespone?> GetCountRequest();
+        Task<RequestCountRespone?> GetCountRequestByAssignees(string id);
     }
 }
 

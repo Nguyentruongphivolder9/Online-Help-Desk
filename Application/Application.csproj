@@ -28,10 +28,10 @@
     <None Remove="UseCases\Assigness\Queries\" />
     <None Remove="UseCases\Assigness\Queries\GetAllAssignees\" />
     <None Remove="UseCases\Requests\Commands\CreateProcessForAssignees\" />
-    <None Remove="UseCases\Assigness\Queries\GetTotalRequest\" />
     <None Remove="UseCases\Assigness\Queries\GetAssigneeById\" />
     <None Remove="UseCases\Requests\Queries\GetRequestStatus\" />
-    <None Remove="UseCases\Requests\Queries\GetListRequestByReStatusId\" />
+    <None Remove="UseCases\Requests\Queries\GetTotalRequestByAssignees\" />
+    <None Remove="UseCases\Requests\Queries\GetTotalRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\Requests\" />
@@ -39,9 +39,9 @@
     <Folder Include="UseCases\Assigness\Queries\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
     <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
-    <Folder Include="UseCases\Assigness\Queries\GetTotalRequest\" />
     <Folder Include="UseCases\Assigness\Queries\GetAssigneeById\" />
     <Folder Include="UseCases\Requests\Queries\GetRequestStatus\" />
-    <Folder Include="UseCases\Requests\Queries\GetListRequestByReStatusId\" />
+    <Folder Include="UseCases\Requests\Queries\GetTotalRequestByAssignees\" />
+    <Folder Include="UseCases\Requests\Queries\GetTotalRequest\" />
   </ItemGroup>
 </Project>
