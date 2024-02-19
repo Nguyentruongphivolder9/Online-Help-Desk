@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Requests;
+﻿using Domain.Entities.Accounts;
+using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,13 @@ namespace Infrastructure.Repositories
         {
         }
 
+        public async Task<Account?> GetAssigneesByAccountId(string accountId)
+        {
+            var user = await _dbContext.Set<Account>()
+                 .SingleOrDefaultAsync(u => u.AccountId == accountId);
+            return user;
+        }
+
         public async Task<ProcessByAssignees?> GetByAssigneeHandleRequest(string assigneesId, Guid requestId)
         {
             var processRequest = await _dbContext.Set<ProcessByAssignees>().SingleOrDefaultAsync
@@ -18,15 +26,6 @@ namespace Infrastructure.Repositories
             return processRequest;    
         }
 
-        public async Task<int> GetTotalRequestofAssignee(string AccountId)
-        {
-            var totalRequests = await _dbContext.Set<ProcessByAssignees>()
-                .Where(u => u.AccountId == AccountId)
-                .GroupBy(u => u.RequestId)
-                .CountAsync()
-                ;
-            return totalRequests;
-        }
 
     }
 }
