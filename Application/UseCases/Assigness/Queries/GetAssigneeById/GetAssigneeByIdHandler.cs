@@ -25,7 +25,7 @@ namespace Application.UseCases.Assigness.Queries.GetAssigneeById
             CancellationToken cancellationToken)
         {
             string id = request.AccountId;
-            var requestQueryObj = await _repo.accountRepo.GetByAccountId(id);
+            var requestQueryObj = await _repo.assigneesRepo.GetAssigneesByAccountId(id);
             if (requestQueryObj == null)
             {
                 return Result.Failure<AccountResponse>(new Error("Error.Empty", "data null"), "Account is Null");

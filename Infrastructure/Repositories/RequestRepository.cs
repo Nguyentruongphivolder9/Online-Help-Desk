@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Domain.Entities.Accounts;
 using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
@@ -32,7 +33,7 @@ namespace Infrastructure.Repositories
             {
                 requestQuery = requestQuery
                     .Include(i => i.Account)
-                    .Where(a => a.Account.FullName.Contains(searchTerm) ||
+                    .Where(a => a.Account!.FullName.Contains(searchTerm) ||
                                 a.Account.Email.Contains(searchTerm))
                     .OrderByDescending(a => a.CreatedAt);
             }
@@ -61,7 +62,7 @@ namespace Infrastructure.Repositories
               .Include(i => i.Account)
               .Include(cu => cu.ProcessByAssignees!)
               .ThenInclude(i => i.Account)
-              .Include(r => r.Room).ThenInclude(de => de.Departments)
+              .Include(r => r.Room).ThenInclude(de => de!.Departments)
                .Skip((page - 1) * pageSize)
                .Take(pageSize)
                .ToListAsync();
@@ -224,17 +225,98 @@ namespace Infrastructure.Repositories
             };
         }
         
-        public async Task<IEnumerable<Request?>> GetRequestByReStatusId(int id)
+
+        public async Task<RequestCountRespone?> GetCountRequest()
         {
-            var result = await _dbContext.Set<Request>()
-                .Include(u => u.RequestStatus)
-                .Include(i => i.Account)
-                .Include(r => r.Room).ThenInclude(de => de!.Departments)
-                .Include(cu => cu.ProcessByAssignees!)
-                .ThenInclude(i => i.Account)
-                .Where(u => u.RequestStatusId == id)
-                .ToListAsync();
-            return result;
+            var CountAll = await _dbContext.Set<Request>()
+                 .CountAsync();
+
+            var CountOpen = await _dbContext.Set<Request>()
+                .Where(u => u.RequestStatusId == 1)
+                .CountAsync();
+
+            var CountAssigned = await _dbContext.Set<Request>()
+                .Where(u => u.RequestStatusId == 2)
+                .CountAsync();
+            var CountWork = await _dbContext.Set<Request>()
+                .Where(u => u.RequestStatusId == 3)
+                .CountAsync();
+            var CountNeed = await _dbContext.Set<Request>()
+              .Where(u => u.RequestStatusId == 4)
+                .CountAsync();
+            var CountRejected = await _dbContext.Set<Request>()
+              .Where(u => u.RequestStatusId == 5)
+                .CountAsync();
+            var CountComplete = await _dbContext.Set<Request>()
+              .Where(u => u.RequestStatusId == 6)
+                .CountAsync();
+
+            var fiveDaysAgo = DateTime.Now.AddHours(-1);
+
+            var pendingCount = await _dbContext.Set<Request>()
+                .Where(r => r.CreatedAt <= fiveDaysAgo
+                && !new[] {6,7}.Contains(r.RequestStatusId)
+                ) // Ensure CreatedAt is older than 10 days ago
+                .CountAsync();
+            return new RequestCountRespone
+            {
+                All = CountAll,
+                Open = CountOpen,
+                Assigned = CountAssigned,
+                WorkInProgress = CountWork,
+                NeedMoreInfo = CountNeed,
+                Rejected = CountRejected,
+                Complete = CountComplete,
+                Pending = pendingCount
+            };
+        }
+
+        public async Task<RequestCountRespone?> GetCountRequestByAssignees(string id)
+        {
+            var CountAll = await _dbContext.Set<Request>()
+                .Where(r => r.ProcessByAssignees!.Any(pa => pa.AccountId == id))
+                .CountAsync();
+
+            var CountOpen = await _dbContext.Set<Request>()
+                .Where(u => u.RequestStatusId == 1 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
+                .CountAsync();
+
+            var CountAssigned = await _dbContext.Set<Request>()
+                .Where(u => u.RequestStatusId == 2 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
+                .CountAsync();
+            var CountWork = await _dbContext.Set<Request>()
+                .Where(u => u.RequestStatusId == 3 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
+                .CountAsync();
+            var CountNeed = await _dbContext.Set<Request>()
+              .Where(u => u.RequestStatusId == 4 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
+                .CountAsync();
+            var CountRejected = await _dbContext.Set<Request>()
+              .Where(u => u.RequestStatusId == 5 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id)) 
+                .CountAsync();
+            var CountComplete = await _dbContext.Set<Request>()
+              .Where(u => u.RequestStatusId == 6 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
+                .CountAsync();
+
+            var fiveDaysAgo = DateTime.Now.AddHours(-120);
+
+            var pendingCount = await _dbContext.Set<Request>()
+                .Where(r => r.CreatedAt <= fiveDaysAgo
+                && !new[] { 6, 7 }.Contains(r.RequestStatusId)
+                && r.ProcessByAssignees!.Any(pa => pa.AccountId == id)
+                ) // Ensure CreatedAt is older than 10 days ago
+                .CountAsync();
+
+            return new RequestCountRespone
+            {
+                All = CountAll,
+                Open = CountOpen,
+                Assigned = CountAssigned,
+                WorkInProgress = CountWork,
+                NeedMoreInfo = CountNeed,
+                Rejected = CountRejected,
+                Complete = CountComplete,
+                Pending = pendingCount
+            };
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿
 using Application.UseCases.Assigness.Queries.GetTotalRequest;
-using Application.UseCases.Requests.Queries.GetRequestById;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ using SharedKernel;
 namespace Web_Api.Endpoints.Requests
 {
 	public class GetTotalRequest : EndpointBaseAsync
-        .WithRequest<string>
+        .WithRequest<GetTotalRequestQueries>
         .WithActionResult<Result>
 	{
 
@@ -20,13 +19,12 @@ namespace Web_Api.Endpoints.Requests
             Sender = sender;
         }
 
-        [HttpGet("api/Assignees/GetTotalRequest/{id}")]
+        [HttpGet("api/Request/GetTotalRequest")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            string id,
+           [FromQuery] GetTotalRequestQueries request,
             CancellationToken cancellationToken = default)
         {
-            var getTotalRequestQueries = new GetTotalRequestQueries { AccountId = id };
-            var status = await Sender.Send(getTotalRequestQueries);
+            var status = await Sender.Send(request);
             return Ok(status);
         }
 
