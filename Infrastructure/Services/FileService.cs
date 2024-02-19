@@ -69,13 +69,16 @@ namespace Infrastructure.Services
             }
         }
 
-        public async Task DeleteImage(string imageFileName)
+        public async Task DeleteImage(string? imageFileName)
         {
-            BlobContainerClient blobContainerClient = new BlobContainerClient(
+            if(imageFileName != null)
+            {
+                BlobContainerClient blobContainerClient = new BlobContainerClient(
                             _asuzeOptions.ConnectionString,
                             _asuzeOptions.Container);
-            BlobClient blobClient = blobContainerClient.GetBlobClient(imageFileName);
-            await blobClient.DeleteAsync();
+                BlobClient blobClient = blobContainerClient.GetBlobClient(imageFileName);
+                await blobClient.DeleteAsync();
+            }
         }
     }
 }

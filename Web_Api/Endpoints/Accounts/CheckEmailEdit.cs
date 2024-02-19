@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Accounts.Queries.CheckPhoneNumber;
+﻿using Application.UseCases.Accounts.Queries.CheckEmail;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -7,25 +7,31 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Accounts
 {
-    public class CheckPhoneNumber : EndpointBaseAsync
-        .WithRequest<string>
+    public class CheckEmailEdit : EndpointBaseAsync
+        .WithRequest<FormCheckEmail>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public CheckPhoneNumber(IMediator sender)
+        public CheckEmailEdit(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/phoneNumber/{phoneNumber}")]
+        [HttpGet("api/accounts/checkEmailEdit")]
         [Authorize(Roles = "Administrator")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromRoute(Name = "phoneNumber")] string phoneNumber,
+            [FromQuery] FormCheckEmail request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new CheckPhoneNumberQuery(null, phoneNumber));
+            var status = await Sender.Send(new CheckEmailQuery(request.AccountId, request.Email));
             return Ok(status);
         }
+    }
+
+    public class FormCheckEmail
+    {
+        public string AccountId { get; set; }
+        public string Email { get; set; }
     }
 }

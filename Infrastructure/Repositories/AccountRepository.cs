@@ -5,6 +5,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using System.Linq.Expressions;
+using System.Numerics;
 
 namespace Infrastructure.Repositories
 {
@@ -60,12 +61,12 @@ namespace Infrastructure.Repositories
 
             };
 
-            if(sortOrder?.ToLower() == "desc")
-            {
-                accountQuery = accountQuery.OrderByDescending(keySelector);
-            } else
+            if(sortOrder?.ToLower() == "asc")
             {
                 accountQuery = accountQuery.OrderBy(keySelector);
+            } else
+            {
+                accountQuery = accountQuery.OrderByDescending(keySelector);
             }
 
             var totalCount = await accountQuery.CountAsync();
@@ -99,9 +100,21 @@ namespace Infrastructure.Repositories
             return user;
         }
 
+        public async Task<Account?> GetByEmailEdit(string accountId, string email)
+        {
+            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.Email == email && u.AccountId != accountId);
+            return user;
+        }
+
         public async Task<Account?> GetByPhoneNumber(string phone)
         {
             var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user;
+        }
+
+        public async Task<Account?> GetByPhoneNumberEdit(string accountId, string phoneNumber)
+        {
+            var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber && u.AccountId != accountId);
             return user;
         }
 

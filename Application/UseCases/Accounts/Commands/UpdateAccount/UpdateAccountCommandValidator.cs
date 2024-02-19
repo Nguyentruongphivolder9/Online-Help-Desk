@@ -1,10 +1,11 @@
-﻿using FluentValidation;
+﻿using Application.UseCases.Accounts.Commands.Register;
+using FluentValidation;
 
-namespace Application.UseCases.Accounts.Commands.Register
+namespace Application.UseCases.Accounts.Commands.UpdateAccount
 {
-    internal class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+    internal class UpdateAccountCommandValidator : AbstractValidator<RegisterCommand>
     {
-        public RegisterCommandValidator()
+        public UpdateAccountCommandValidator()
         {
             RuleFor(x => x.FullName)
                 .NotEmpty().WithMessage("FullName cannot be left blank.")
@@ -15,8 +16,6 @@ namespace Application.UseCases.Accounts.Commands.Register
             RuleFor(x => x.Address)
                 .NotEmpty().WithMessage("Address cannot be left blank.")
                 .MaximumLength(200).WithMessage("Up to 100 characters");
-            RuleFor(x => x.ImageFile.FileName)
-                .NotEmpty().WithMessage("Profile picture cannot be left blank.");
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("PhoneNumber cannot be left blank.")
                 .Must(phoneNumber => phoneNumber.All(char.IsDigit)).WithMessage("PhoneNumber must contain only digits.")
