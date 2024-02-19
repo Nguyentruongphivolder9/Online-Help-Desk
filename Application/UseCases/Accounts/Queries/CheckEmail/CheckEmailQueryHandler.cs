@@ -15,11 +15,22 @@ namespace Application.UseCases.Accounts.Queries.CheckEmail
 
         public async Task<Result> Handle(CheckEmailQuery request, CancellationToken cancellationToken)
         {
-            var acc = await _repo.accountRepo.GetByEmail(request.Email);
-            if (acc != null)
-                return Result.Failure(new Error("Error.Client", "data duplication"), "Email already exists.");
+            if(request.AccountId == null)
+            {
+                var acc = await _repo.accountRepo.GetByEmail(request.Email);
+                if (acc != null)
+                    return Result.Failure(new Error("Error.Client", "data duplication"), "Email already exists.");
 
-            return Result.Success("Valid email.");
+                return Result.Success("Valid email.");
+            } else
+            {
+                var acc = await _repo.accountRepo.GetByEmailEdit(request.AccountId, request.Email);
+                if (acc != null)
+                    return Result.Failure(new Error("Error.Client", "data duplication"), "Email already exists.");
+
+                return Result.Success("Valid email.");
+            }
+            
         }
     }
 }

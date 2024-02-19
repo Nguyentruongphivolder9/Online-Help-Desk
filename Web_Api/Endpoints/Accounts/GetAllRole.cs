@@ -18,7 +18,7 @@ namespace Web_Api.Endpoints.Accounts
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/role/get-all")]
+        [HttpGet("api/accounts/roles")]
         [Authorize(Roles = "Administrator")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery] GetAllRoleQuery request,

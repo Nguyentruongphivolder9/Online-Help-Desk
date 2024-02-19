@@ -18,8 +18,8 @@ namespace Web_Api.Endpoints.Accounts
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/getAll")]
-        //[Authorize(Roles = "Administrator")]
+        [HttpGet("api/accounts")]
+        [Authorize(Roles = "Administrator")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery] FieldSSFP request,
             CancellationToken cancellationToken = default)

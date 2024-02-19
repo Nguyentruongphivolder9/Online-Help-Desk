@@ -7,25 +7,31 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Accounts
 {
-    public class CheckPhoneNumber : EndpointBaseAsync
-        .WithRequest<string>
+    public class checkPhoneNumberEdit : EndpointBaseAsync
+        .WithRequest<FormCheckPhoneNumber>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public CheckPhoneNumber(IMediator sender)
+        public checkPhoneNumberEdit(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/phoneNumber/{phoneNumber}")]
+        [HttpGet("api/accounts/phoneNumberEdit")]
         [Authorize(Roles = "Administrator")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromRoute(Name = "phoneNumber")] string phoneNumber,
+            [FromQuery] FormCheckPhoneNumber request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new CheckPhoneNumberQuery(null, phoneNumber));
+            var status = await Sender.Send(new CheckPhoneNumberQuery(request.AccountId, request.PhoneNumber));
             return Ok(status);
         }
+    }
+
+    public class FormCheckPhoneNumber
+    {
+        public string AccountId { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

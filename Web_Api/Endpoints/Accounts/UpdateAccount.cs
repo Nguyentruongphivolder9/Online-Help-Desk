@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Accounts.Queries.CheckEmail;
+﻿using Application.UseCases.Accounts.Commands.UpdateAccount;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -7,24 +7,24 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Accounts
 {
-    public class CheckEmail : EndpointBaseAsync
-        .WithRequest<string>
+    public class UpdateAccount : EndpointBaseAsync
+        .WithRequest<UpdateAccountCommand>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public CheckEmail(IMediator sender)
+        public UpdateAccount(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/accounts/checkEmail/{email}")]
+        [HttpPut("api/accounts/update")]
         [Authorize(Roles = "Administrator")]
-        public async override Task<ActionResult<Result>> HandleAsync(
-            [FromRoute(Name = "email")] string email,
+        public override async Task<ActionResult<Result>> HandleAsync(
+            [FromForm] UpdateAccountCommand command,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new CheckEmailQuery(null, email));
+            var status = await Sender.Send(command);
             return Ok(status);
         }
     }

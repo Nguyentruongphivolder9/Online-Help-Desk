@@ -17,7 +17,7 @@ namespace Web_Api.Endpoints.Accounts
             Sender = sender;
         }
 
-        [HttpGet("api/account/getAccountById/{accountId}")]
+        [HttpGet("api/accounts/{accountId}")]
         public override async Task<ActionResult<Result>> HandleAsync(
             [FromRoute(Name = "accountId")]string accoutnId, 
             CancellationToken cancellationToken = default)

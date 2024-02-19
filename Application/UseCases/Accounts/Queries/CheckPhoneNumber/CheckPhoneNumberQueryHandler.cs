@@ -15,11 +15,21 @@ namespace Application.UseCases.Accounts.Queries.CheckPhoneNumber
 
         public async Task<Result> Handle(CheckPhoneNumberQuery request, CancellationToken cancellationToken)
         {
-            var acc = await _repo.accountRepo.GetByPhoneNumber(request.PhoneNumber);
-            if (acc != null)
-                return Result.Failure(new Error("Error.Client", "data duplication"), "Phone number already exists.");
+            if(request.AccountId == null)
+            {
+                var acc = await _repo.accountRepo.GetByPhoneNumber(request.PhoneNumber);
+                if (acc != null)
+                    return Result.Failure(new Error("Error.Client", "data duplication"), "Phone number already exists.");
 
-            return Result.Success("Valid phone number.");
+                return Result.Success("Valid phone number.");
+            } else
+            {
+                var acc = await _repo.accountRepo.GetByPhoneNumberEdit(request.AccountId, request.PhoneNumber);
+                if (acc != null)
+                    return Result.Failure(new Error("Error.Client", "data duplication"), "Phone number already exists.");
+
+                return Result.Success("Valid phone number.");
+            }
         }
     }
 }
