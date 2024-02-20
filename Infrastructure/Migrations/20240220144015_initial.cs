@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -113,11 +113,11 @@ namespace Infrastructure.Migrations
                 {
                     AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AvatarPhoto = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Birthday = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
@@ -176,6 +176,61 @@ namespace Infrastructure.Migrations
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NotificationHandleRequest",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", maxLength: 100, nullable: false),
+                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Purpose = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsSeen = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotificationHandleRequest", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NotificationHandleRequest_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId");
+                    table.ForeignKey(
+                        name: "FK_NotificationHandleRequest_Requests_RequestId",
+                        column: x => x.RequestId,
+                        principalTable: "Requests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NotificationRemark",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsSeen = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotificationRemark", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NotificationRemark_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId");
+                    table.ForeignKey(
+                        name: "FK_NotificationRemark_Requests_RequestId",
+                        column: x => x.RequestId,
+                        principalTable: "Requests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -271,17 +326,37 @@ namespace Infrastructure.Migrations
                 columns: new[] { "AccountId", "Address", "AvatarPhoto", "Birthday", "CreatedAt", "Email", "Enable", "FullName", "Gender", "Password", "PhoneNumber", "RefreshToken", "RefreshTokenExpiry", "RoleId", "StatusAccount", "UpdatedAt", "VerifyCode", "VerifyRefreshExpiry" },
                 values: new object[,]
                 {
-                    { "AD729729", "Alaska", null, "30/04/1945", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7148), "nguyentruongphi15032003@gmail.com", true, "Johnny Đặng", "Orther", "$2a$12$tGpNXYvvyOQcRNDXepEZe.umYLLDzFYGTN3zDJ3JE0TC7EafEVVF6", "0937888707", null, null, 5, "Active", null, null, null },
-                    { "AS729729", "Bình Định", null, "07/05/1954", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7145), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 4, "Active", null, null, null },
-                    { "FH729729", "Alaska", null, "30/04/1945", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7147), "facility@gmail.com", true, "Johnny Bruno", "Orther", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 3, "Active", null, null, null },
-                    { "ST729729", "Bình Chánh", null, "30/04/1975", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7139), "student@gmail.com", true, "Johnny Depp", "Male", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 1, "Active", null, null, null },
-                    { "TC729729", "Bình Dương", null, "02/09/1945", new DateTime(2024, 1, 29, 16, 37, 47, 671, DateTimeKind.Utc).AddTicks(7143), "teacher@gmail.com", true, "Johnny Dark", "Female", "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS", "0909009009", null, null, 2, "Verifying", null, null, null }
+                    { "AD729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3219), "nguyentruongphi15032003@gmail.com", true, "Phi Đzai", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0937888707", null, null, 5, "Active", null, null, null },
+                    { "AS729729", "Bình Định", null, "1954/06/07", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3215), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009003", null, null, 4, "Active", null, null, null },
+                    { "FH729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3217), "facility@gmail.com", true, "Ngọc Nhi", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009004", null, null, 3, "Active", null, null, null },
+                    { "ST729729", "Bình Chánh", null, "1975/04/30", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3198), "student@gmail.com", true, "Duy Hiển", "Male", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009001", null, null, 1, "Active", null, null, null },
+                    { "TC729729", "Bình Dương", null, "1945/09/02", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3213), "teacher@gmail.com", true, "Duy Hiển", "Female", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009002", null, null, 2, "Verifying", null, null, null }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_RoleId",
                 table: "Accounts",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NotificationHandleRequest_AccountId",
+                table: "NotificationHandleRequest",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NotificationHandleRequest_RequestId",
+                table: "NotificationHandleRequest",
+                column: "RequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NotificationRemark_AccountId",
+                table: "NotificationRemark",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NotificationRemark_RequestId",
+                table: "NotificationRemark",
+                column: "RequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProcessByAssignees_AccountId",
@@ -334,6 +409,12 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "HelpAbouts");
+
+            migrationBuilder.DropTable(
+                name: "NotificationHandleRequest");
+
+            migrationBuilder.DropTable(
+                name: "NotificationRemark");
 
             migrationBuilder.DropTable(
                 name: "ProcessByAssignees");
