@@ -23,4 +23,3 @@ namespace Application.DTOs.Requests
         public List<RemarkDTO>? Remarks { get; set; }
     }
 }
-

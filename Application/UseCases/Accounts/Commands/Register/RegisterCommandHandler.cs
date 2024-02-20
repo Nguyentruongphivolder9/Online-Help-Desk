@@ -56,7 +56,7 @@ namespace Application.UseCases.Accounts.Commands.Register
 
             do
             {
-                string code = await _randomService.RandomCode();
+                string code = await _randomService.RandomSevenNumberCode();
                 switch (request.RoleId)
                 {
                     case 1:

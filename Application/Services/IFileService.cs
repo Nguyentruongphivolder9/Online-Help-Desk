@@ -6,6 +6,6 @@ namespace Application.Services
     {
         Task<Tuple<int, string>> SaveImage(IFormFile imageFile);
 
-        Task DeleteImage(string imageFileName);
+        Task DeleteImage(string? imageFileName);
     }
 }

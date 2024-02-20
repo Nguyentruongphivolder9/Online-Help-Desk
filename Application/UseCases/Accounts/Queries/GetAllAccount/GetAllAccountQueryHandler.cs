@@ -7,7 +7,9 @@ using SharedKernel;
 
 namespace Application.UseCases.Accounts.Queries.GetAllAccount
 {
-    public sealed class GetAllAccountQueryHandler : IQueryHandler<GetAllAccountQuery, PagedList<AccountResponse>>
+    public sealed class GetAllAccountQueryHandler :
+        IQueryHandler<GetAllAccountQuery,
+            PagedList<AccountResponse>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;
@@ -34,7 +36,7 @@ namespace Application.UseCases.Accounts.Queries.GetAllAccount
                 Limit = request.Limit,
                 TotalCount = listAccount.TotalCount
             };
-            return Result.Success(resultPageList, "Get List Account successfully !");
+            return Result.Success<PagedList<AccountResponse>>(resultPageList, "Get list account successfully!");
         }
     }
 }

@@ -6,25 +6,35 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Requests
 {
-    public class ListAssigneesRequest : EndpointBaseAsync
-        .WithRequest<GetAllAssigneesQueries>
+    public class GetListAssignees : EndpointBaseAsync
+        .WithRequest<FieldSSFP02>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public ListAssigneesRequest(IMediator sender)
+        public GetListAssignees(IMediator sender)
         {
             Sender = sender;
         }
 
         [HttpGet("api/Assignees/GetListAssignees")]
+        //[Authorize(Roles = "Facility-Heads")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] GetAllAssigneesQueries request,
+            [FromQuery] FieldSSFP02 request,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(request);
+            var status = await Sender.Send(new GetAllAssigneesQueries
+                (request.SearchTerm, request.Page, request.Limit));
             return Ok(status);
         }
+
+    }
+
+    public class FieldSSFP02
+    {
+        public string? SearchTerm { get; set; }
+        public int Page { get; set; }
+        public int Limit { get; set; }
     }
 }
 

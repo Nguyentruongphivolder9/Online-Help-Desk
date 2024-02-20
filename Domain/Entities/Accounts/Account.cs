@@ -30,5 +30,7 @@ namespace Domain.Entities.Accounts
         public List<Request>? Requests { get; set; }
         public List<Remark>? Remarks { get; set; }
         public List<ProcessByAssignees>? ProcessByAssignees { get; set; }
+        public List<NotificationRemark>? NotificationRemarks { get; set; }
+        public List<NotificationHandleRequest>? NotificationHandleRequests { get; set; }
     }
 }

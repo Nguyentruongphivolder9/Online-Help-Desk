@@ -5,6 +5,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using System.Linq.Expressions;
+using System.Numerics;
 
 namespace Infrastructure.Repositories
 {
@@ -60,12 +61,12 @@ namespace Infrastructure.Repositories
 
             };
 
-            if(sortOrder?.ToLower() == "desc")
-            {
-                accountQuery = accountQuery.OrderByDescending(keySelector);
-            } else
+            if(sortOrder?.ToLower() == "asc")
             {
                 accountQuery = accountQuery.OrderBy(keySelector);
+            } else
+            {
+                accountQuery = accountQuery.OrderByDescending(keySelector);
             }
 
             var totalCount = await accountQuery.CountAsync();
@@ -99,19 +100,53 @@ namespace Infrastructure.Repositories
             return user;
         }
 
+        public async Task<Account?> GetByEmailEdit(string accountId, string email)
+        {
+            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.Email == email && u.AccountId != accountId);
+            return user;
+        }
+
         public async Task<Account?> GetByPhoneNumber(string phone)
         {
             var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phone);
             return user;
         }
 
-        public async Task<IEnumerable<Account?>> GetListAssignees()
+        public async Task<Account?> GetByPhoneNumberEdit(string accountId, string phoneNumber)
         {
-            var listAssignees = await _dbContext.Set<Account>()
-                .Where(u => u.RoleId == 4 && u.StatusAccount == "Active")
-                .ToListAsync();
+            var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber && u.AccountId != accountId);
+            return user;
+        }
 
-            return listAssignees;
+        public async Task<DataResponse<Account?>> GetListAssigneesSSFP(
+            string? searchTerm,
+            int page,
+            int pageSize,
+            CancellationToken cancellationToken)
+        {
+            IQueryable<Account> accountQuery = _dbContext.Set<Account>()
+                .Where(u => u.RoleId == 4 && u.StatusAccount == "Active");
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                accountQuery = accountQuery.Where(a =>
+                    a.AccountId.Contains(searchTerm) ||
+                    a.Email.Contains(searchTerm) ||
+                    a.FullName.Contains(searchTerm));
+            }
+
+            var totalCount = await accountQuery.CountAsync(cancellationToken);
+
+            var accounts = await accountQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            return new DataResponse<Account>
+            {
+                Items = accounts,
+                TotalCount = totalCount
+            };
         }
 
 

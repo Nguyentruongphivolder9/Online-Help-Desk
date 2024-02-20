@@ -1,6 +1,4 @@
-﻿using System;
-using Domain.Entities.Accounts;
-using Domain.Entities.Requests;
+﻿using Domain.Entities.Requests;
 using SharedKernel;
 
 namespace Domain.Repositories
@@ -20,9 +18,13 @@ namespace Domain.Repositories
             string? FCondition, string? SCondition, string? TCondition,
             string? searchTerm, string? sortColumn, string? sortOrder,
            int page, int pageSize, CancellationToken cancellationToken);
+
         Task<Request?> GetRequestById(Guid id);
         Task<Request?> GetRequestByRoomId(Guid id);
         Task<List<Request>> GetAllRequestWithoutSSFP(string accountId);
+        Task<RequestCountRespone?> GetCountRequest();
+        Task<RequestCountRespone?> GetCountRequestByAssignees(string id);
+
     }
 }
 
