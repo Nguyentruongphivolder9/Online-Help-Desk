@@ -12,9 +12,7 @@ namespace Domain.Entities.Requests
         public DateTime CreateAt { get; set; }
         public bool Enable { get; set; }
 
-        [JsonIgnore]
         public Account? Account { get; set; }
-        [JsonIgnore]
         public Request? Request { get; set; }
     }
 }
