@@ -274,6 +274,18 @@ namespace Infrastructure.Repositories
             };
         }
 
+        public async Task<Request?> GetRequestByRoomId(Guid id)
+        {
+            var requestObj = await _dbContext.Set<Request>()
+                .Include(u => u.RequestStatus)
+                .Include(i => i.Account)
+                .Include(r => r.Room).ThenInclude(de => de!.Departments)
+                .Include(cu => cu.ProcessByAssignees!)
+                .ThenInclude(i => i.Account)
+                .SingleOrDefaultAsync(r => r.RoomId == id);
+            return requestObj;
+        }
+
 
         public async Task<List<Request>> GetAllRequestWithoutSSFP(string accountId)
         {
