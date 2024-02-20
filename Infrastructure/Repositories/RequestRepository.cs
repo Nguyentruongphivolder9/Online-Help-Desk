@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
+using Application.DTOs.Requests;
 using Domain.Entities.Accounts;
 using Domain.Entities.Requests;
 using Domain.Repositories;
@@ -138,6 +139,7 @@ namespace Infrastructure.Repositories
               .Include(u => u.RequestStatus)
               .Include(i => i.Account)
               .Include(r => r.Room).ThenInclude(de => de.Departments)
+              .Include(rm => rm.Remarks)
                .Skip((page - 1) * limit)
                .Take(limit)
                .ToListAsync();
@@ -214,6 +216,7 @@ namespace Infrastructure.Repositories
               .Include(u => u.RequestStatus)
               .Include(i => i.Account)
               .Include(r => r.Room).ThenInclude(de => de.Departments)
+              .Include(rm => rm.Remarks)
                .Skip((page - 1) * limit)
                .Take(limit)
                .ToListAsync();
@@ -269,6 +272,20 @@ namespace Infrastructure.Repositories
                 Complete = CountComplete,
                 Pending = pendingCount
             };
+        }
+
+
+        public async Task<List<Request>> GetAllRequestWithoutSSFP(string accountId)
+        {
+            var list = await _dbContext.Set<Request>()
+                .Where(r => r.AccountId == accountId)
+                .Include(u => u.RequestStatus)
+                .Include(i => i.Account)
+                .Include(r => r.Room).ThenInclude(de => de.Departments)
+                .Include(r => r.Remarks.OrderByDescending(rm => rm.CreateAt))
+                .ToListAsync();
+
+            return list;
         }
 
         public async Task<RequestCountRespone?> GetCountRequestByAssignees(string id)
