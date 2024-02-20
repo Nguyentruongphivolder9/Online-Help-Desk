@@ -10,6 +10,7 @@
         IDepartmentRepository departmentRepo { get; }
         IRoomRepository roomRepo { get; }
         IAssigneesRepository assigneesRepo { get; }
+        IRemarkRepository remarkRepo { get; }
 
         Task SaveChangesAsync(CancellationToken cancellationToken);
         Task RollbackTransactionAsync(CancellationToken cancellationToken = default);

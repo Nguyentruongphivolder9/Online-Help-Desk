@@ -1,5 +1,6 @@
 using Application.Common.Mapppings;
 using Application.DTOs.Departments;
+using Application.DTOs.Remarks;
 using Domain.Entities.Requests;
 
 namespace Application.DTOs.Requests
@@ -19,6 +20,7 @@ namespace Application.DTOs.Requests
         public RequestStatusDTO RequestStatus { get; set; }
         public AccountDTO Account { get; set; }
         public List<ProcessByAssigneesDTO> ProcessByAssignees { get; set; }
+        public List<RemarkDTO>? Remarks { get; set; }
     }
 }
 

@@ -1,6 +1,9 @@
 using Application;
 using Domain.Entities.Settings;
 using Infrastructure;
+using Infrastructure.sHubs;
+using Microsoft.AspNetCore.SignalR;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +16,16 @@ builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSe
 builder.Services
     .AddApplicationService()
     .AddInfrastructureService(builder.Configuration);
-
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddSignalR();
 var allowOrigins = builder.Configuration.GetSection("AllowOrigins").Get<string[]>();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("myAppCors", policy =>
     {
-        policy.WithOrigins(allowOrigins).AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins(allowOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 
@@ -41,5 +46,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHub<ChatHub>("/hubs/chat");
 app.Run();

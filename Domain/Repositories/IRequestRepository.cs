@@ -22,6 +22,7 @@ namespace Domain.Repositories
            int page, int pageSize, CancellationToken cancellationToken);
         Task<Request?> GetRequestById(Guid id);
         Task<Request?> GetRequestByRoomId(Guid id);
+        Task<List<Request>> GetAllRequestWithoutSSFP(string accountId);
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Application.DTOs.Requests;
 using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
@@ -137,6 +138,7 @@ namespace Infrastructure.Repositories
               .Include(u => u.RequestStatus)
               .Include(i => i.Account)
               .Include(r => r.Room).ThenInclude(de => de.Departments)
+              .Include(rm => rm.Remarks)
                .Skip((page - 1) * limit)
                .Take(limit)
                .ToListAsync();
@@ -213,6 +215,7 @@ namespace Infrastructure.Repositories
               .Include(u => u.RequestStatus)
               .Include(i => i.Account)
               .Include(r => r.Room).ThenInclude(de => de.Departments)
+              .Include(rm => rm.Remarks)
                .Skip((page - 1) * limit)
                .Take(limit)
                .ToListAsync();
@@ -234,6 +237,19 @@ namespace Infrastructure.Repositories
                 .ThenInclude(i => i.Account)
                 .SingleOrDefaultAsync(r => r.RoomId == id);
             return requestObj;
+        }
+
+        public async Task<List<Request>> GetAllRequestWithoutSSFP(string accountId)
+        {
+            var list = await _dbContext.Set<Request>()
+                .Where(r => r.AccountId == accountId)
+                .Include(u => u.RequestStatus)
+                .Include(i => i.Account)
+                .Include(r => r.Room).ThenInclude(de => de.Departments)
+                .Include(r => r.Remarks.OrderByDescending(rm => rm.CreateAt))
+                .ToListAsync();
+
+            return list;
         }
 
 
