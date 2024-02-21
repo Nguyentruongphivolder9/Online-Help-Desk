@@ -23,6 +23,12 @@ namespace Infrastructure.Repositories
             return true;
         }
 
+        public async Task<List<Account>> GetAllAccount()
+        {
+            var listAccount = await _dbContext.Set<Account>().Include(rt => rt.Role).ThenInclude(rt => rt.RoleTypes).ToListAsync();
+            return listAccount;
+        }
+
         public async Task<DataResponse<Account>> GetAllAccountSSFP(
             string? searchTerm, 
             string? sortColumn, 

@@ -12,7 +12,7 @@
         IAssigneesRepository assigneesRepo { get; }
         IRemarkRepository remarkRepo { get; }
         IRequestStatusRepository requestStatusRepo { get; }
-
+        INotificationRemark notificationRemark {  get; }
         Task SaveChangesAsync(CancellationToken cancellationToken);
         Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
     }

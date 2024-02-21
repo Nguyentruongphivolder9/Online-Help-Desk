@@ -214,6 +214,7 @@ namespace Infrastructure.Migrations
                     RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AccountId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsSeen = table.Column<bool>(type: "bit", nullable: false),
+                    Unwatchs = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -326,11 +327,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "AccountId", "Address", "AvatarPhoto", "Birthday", "CreatedAt", "Email", "Enable", "FullName", "Gender", "Password", "PhoneNumber", "RefreshToken", "RefreshTokenExpiry", "RoleId", "StatusAccount", "UpdatedAt", "VerifyCode", "VerifyRefreshExpiry" },
                 values: new object[,]
                 {
-                    { "AD729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3219), "nguyentruongphi15032003@gmail.com", true, "Phi Đzai", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0937888707", null, null, 5, "Active", null, null, null },
-                    { "AS729729", "Bình Định", null, "1954/06/07", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3215), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009003", null, null, 4, "Active", null, null, null },
-                    { "FH729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3217), "facility@gmail.com", true, "Ngọc Nhi", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009004", null, null, 3, "Active", null, null, null },
-                    { "ST729729", "Bình Chánh", null, "1975/04/30", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3198), "student@gmail.com", true, "Duy Hiển", "Male", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009001", null, null, 1, "Active", null, null, null },
-                    { "TC729729", "Bình Dương", null, "1945/09/02", new DateTime(2024, 2, 20, 21, 40, 15, 370, DateTimeKind.Local).AddTicks(3213), "teacher@gmail.com", true, "Duy Hiển", "Female", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009002", null, null, 2, "Verifying", null, null, null }
+                    { "AD729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5749), "nguyentruongphi15032003@gmail.com", true, "Phi Đzai", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0937888707", null, null, 5, "Active", null, null, null },
+                    { "AS729729", "Bình Định", null, "1954/06/07", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5736), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009003", null, null, 4, "Active", null, null, null },
+                    { "FH729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5739), "facility@gmail.com", true, "Ngọc Nhi", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009004", null, null, 3, "Active", null, null, null },
+                    { "ST729729", "Bình Chánh", null, "1975/04/30", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5713), "student@gmail.com", true, "Duy Hiển", "Male", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009001", null, null, 1, "Active", null, null, null },
+                    { "TC729729", "Bình Dương", null, "1945/09/02", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5733), "teacher@gmail.com", true, "Duy Hiển", "Female", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009002", null, null, 2, "Verifying", null, null, null }
                 });
 
             migrationBuilder.CreateIndex(
