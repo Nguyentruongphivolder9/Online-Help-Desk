@@ -17,6 +17,11 @@ namespace Infrastructure.sHubs
            await Clients.All.SendAsync("ReceiveMessage", username, message);
         }
 
+        public async Task ReceiveNotificationRemark()
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, "");
+        }
+
         public async Task JoinSpecificChatRoom(string requestId, string userName) // tao phong dua tren requestId 
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, requestId);

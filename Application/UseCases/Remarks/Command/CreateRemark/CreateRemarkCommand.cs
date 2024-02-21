@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Application.UseCases.Remarks.Command.CreateRemark
 {
 
-    public record class CreateRemarkCommand(string accountId, string requestId, string comment, bool? Enable) : ICommand<RemarkDTO>
+    public record class CreateRemarkCommand(string AccountId, string RequestId, string Comment, bool? Enable) : ICommand<RemarkDTO>
     {
     }
 }

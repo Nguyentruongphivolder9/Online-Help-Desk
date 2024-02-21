@@ -25,14 +25,40 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
             var remarkData = new Remark
             {
                 Id = new Guid(),
-                AccountId = request.accountId,
-                RequestId = new Guid(request.requestId),
-                Comment = request.comment,
+                AccountId = request.AccountId,
+                RequestId = new Guid(request.RequestId),
+                Comment = request.Comment,
                 CreateAt = DateTime.Now,
                 Enable = true
             };
 
             _repo.remarkRepo.Add(remarkData);
+
+
+
+            var accounts = await _repo.accountRepo.GetAllAccount();
+            if (accounts != null && accounts.Any())
+            {
+                foreach (var account in accounts)
+                {
+                    if(account.Role.RoleTypes!.Id == 1)
+                    {
+                        if (account.Role!.RoleTypes!.Id == 2 || account.Role.RoleTypes.Id! == 3)
+                        {
+                            var notificationRemark = new NotificationRemark
+                            {
+                                Id = Guid.NewGuid(),
+                                RequestId = Guid.Parse(request.RequestId),
+                                AccountId = account.AccountId.ToString(),
+                                IsSeen = false,
+                                CreatedAt = DateTime.Now,
+                                UpdatedAt = DateTime.Now
+                            };
+                            _repo.notificationRemark.Add(notificationRemark);
+                        }
+                    }
+                }
+            }
 
 
             try
@@ -41,6 +67,7 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
 
                 var latestRemark = await _repo.remarkRepo.GetLatestRemark(remarkData.Id.ToString().ToUpper());
                 var latestRemarkMapper = _mapper.Map<RemarkDTO>(latestRemark);
+
                 return Result.Success<RemarkDTO>(latestRemarkMapper, "Create remark successfully!");
             }
             catch (Exception ex)

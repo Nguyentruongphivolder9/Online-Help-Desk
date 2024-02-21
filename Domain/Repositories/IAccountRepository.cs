@@ -8,6 +8,7 @@ namespace Domain.Repositories
         Task<Account?> GetByEmail(string email);
         Task<Account?> GetByPhoneNumber(string phone);
         Task<Account?> GetByAccountId(string accountId);
+        Task<List<Account>> GetAllAccount();
         Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? RoleType, int page, int pageSize, CancellationToken cancellationToken);
         Task<Account?> GetStaySignIn(string accountId, string refreshToken);
         Task<bool> CheckRegisterAccount(string accountId);
@@ -15,5 +16,6 @@ namespace Domain.Repositories
         Task<Account?> GetByPhoneNumberEdit(string accountId, string phoneNumber);
         //nhi
         Task<DataResponse<Account?>> GetListAssigneesSSFP(string? searchTerm, int page, int pageSize, CancellationToken cancellationToken);
+
     }
 }

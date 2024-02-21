@@ -41,6 +41,12 @@ namespace Web_Api.Endpoints.Requests
                 });
                 await _hubContext.Clients.Group(roomId).SendAsync("ReceiveMessage", jsonString);
             }
+
+            //if(status != null)
+            //{
+
+            //}
+
             return status;
         }
     }

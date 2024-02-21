@@ -66,7 +66,7 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
             sensitiveWordsPattern = $"({string.Join("|", sensitiveWordRegexPatterns)})";
 
 
-            RuleFor(c => c.comment)
+            RuleFor(c => c.Comment)
                 .NotEmpty().WithMessage("You are not allowed to send an empty message")
                 .MaximumLength(100).WithMessage("Messages cannot exceed 100 characters.")
                 .Must(comment => !Regex.IsMatch(comment, sensitiveWordsPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline))

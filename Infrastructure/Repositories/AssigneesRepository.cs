@@ -26,6 +26,12 @@ namespace Infrastructure.Repositories
             return processRequest;    
         }
 
+        public async Task<List<ProcessByAssignees>?> GetListByAssigneeHandleRequest(string assigneesId, Guid requestId)
+        {
+            var listProcessRequest = await _dbContext.Set<ProcessByAssignees>().Where(ai => ai.AccountId == assigneesId && ai.RequestId == requestId).ToListAsync();
+            return listProcessRequest;
+        }
+
 
     }
 }
