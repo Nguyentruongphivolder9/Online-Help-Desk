@@ -1,5 +1,5 @@
 ﻿using Application.Common.Messaging;
-using Application.DTOs;
+using Application.DTOs.Auth;
 using Application.Services;
 using Domain.Repositories;
 using SharedKernel;

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Messaging;
 using Application.DTOs;
+using Application.DTOs.Auth;
 using Application.Services;
 using Domain.Entities.Accounts;
 using Domain.Repositories;

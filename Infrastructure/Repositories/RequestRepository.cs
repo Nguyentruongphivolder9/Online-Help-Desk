@@ -1,11 +1,9 @@
-using System.Linq.Expressions;
-using Application.DTOs.Requests;
-using Domain.Entities.Accounts;
 using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -346,6 +344,95 @@ namespace Infrastructure.Repositories
                 Complete = CountComplete,
                 Pending = pendingCount
             };
+        }
+
+        public async Task<DataResponse<Request>> GetAllRequestOfAssigneeProcessingSSFP(
+            string accountIdAssignees,
+            string? searchTerm,
+            string? sortColumn,
+            string? sortOrder,
+            string? department,
+            string? room,
+            string? severalLevel,
+            string? status,
+            int page,
+            int limit,
+            CancellationToken cancellationToken)
+        {
+            IQueryable<Request> requestQueries = _dbContext.Set<Request>()
+                .Include(p => p.ProcessByAssignees)
+                .Include(r => r.Account)
+                    .ThenInclude(a => a!.Role)
+                .Include(r => r.Room)
+                    .ThenInclude(ro => ro!.Departments)
+                .Include(r => r.RequestStatus);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                requestQueries = requestQueries.Where(a =>
+                a.Account!.FullName.Contains(searchTerm) ||
+                a.SeveralLevel.Contains(searchTerm) ||
+                a.Room!.Departments!.DepartmentName.Contains(searchTerm) ||
+                a.Room.RoomNumber.Contains(searchTerm));
+            }
+
+            if (!string.IsNullOrEmpty(accountIdAssignees))
+            {
+                requestQueries = requestQueries.Where(a =>
+                a.ProcessByAssignees!.Any(p => p.AccountId == accountIdAssignees));
+            }
+            
+            if (!string.IsNullOrEmpty(room))
+            {
+                requestQueries = requestQueries.Where(a =>
+                a.Room!.RoomNumber == room);
+            }
+            
+            if (!string.IsNullOrEmpty(department))
+            {
+                requestQueries = requestQueries.Where(a =>
+                a.Room!.Departments!.DepartmentName == department);
+            }
+
+            if (!string.IsNullOrEmpty(severalLevel))
+            {
+                requestQueries = requestQueries.Where(a =>
+                a.SeveralLevel == severalLevel);
+            }
+            
+            if (!string.IsNullOrEmpty(status))
+            {
+                requestQueries = requestQueries.Where(a =>
+                a.RequestStatus!.StatusName == status);
+            }
+
+            Expression<Func<Request, object>> keySelector = sortColumn?.ToLower() switch
+            {
+                _ => request => request.CreatedAt,
+            };
+
+            if (sortOrder?.ToLower() == "asc")
+            {
+                requestQueries = requestQueries.OrderBy(keySelector);
+            }
+            else
+            {
+                requestQueries = requestQueries.OrderByDescending(keySelector);
+            }
+
+            var totalCount = await requestQueries.CountAsync();
+
+            var requests = await requestQueries
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .ToListAsync(cancellationToken);
+
+            return new DataResponse<Request>
+            {
+                Items = requests,
+                TotalCount = totalCount,
+            };
+
         }
     }
 }

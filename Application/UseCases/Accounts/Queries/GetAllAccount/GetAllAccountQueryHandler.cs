@@ -22,7 +22,7 @@ namespace Application.UseCases.Accounts.Queries.GetAllAccount
 
         public async Task<Result<PagedList<AccountResponse>>> Handle(GetAllAccountQuery request, CancellationToken cancellationToken)
         {
-            var listAccount = await _repo.accountRepo.GetAllAccountSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.RoleType, request.Page, request.Limit, cancellationToken);
+            var listAccount = await _repo.accountRepo.GetAllAccountSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.RoleName, request.AccountStatus, request.Page, request.Limit, cancellationToken);
 
             if (listAccount.Items == null)
             {
