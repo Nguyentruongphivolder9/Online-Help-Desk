@@ -3,9 +3,9 @@ using Domain.Entities.Accounts;
 using Domain.Entities.Roles;
 using System.Text.Json.Serialization;
 
-namespace Application.DTOs
+namespace Application.DTOs.Auth
 {
-    public class LoginResponse : IMapForm<Account>
+    public class LoginDTO : IMapForm<Account>
     {
         public string AccountId { get; set; }
         public string RoleName { get; set; }
