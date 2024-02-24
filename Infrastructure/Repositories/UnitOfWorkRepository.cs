@@ -24,7 +24,8 @@ namespace Infrastructure.Repositories
 
         public IRequestStatusRepository requestStatusRepo { get; private set; }
 
-        public INotificationRemark notificationRemark {  get; private set; }
+        public INotificationRemarkRepository notificationRemarkRepo {  get; private set; }
+        public INotificationHandleRequestRepository notificationHandleRequestRepo{ get; private set; }
 
         public UnitOfWorkRepository(OHDDbContext dbContext)
         {
@@ -38,7 +39,8 @@ namespace Infrastructure.Repositories
             assigneesRepo = new AssigneesRepository(dbContext);
             remarkRepo = new RemarkRepository(dbContext);
             requestStatusRepo = new RequestStatusRepositoty(dbContext);
-            notificationRemark = new NotificationRemarkRepository(dbContext);
+            notificationRemarkRepo = new NotificationRemarkRepository(dbContext);
+            notificationHandleRequestRepo = new NotificationHandleRequestRepository(dbContext);
 
         }
 

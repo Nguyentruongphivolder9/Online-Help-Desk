@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Requests;
+﻿using Domain.Entities.Accounts;
+using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +43,6 @@ namespace Infrastructure.Repositories
                 .Include(a => a.Account)
                 .Include(re => re.Request)
                 .FirstOrDefaultAsync();
-          
             return latestRemark;
         }
     }

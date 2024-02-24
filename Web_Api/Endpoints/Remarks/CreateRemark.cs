@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.Remarks;
 using Application.UseCases.Remarks.Command.CreateRemark;
 using Ardalis.ApiEndpoints;
+using Domain.Repositories;
 using Infrastructure.sHubs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,15 @@ namespace Web_Api.Endpoints.Requests
     {
 
         private readonly IMediator Sender;
+        private readonly IUnitOfWorkRepository _repo;
         public readonly IHubContext<ChatHub> _hubContext;
-        public CreateRemark(IMediator sender, IHubContext<ChatHub> hubContext)
+        public readonly IHubContext<NotificationHub> _hubNotifiContext;
+        public CreateRemark(IMediator sender, IUnitOfWorkRepository repo, IHubContext<ChatHub> hubContext, IHubContext<NotificationHub> hubNotifiContext)
         {
             Sender = sender;
+            _repo = repo;
             _hubContext = hubContext;
+            _hubNotifiContext = hubNotifiContext;
         }
 
 
@@ -31,23 +36,31 @@ namespace Web_Api.Endpoints.Requests
         {
             var status = await Sender.Send(command);
 
-            if(status != null)
+            if(status != null && status.IsSuccess == true)
             {
-                var roomId = status.Data.Request.Id.ToString(); // dua tren requestId làm room vì nó unique
+                var roomId = status.Data.Request!.Id.ToString(); // dua tren requestId làm room vì nó unique
                 var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(status.Data, new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() }
                 });
                 await _hubContext.Clients.Group(roomId).SendAsync("ReceiveMessage", jsonString);
+
             }
 
-            //if(status != null)
-            //{
+            if (status != null && status.IsSuccess == true)
+            {
+                var roomId = status.Data.Request!.Id.ToString(); // dua tren requestId làm room vì nó unique
+                var notifiRemark = await _repo.notificationRemarkRepo.GetNotificationRemarkByRequestId(status.Data.Request!.Id);
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(notifiRemark, new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() }
+                });
+                await _hubNotifiContext.Clients.Group(roomId).SendAsync("ReceiveNotificationRemark", jsonString);
+            }
 
-            //}
-
-            return status;
+            return status!;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Application.UseCases.Requests.Commands.UpdateRequest
                 return Result.Failure(new Error("Error", "No data exists"), "Can not GetRequestById ");
             }
 
-            if (account.Role.RoleTypeId == 1) // End-User
+            if (account!.Role!.RoleTypes!.Id == 1) // End-User
             {
                 if (request.Enable.HasValue && !(request.RequestStatusId.HasValue))
                 {
@@ -40,9 +40,9 @@ namespace Application.UseCases.Requests.Commands.UpdateRequest
                 }
             }
             else if(
-                account.Role.RoleTypeId == 2 || 
-                account.Role.RoleTypeId == 3 || 
-                account.Role.RoleTypeId == 4) // Facility, Assignees , Admin
+                account.Role.RoleTypes.Id == 2 || 
+                account.Role.RoleTypes.Id == 3 || 
+                account.Role.RoleTypes.Id == 4) // Facility, Assignees , Admin
             {
                 if (request.RequestStatusId.HasValue && !(request.Enable.HasValue))
                 {
@@ -56,7 +56,7 @@ namespace Application.UseCases.Requests.Commands.UpdateRequest
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);
-                if (account.Role.RoleTypeId == 2 || account.Role.RoleTypeId == 3 || account.Role.RoleTypeId == 4)
+                if (account.Role.RoleTypes.Id == 2 || account.Role.RoleTypes.Id == 3 || account.Role.RoleTypes.Id == 4)
                 {
                     return Result.Success("Updated request successfully by Facility-Header ");
                 }
