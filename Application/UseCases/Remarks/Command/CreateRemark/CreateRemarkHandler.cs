@@ -2,6 +2,7 @@
 using Application.DTOs.Remarks;
 using Application.DTOs.Requests;
 using AutoMapper;
+using Domain.Entities.Accounts;
 using Domain.Entities.Requests;
 using Domain.Repositories;
 
@@ -22,6 +23,10 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
 
         public async Task<Result<RemarkDTO>> Handle(CreateRemarkCommand request, CancellationToken cancellationToken)
         {
+            var listfacilityHeads = await _repo.accountRepo.GetAllFacilityHeads();
+            var listAssigneeRalateToRequestId = await _repo.assigneesRepo.GetListByAssigneeHandleRequest(Guid.Parse(request.RequestId));
+            var listNotifiRemarkRelateToRequestId = await _repo.notificationRemarkRepo.GetNotificationRemarkByRequestId(Guid.Parse(request.RequestId));
+            var accountChatting = await _repo.accountRepo.GetByAccountId(request.AccountId);
             var remarkData = new Remark
             {
                 Id = new Guid(),
@@ -31,34 +36,132 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
                 CreateAt = DateTime.Now,
                 Enable = true
             };
-
             _repo.remarkRepo.Add(remarkData);
 
-
-
-            var accounts = await _repo.accountRepo.GetAllAccount();
-            if (accounts != null && accounts.Any())
+            if (accountChatting != null)
             {
-                foreach (var account in accounts)
+                foreach (var head in listfacilityHeads)
                 {
-                    if(account.Role.RoleTypes!.Id == 1)
+                    var foundNotifiRemark = listNotifiRemarkRelateToRequestId.
+                                                FirstOrDefault(notifiRemark => notifiRemark.AccountId == head.AccountId);
+                    if (head.AccountId != accountChatting.AccountId && foundNotifiRemark != null)
                     {
-                        if (account.Role!.RoleTypes!.Id == 2 || account.Role.RoleTypes.Id! == 3)
+                        foundNotifiRemark.Unwatchs += 1;
+                        foundNotifiRemark.IsSeen = false;
+                        _repo.notificationRemarkRepo.Update(foundNotifiRemark);
+                    }
+                }
+
+                if (listAssigneeRalateToRequestId != null)
+                {
+                    foreach (var assignee in listAssigneeRalateToRequestId)
+                    {
+                        var foundNotifiRemark = listNotifiRemarkRelateToRequestId.
+                                                FirstOrDefault(notifiRemark => notifiRemark.AccountId == assignee.AccountId);
+
+                        if (assignee.AccountId != accountChatting.AccountId && foundNotifiRemark != null)
                         {
-                            var notificationRemark = new NotificationRemark
-                            {
-                                Id = Guid.NewGuid(),
-                                RequestId = Guid.Parse(request.RequestId),
-                                AccountId = account.AccountId.ToString(),
-                                IsSeen = false,
-                                CreatedAt = DateTime.Now,
-                                UpdatedAt = DateTime.Now
-                            };
-                            _repo.notificationRemark.Add(notificationRemark);
+                            foundNotifiRemark.Unwatchs += 1;
+                            foundNotifiRemark.IsSeen = false;
+                            _repo.notificationRemarkRepo.Update(foundNotifiRemark);
                         }
                     }
                 }
+
+                if (accountChatting != null &&
+                   (accountChatting.Role?.RoleTypes?.Id == 2 ||
+                    accountChatting.Role?.RoleTypes?.Id == 3))
+                {
+
+                    var foundNotifiRemarkOfUser = listNotifiRemarkRelateToRequestId.
+                                                FirstOrDefault(notifiRemark => notifiRemark.RequestId == Guid.Parse(request.RequestId));
+                    if (foundNotifiRemarkOfUser != null)
+                    {
+                        foundNotifiRemarkOfUser.Unwatchs += 1;
+                        foundNotifiRemarkOfUser.IsSeen = false;
+                        _repo.notificationRemarkRepo.Update(foundNotifiRemarkOfUser);
+                    }
+                }
             }
+
+                /*if (accountChatting != null &&
+                       string.Equals(accountChatting.Role!.RoleTypes!.RoleTypeName, "Facility-Heads", StringComparison.OrdinalIgnoreCase) &&
+                       accountChatting.Role.RoleTypes.Id == 2)
+                {
+                    foreach (var head in listfacilityHeads)
+                    {
+                        var foundNotifiRemark = listNotifiRemarkRelateToRequestId.
+                                                    FirstOrDefault(notifiRemark => notifiRemark.AccountId == head.AccountId);
+                        if (head.AccountId != accountChatting.AccountId && foundNotifiRemark != null)
+                        {
+                            foundNotifiRemark.Unwatchs += 1;
+                            _repo.notificationRemarkRepo.Update(foundNotifiRemark);
+                        }
+                    }
+
+                    if (listAssigneeRalateToRequestId != null)
+                    {
+                        foreach (var assignee in listAssigneeRalateToRequestId)
+                        {
+                            var foundNotifiRemark = listNotifiRemarkRelateToRequestId.
+                                                    FirstOrDefault(notifiRemark => notifiRemark.AccountId == assignee.AccountId);
+
+                            if (assignee.AccountId != accountChatting.AccountId && foundNotifiRemark != null)
+                            {
+                                foundNotifiRemark.Unwatchs += 1;
+                                _repo.notificationRemarkRepo.Update(foundNotifiRemark);
+                            }
+                        }
+                    }
+
+                    var foundNotifiRemarkOfUser = listNotifiRemarkRelateToRequestId.
+                                                    FirstOrDefault(notifiRemark => notifiRemark.RequestId == Guid.Parse(request.RequestId));
+                    if (foundNotifiRemarkOfUser != null)
+                    {
+                        foundNotifiRemarkOfUser.Unwatchs += 1;
+                        _repo.notificationRemarkRepo.Update(foundNotifiRemarkOfUser);
+                    }
+
+                }
+
+                if (accountChatting != null &&
+                       string.Equals(accountChatting.Role!.RoleTypes!.RoleTypeName, "Assignees", StringComparison.OrdinalIgnoreCase) &&
+                       accountChatting.Role.RoleTypes.Id == 3)
+                {
+                    foreach (var head in listfacilityHeads)
+                    {
+                        var foundNotifiRemark = listNotifiRemarkRelateToRequestId.
+                                                    FirstOrDefault(notifiRemark => notifiRemark.AccountId == head.AccountId);
+                        if (head.AccountId != accountChatting.AccountId && foundNotifiRemark != null)
+                        {
+                            foundNotifiRemark.Unwatchs += 1;
+                            _repo.notificationRemarkRepo.Update(foundNotifiRemark);
+                        }
+                    }
+
+                    if (listAssigneeRalateToRequestId != null)
+                    {
+                        foreach (var assignee in listAssigneeRalateToRequestId)
+                        {
+                            var foundNotifiRemark = listNotifiRemarkRelateToRequestId.
+                                                    FirstOrDefault(notifiRemark => notifiRemark.AccountId == assignee.AccountId);
+
+                            if (assignee.AccountId != accountChatting.AccountId && foundNotifiRemark != null)
+                            {
+                                foundNotifiRemark.Unwatchs += 1;
+                                _repo.notificationRemarkRepo.Update(foundNotifiRemark);
+                            }
+                        }
+                    }
+
+                    var foundNotifiRemarkOfUser = listNotifiRemarkRelateToRequestId.
+                                                    FirstOrDefault(notifiRemark => notifiRemark.RequestId == Guid.Parse(request.RequestId));
+                    if (foundNotifiRemarkOfUser != null)
+                    {
+                        foundNotifiRemarkOfUser.Unwatchs += 1;
+                        _repo.notificationRemarkRepo.Update(foundNotifiRemarkOfUser);
+                    }
+                }*/
 
 
             try
@@ -77,5 +180,7 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
                 return Result.Failure<RemarkDTO>(error, "Create Remark failed!");
             }
         }
+
+        
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace Infrastructure.sHubs
 {
@@ -19,7 +21,9 @@ namespace Infrastructure.sHubs
 
         public async Task ReceiveNotificationRemark()
         {
+            var list = _repo.remarkRepo.GetRemarksRequestId(Guid.Parse("ds"));
             await Groups.AddToGroupAsync(Context.ConnectionId, "");
+ 
         }
 
         public async Task JoinSpecificChatRoom(string requestId, string userName) // tao phong dua tren requestId 
@@ -33,5 +37,7 @@ namespace Infrastructure.sHubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, requestId);
             await Clients.Group(requestId).SendAsync("LeaveSpecificChatRoom", userName, $"{userName} has left");
         }
+
+        
     }
 }

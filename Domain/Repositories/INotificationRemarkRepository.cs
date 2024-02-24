@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Repositories
 {
-    public interface INotificationRemark : IGenericRepository<NotificationRemark>
+    public interface INotificationRemarkRepository : IGenericRepository<NotificationRemark>
     {
+        Task<List<NotificationRemark>> GetNotificationRemarkByRequestId(Guid requestId);
     }
 }

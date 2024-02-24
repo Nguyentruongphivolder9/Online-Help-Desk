@@ -26,12 +26,16 @@ namespace Infrastructure.Repositories
             return processRequest;    
         }
 
-        public async Task<List<ProcessByAssignees>?> GetListByAssigneeHandleRequest(string assigneesId, Guid requestId)
+        public async Task<List<ProcessByAssignees>> GetListByAssigneeHandleRequest(Guid requestId)
         {
-            var listProcessRequest = await _dbContext.Set<ProcessByAssignees>().Where(ai => ai.AccountId == assigneesId && ai.RequestId == requestId).ToListAsync();
+            var listProcessRequest = await _dbContext.Set<ProcessByAssignees>().Where(ai => ai.RequestId == requestId).ToListAsync();
             return listProcessRequest;
         }
-
+        public async Task<List<ProcessByAssignees>> GetListHandleRequestOfOneAssigneeByAccountId(string accountId)
+        {
+            var listProcessRequestByAccountId = await _dbContext.Set<ProcessByAssignees>().Where(ai => ai.AccountId == accountId).ToListAsync();
+            return listProcessRequestByAccountId;
+        }
 
     }
 }

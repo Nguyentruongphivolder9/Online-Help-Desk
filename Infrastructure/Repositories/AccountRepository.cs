@@ -26,6 +26,12 @@ namespace Infrastructure.Repositories
             var listAccount = await _dbContext.Set<Account>().Include(rt => rt.Role).ThenInclude(rt => rt.RoleTypes).ToListAsync();
             return listAccount;
         }
+        
+        public async Task<List<Account>> GetAllFacilityHeads()
+        {
+            var listFacilityHeads = await _dbContext.Set<Account>().Where(a => a.Role!.RoleTypes!.Id == 2).ToListAsync();
+            return listFacilityHeads;
+        }
 
         public async Task<DataResponse<Account>> GetAllAccountSSFP(
             string? searchTerm, 
