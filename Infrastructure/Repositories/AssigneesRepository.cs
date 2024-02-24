@@ -11,7 +11,7 @@ namespace Infrastructure.Repositories
         public AssigneesRepository(OHDDbContext dbContext) : base(dbContext)
         {
         }
-
+        
         public async Task<Account?> GetAssigneesByAccountId(string accountId)
         {
             var user = await _dbContext.Set<Account>()

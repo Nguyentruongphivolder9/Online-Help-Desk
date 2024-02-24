@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Auth;
 using Application.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -27,7 +27,7 @@ namespace Infrastructure.Services
             }
         }
 
-        public TokenResponse GetToken(IEnumerable<Claim> claim)
+        public TokenDTO GetToken(IEnumerable<Claim> claim)
         {
             var authSingingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]!));
 
@@ -40,7 +40,7 @@ namespace Infrastructure.Services
             );
             string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new TokenResponse { TokenString = tokenString, ValidTo = token.ValidTo };
+            return new TokenDTO { TokenString = tokenString, ValidTo = token.ValidTo };
         }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using Domain.Entities.Accounts;
-using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using System.Linq.Expressions;
-using System.Numerics;
 
 namespace Infrastructure.Repositories
 {
@@ -39,14 +37,14 @@ namespace Infrastructure.Repositories
             string? searchTerm, 
             string? sortColumn, 
             string? sortOrder,
-            string? roleType,
+            string? roleName,
+            string? accountStatus,
             int page,
             int pageSize,
             CancellationToken cancellationToken)
         {
             IQueryable<Account> accountQuery = _dbContext.Set<Account>()
-                .Include(a => a.Role)
-                .ThenInclude(r => r!.RoleTypes);
+                .Include(a => a.Role);
 
             if(!string.IsNullOrEmpty(searchTerm) )
             {
@@ -56,10 +54,16 @@ namespace Infrastructure.Repositories
                 a.FullName.Contains(searchTerm));
             }
 
-            if (!string.IsNullOrEmpty(roleType))
+            if (!string.IsNullOrEmpty(roleName))
             {
                 accountQuery = accountQuery.Where(a =>
-                a.Role!.RoleTypes!.RoleTypeName == roleType);
+                a.Role!.RoleName == roleName);
+            }
+            
+            if (!string.IsNullOrEmpty(accountStatus))
+            {
+                accountQuery = accountQuery.Where(a =>
+                a.StatusAccount == accountStatus);
             }
 
             Expression<Func<Account, object>> keySelector = sortColumn?.ToLower() switch

@@ -11,12 +11,13 @@ namespace Domain.Repositories
         Task<List<Account>> GetAllAccount();
         Task<List<Account>> GetAllFacilityHeads();
         Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? RoleType, int page, int pageSize, CancellationToken cancellationToken);
+        Task<DataResponse<Account>> GetAllAccountSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? roleName, string? accountStatus, int page, int pageSize, CancellationToken cancellationToken);
         Task<Account?> GetStaySignIn(string accountId, string refreshToken);
         Task<bool> CheckRegisterAccount(string accountId);
         Task<Account?> GetByEmailEdit(string accountId, string email);
         Task<Account?> GetByPhoneNumberEdit(string accountId, string phoneNumber);
         //nhi
         Task<DataResponse<Account?>> GetListAssigneesSSFP(string? searchTerm, int page, int pageSize, CancellationToken cancellationToken);
-
+        
     }
 }

@@ -24,7 +24,19 @@ namespace Domain.Repositories
         Task<List<Request>> GetAllRequestWithoutSSFP(string accountId);
         Task<RequestCountRespone?> GetCountRequest();
         Task<RequestCountRespone?> GetCountRequestByAssignees(string id);
-
+        Task<DataResponse<Request>> GetAllRequestOfAssigneeProcessingSSFP(
+            string accountIdAssignees,
+            string? searchTerm,
+            string? sortColumn,
+            string? sortOrder,
+            string? department,
+            string? room,
+            string? severalLevel,
+            string? status,
+            int page,
+            int limit,
+            CancellationToken cancellationToken
+        );
     }
 }
 

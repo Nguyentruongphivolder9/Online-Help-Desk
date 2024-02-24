@@ -34,9 +34,6 @@
     <None Remove="UseCases\Requests\Queries\GetTotalRequest\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTOs\Requests\" />
-    <Folder Include="UseCases\Assigness\" />
-    <Folder Include="UseCases\Assigness\Queries\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
     <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
     <Folder Include="UseCases\Assigness\Queries\GetAssigneeById\" />
