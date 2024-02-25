@@ -21,7 +21,7 @@ namespace Application.UseCases.Requests.Queries.GetAllRequest
 
         public async Task<Result<PagedList<RequestResponse>>> Handle(GetAllRequestQueries request, CancellationToken cancellationToken)
         {
-            var list = await _repo.requestRepo.GetAllRequestSSFP(request.SearchTerm, request.SortColumn, request.SortOrder, request.Page, request.Limit, cancellationToken);
+            var list = await _repo.requestRepo.GetAllRequestSSFP(request.SearchTerm, request.SortColumn, request.SortOrder,request.SortStatus ,request.Page, request.Limit, cancellationToken);
             if (list == null)
             {
                 return Result.Failure<PagedList<RequestResponse>>(new Error("Error.Empty", "data null"), "List Request is Null");

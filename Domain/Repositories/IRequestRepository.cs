@@ -6,8 +6,12 @@ namespace Domain.Repositories
     public interface IRequestRepository : IGenericRepository<Request>
     {
         Task<DataResponse<Request>> GetAllRequestSSFP
-            (string? searchTerm, string? sortColumn, string? sortOrder,
+            (string? searchTerm, string? sortColumn, string? sortOrder,string? sortStatus,
             int page, int pageSize, CancellationToken cancellationToken);
+        Task<DataResponse<Request>> GetAllPendingRequestSSFP
+            (string? searchTerm, string? sortColumn, string? sortOrder, string? sortStatus,
+            int page, int pageSize, CancellationToken cancellationToken);
+
         Task<DataResponse<Request>> GetAllClientEnableRequestSSFP
            (string? AccountId , 
             string? FCondition, string? SCondition, string? TCondition,

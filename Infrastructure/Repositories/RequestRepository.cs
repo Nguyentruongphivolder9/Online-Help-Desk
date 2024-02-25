@@ -1,6 +1,8 @@
 using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
+using MailKit.Search;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using System.Linq.Expressions;
@@ -24,44 +26,48 @@ namespace Infrastructure.Repositories
             return requestObj;
         }
 
-        public async Task<DataResponse<Request>> GetAllRequestSSFP(string? searchTerm, string? sortColumn, string? sortOrder, int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<DataResponse<Request>> GetAllRequestSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? sortStatus,int page, int pageSize, CancellationToken cancellationToken)
         {
-            IQueryable<Request> requestQuery = _dbContext.Set<Request>();
+            IQueryable<Request> requestQuery = _dbContext.Set<Request>()
+              .Include(u => u.RequestStatus)
+              .Include(i => i.Account)
+              .Include(cu => cu.ProcessByAssignees!)
+              .ThenInclude(i => i.Account)
+              .Include(r => r.Room).ThenInclude(de => de!.Departments);
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                requestQuery = requestQuery
-                    .Include(i => i.Account)
-                    .Where(a => a.Account!.FullName.Contains(searchTerm) ||
-                                a.Account.Email.Contains(searchTerm))
-                    .OrderByDescending(a => a.CreatedAt);
+                requestQuery = requestQuery.Where(a =>
+                    a.Room!.RoomNumber.Contains(searchTerm) ||
+                    a.Room!.Departments!.DepartmentName.Contains(searchTerm) ||
+                    a.ProcessByAssignees!.Any(p => p.AccountId.Contains(searchTerm))
+                );
             }
+
+            if (!string.IsNullOrEmpty(sortStatus))
+            {
+                requestQuery = requestQuery
+                    .Where(a => a.RequestStatus!.StatusName == sortStatus);
+            };
 
             Expression<Func<Request, object>> keySelector = sortColumn?.ToLower() switch
             {
-                "CreatedAt" => request => request.CreatedAt,
-                "RequestStatusId" => request => request.RequestStatusId ,
                 _ => request => request.CreatedAt
             };
 
             // Adjust the ordering based on sortOrder
-            if (sortOrder?.ToLower() == "desc")
+            if (sortOrder?.ToLower() == "asc")
             {
-                requestQuery = requestQuery.OrderByDescending(keySelector);
+                requestQuery = requestQuery.OrderBy(keySelector);
             }
             else
             {
-                requestQuery = requestQuery.OrderBy(keySelector);
+                requestQuery = requestQuery.OrderByDescending(keySelector);
             }
 
             var totalCount = await requestQuery.CountAsync();
 
             var requests = await requestQuery
-              .Include(u => u.RequestStatus)
-              .Include(i => i.Account)
-              .Include(cu => cu.ProcessByAssignees!)
-              .ThenInclude(i => i.Account)
-              .Include(r => r.Room).ThenInclude(de => de!.Departments)
                .Skip((page - 1) * pageSize)
                .Take(pageSize)
                .ToListAsync();
@@ -252,7 +258,7 @@ namespace Infrastructure.Repositories
               .Where(u => u.RequestStatusId == 6)
                 .CountAsync();
 
-            var fiveDaysAgo = DateTime.Now.AddHours(-1);
+            var fiveDaysAgo = DateTime.Now.AddHours(-120);
 
             var pendingCount = await _dbContext.Set<Request>()
                 .Where(r => r.CreatedAt <= fiveDaysAgo
@@ -346,6 +352,63 @@ namespace Infrastructure.Repositories
             };
         }
 
+        public async Task<DataResponse<Request>> GetAllPendingRequestSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? sortStatus, int page, int pageSize, CancellationToken cancellationToken)
+        {
+            var fiveDaysAgo = DateTime.Now.AddHours(-120);
+
+            IQueryable<Request> requestQuery = _dbContext.Set<Request>()
+             .Include(u => u.RequestStatus)
+             .Include(i => i.Account)
+             .Include(cu => cu.ProcessByAssignees!)
+             .ThenInclude(i => i.Account)
+             .Include(r => r.Room).ThenInclude(de => de!.Departments)
+             .Where(r => r.CreatedAt <= fiveDaysAgo
+                && !new[] { 6, 7 }.Contains(r.RequestStatusId)
+                );
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                requestQuery = requestQuery.Where(a =>
+                    a.Room!.RoomNumber.Contains(searchTerm) ||
+                    a.Room!.Departments!.DepartmentName.Contains(searchTerm) ||
+                    a.ProcessByAssignees!.Any(p => p.AccountId.Contains(searchTerm))
+                );
+            }
+
+            if (!string.IsNullOrEmpty(sortStatus))
+            {
+                requestQuery = requestQuery
+                    .Where(a => a.RequestStatus!.StatusName == sortStatus);
+            };
+
+            Expression<Func<Request, object>> keySelector = sortColumn?.ToLower() switch
+            {
+                _ => request => request.CreatedAt
+            };
+
+            // Adjust the ordering based on sortOrder
+            if (sortOrder?.ToLower() == "asc")
+            {
+                requestQuery = requestQuery.OrderBy(keySelector);
+            }
+            else
+            {
+                requestQuery = requestQuery.OrderByDescending(keySelector);
+            }
+
+            var totalCount = await requestQuery.CountAsync();
+
+            var requests = await requestQuery
+               .Skip((page - 1) * pageSize)
+               .Take(pageSize)
+               .ToListAsync();
+
+            return new DataResponse<Request>
+            {
+                Items = requests, // Change from 'request' to 'requests'
+                TotalCount = totalCount,
+            };
+
         public async Task<DataResponse<Request>> GetAllRequestOfAssigneeProcessingSSFP(
             string accountIdAssignees,
             string? searchTerm,
@@ -432,7 +495,6 @@ namespace Infrastructure.Repositories
                 Items = requests,
                 TotalCount = totalCount,
             };
-
         }
     }
 }

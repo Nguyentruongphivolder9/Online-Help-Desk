@@ -32,6 +32,9 @@
     <None Remove="UseCases\Requests\Queries\GetRequestStatus\" />
     <None Remove="UseCases\Requests\Queries\GetTotalRequestByAssignees\" />
     <None Remove="UseCases\Requests\Queries\GetTotalRequest\" />
+    <None Remove="UseCases\Assigness\Queries\GetListRequestOfSingleAssignee\" />
+    <None Remove="UseCases\Requests\Queries\GetAllPendingRequest\" />
+    <None Remove="UseCases\Assigness\Queries\GetAllPendingRequestOfAssignee\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
@@ -40,5 +43,8 @@
     <Folder Include="UseCases\Requests\Queries\GetRequestStatus\" />
     <Folder Include="UseCases\Requests\Queries\GetTotalRequestByAssignees\" />
     <Folder Include="UseCases\Requests\Queries\GetTotalRequest\" />
+    <Folder Include="UseCases\Assigness\Queries\GetListRequestOfSingleAssignee\" />
+    <Folder Include="UseCases\Requests\Queries\GetAllPendingRequest\" />
+    <Folder Include="UseCases\Assigness\Queries\GetAllPendingRequestOfAssignee\" />
   </ItemGroup>
 </Project>
