@@ -26,7 +26,7 @@ namespace Infrastructure.Repositories
             return requestObj;
         }
 
-        public async Task<DataResponse<Request>> GetAllRequestSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? sortStatus,int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<DataResponse<Request>> GetAllRequestSSFP(string? searchTerm, string? sortColumn, string? sortOrder, string? sortStatus, int page, int pageSize, CancellationToken cancellationToken)
         {
             IQueryable<Request> requestQuery = _dbContext.Set<Request>()
               .Include(u => u.RequestStatus)
@@ -79,8 +79,8 @@ namespace Infrastructure.Repositories
             };
         }
 
-        public async Task<DataResponse<Request>> GetAllClientEnableRequestSSFP(string? accountId , 
-            string? FCondition, string? SCondition, string? TCondition, 
+        public async Task<DataResponse<Request>> GetAllClientEnableRequestSSFP(string? accountId,
+            string? FCondition, string? SCondition, string? TCondition,
             string? searchTerm, string? sortColumn, string? sortOrder, int page, int limit, CancellationToken cancellationToken)
         {
 
@@ -109,11 +109,11 @@ namespace Infrastructure.Repositories
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                requestQuery = requestQuery.Where(r => 
-                r.SeveralLevel.Contains(searchTerm) || 
-                r.Room!.Departments!.DepartmentName.Contains(searchTerm)||
+                requestQuery = requestQuery.Where(r =>
+                r.SeveralLevel.Contains(searchTerm) ||
+                r.Room!.Departments!.DepartmentName.Contains(searchTerm) ||
                 r!.RequestStatus!.StatusName.Contains(searchTerm));
-   
+
             }
 
             Expression<Func<Request, object>> keySelector = sortColumn?.ToLower() switch
@@ -231,7 +231,7 @@ namespace Infrastructure.Repositories
                 TotalCount = totalCount,
             };
         }
-        
+
 
         public async Task<RequestCountRespone?> GetCountRequest()
         {
@@ -262,7 +262,7 @@ namespace Infrastructure.Repositories
 
             var pendingCount = await _dbContext.Set<Request>()
                 .Where(r => r.CreatedAt <= fiveDaysAgo
-                && !new[] {6,7}.Contains(r.RequestStatusId)
+                && !new[] { 6, 7 }.Contains(r.RequestStatusId)
                 ) // Ensure CreatedAt is older than 10 days ago
                 .CountAsync();
             return new RequestCountRespone
@@ -324,7 +324,7 @@ namespace Infrastructure.Repositories
               .Where(u => u.RequestStatusId == 4 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
                 .CountAsync();
             var CountRejected = await _dbContext.Set<Request>()
-              .Where(u => u.RequestStatusId == 5 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id)) 
+              .Where(u => u.RequestStatusId == 5 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
                 .CountAsync();
             var CountComplete = await _dbContext.Set<Request>()
               .Where(u => u.RequestStatusId == 6 && u.ProcessByAssignees!.Any(pa => pa.AccountId == id))
@@ -408,7 +408,7 @@ namespace Infrastructure.Repositories
                 Items = requests, // Change from 'request' to 'requests'
                 TotalCount = totalCount,
             };
-
+        }
         public async Task<DataResponse<Request>> GetAllRequestOfAssigneeProcessingSSFP(
             string accountIdAssignees,
             string? searchTerm,
@@ -444,13 +444,13 @@ namespace Infrastructure.Repositories
                 requestQueries = requestQueries.Where(a =>
                 a.ProcessByAssignees!.Any(p => p.AccountId == accountIdAssignees));
             }
-            
+
             if (!string.IsNullOrEmpty(room))
             {
                 requestQueries = requestQueries.Where(a =>
                 a.Room!.RoomNumber == room);
             }
-            
+
             if (!string.IsNullOrEmpty(department))
             {
                 requestQueries = requestQueries.Where(a =>
@@ -462,7 +462,7 @@ namespace Infrastructure.Repositories
                 requestQueries = requestQueries.Where(a =>
                 a.SeveralLevel == severalLevel);
             }
-            
+
             if (!string.IsNullOrEmpty(status))
             {
                 requestQueries = requestQueries.Where(a =>
@@ -496,6 +496,8 @@ namespace Infrastructure.Repositories
                 TotalCount = totalCount,
             };
         }
+        
     }
 }
+
 
