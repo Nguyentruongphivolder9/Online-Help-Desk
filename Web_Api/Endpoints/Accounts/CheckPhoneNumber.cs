@@ -24,7 +24,7 @@ namespace Web_Api.Endpoints.Accounts
             [FromRoute(Name = "phoneNumber")] string phoneNumber,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new CheckPhoneNumberQuery(phoneNumber));
+            var status = await Sender.Send(new CheckPhoneNumberQuery(null, phoneNumber));
             return Ok(status);
         }
     }

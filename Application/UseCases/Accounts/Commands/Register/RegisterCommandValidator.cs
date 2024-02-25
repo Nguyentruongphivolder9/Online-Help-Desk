@@ -27,7 +27,7 @@ namespace Application.UseCases.Accounts.Commands.Register
                     .WithMessage("Invalid value for Gender. Allowed values are 'Male', 'Female', or 'Other'.");
             RuleFor(x => x.Birthday)
                 .NotEmpty().WithMessage("Birthday cannot be left blank.")
-                .Matches(@"^\d{2}/\d{2}/\d{4}$").WithMessage("Invalid date format. Please use MM/dd/yyyy.");
+                .Matches(@"^\d{4}/\d{2}/\d{2}$").WithMessage("Invalid date format. Please use MM/dd/yyyy.");
 
         }
     }

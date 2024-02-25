@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Accounts;
-using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -22,18 +21,30 @@ namespace Infrastructure.Repositories
             return true;
         }
 
+        public async Task<List<Account>> GetAllAccount()
+        {
+            var listAccount = await _dbContext.Set<Account>().Include(rt => rt.Role).ThenInclude(rt => rt.RoleTypes).ToListAsync();
+            return listAccount;
+        }
+        
+        public async Task<List<Account>> GetAllFacilityHeads()
+        {
+            var listFacilityHeads = await _dbContext.Set<Account>().Where(a => a.Role!.RoleTypes!.Id == 2).ToListAsync();
+            return listFacilityHeads;
+        }
+
         public async Task<DataResponse<Account>> GetAllAccountSSFP(
             string? searchTerm, 
             string? sortColumn, 
             string? sortOrder,
-            string? roleType,
+            string? roleName,
+            string? accountStatus,
             int page,
             int pageSize,
             CancellationToken cancellationToken)
         {
             IQueryable<Account> accountQuery = _dbContext.Set<Account>()
-                .Include(a => a.Role)
-                .ThenInclude(r => r!.RoleTypes);
+                .Include(a => a.Role);
 
             if(!string.IsNullOrEmpty(searchTerm) )
             {
@@ -43,10 +54,16 @@ namespace Infrastructure.Repositories
                 a.FullName.Contains(searchTerm));
             }
 
-            if (!string.IsNullOrEmpty(roleType))
+            if (!string.IsNullOrEmpty(roleName))
             {
                 accountQuery = accountQuery.Where(a =>
-                a.Role!.RoleTypes!.RoleTypeName == roleType);
+                a.Role!.RoleName == roleName);
+            }
+            
+            if (!string.IsNullOrEmpty(accountStatus))
+            {
+                accountQuery = accountQuery.Where(a =>
+                a.StatusAccount == accountStatus);
             }
 
             Expression<Func<Account, object>> keySelector = sortColumn?.ToLower() switch
@@ -60,12 +77,12 @@ namespace Infrastructure.Repositories
 
             };
 
-            if(sortOrder?.ToLower() == "desc")
-            {
-                accountQuery = accountQuery.OrderByDescending(keySelector);
-            } else
+            if(sortOrder?.ToLower() == "asc")
             {
                 accountQuery = accountQuery.OrderBy(keySelector);
+            } else
+            {
+                accountQuery = accountQuery.OrderByDescending(keySelector);
             }
 
             var totalCount = await accountQuery.CountAsync();
@@ -99,9 +116,21 @@ namespace Infrastructure.Repositories
             return user;
         }
 
+        public async Task<Account?> GetByEmailEdit(string accountId, string email)
+        {
+            var user = await _dbContext.Set<Account>().SingleOrDefaultAsync(u => u.Email == email && u.AccountId != accountId);
+            return user;
+        }
+
         public async Task<Account?> GetByPhoneNumber(string phone)
         {
             var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phone);
+            return user;
+        }
+
+        public async Task<Account?> GetByPhoneNumberEdit(string accountId, string phoneNumber)
+        {
+            var user = await _dbContext.Set<Account>().FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber && u.AccountId != accountId);
             return user;
         }
 

@@ -2,5 +2,5 @@
 
 namespace Application.UseCases.Accounts.Queries.CheckEmail
 {
-    public sealed record CheckEmailQuery(string Email) : IQuery;
+    public sealed record CheckEmailQuery(string? AccountId, string Email) : IQuery;
 }

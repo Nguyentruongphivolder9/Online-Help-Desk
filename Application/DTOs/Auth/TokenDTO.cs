@@ -1,6 +1,6 @@
-﻿namespace Application.DTOs
+﻿namespace Application.DTOs.Auth
 {
-    public class TokenResponse
+    public class TokenDTO
     {
         public string? TokenString { get; set; }
         public DateTime ValidTo { get; set; }

@@ -26,7 +26,6 @@ namespace Web_Api.Endpoints.Requests
             CancellationToken cancellationToken = default)
         {
             var accountId = User.FindFirstValue(ClaimTypes.Sid);
-
             var status = await Sender.Send
                 (new GetAllClienRequestQueries(
                 accountId,

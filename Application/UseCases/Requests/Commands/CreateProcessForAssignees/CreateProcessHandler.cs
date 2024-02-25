@@ -74,10 +74,33 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                 AccountId = request.AccountId,
             };
 
+            var notificationHandleRequest = new NotificationHandleRequest
+            {
+                Id = new Guid(),
+                RequestId = request.RequestId,
+                AccountId = request.AccountId,
+                Purpose = "Assign request to asignnee",
+                IsSeen = false,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+            _repo.notificationHandleRequestRepo.Add(notificationHandleRequest);
+
+            var notificationRemark = new NotificationRemark
+            {
+                Id = new Guid(),
+                RequestId = request.RequestId,
+                AccountId = request.AccountId,
+                IsSeen = true,
+                Unwatchs = 0,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+            _repo.notificationRemarkRepo.Add(notificationRemark);
+
             try
             {
                 _repo.requestRepo.Update(requestItem);
-                await _repo.SaveChangesAsync(cancellationToken);
                 _repo.assigneesRepo.Add(processByAssigneesData);
                 await _repo.SaveChangesAsync(cancellationToken);
 

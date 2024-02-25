@@ -1,11 +1,11 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Auth;
 using System.Security.Claims;
 
 namespace Application.Services
 {
     public interface ITokenService
     {
-        TokenResponse GetToken(IEnumerable<Claim> claims);
+        TokenDTO GetToken(IEnumerable<Claim> claims);
         string GetRefreshToken();
     }
 }

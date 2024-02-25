@@ -23,11 +23,24 @@ namespace Domain.Repositories
             string? searchTerm, string? sortColumn, string? sortOrder,
            int page, int pageSize, CancellationToken cancellationToken);
 
+        Task<Request?> GetRequestById(Guid id);
+        Task<Request?> GetRequestByRoomId(Guid id);
+        Task<List<Request>> GetAllRequestWithoutSSFP(string accountId);
         Task<RequestCountRespone?> GetCountRequest();
         Task<RequestCountRespone?> GetCountRequestByAssignees(string id);
-
-        Task<Request?> GetRequestById(Guid id);
-
+        Task<DataResponse<Request>> GetAllRequestOfAssigneeProcessingSSFP(
+            string accountIdAssignees,
+            string? searchTerm,
+            string? sortColumn,
+            string? sortOrder,
+            string? department,
+            string? room,
+            string? severalLevel,
+            string? status,
+            int page,
+            int limit,
+            CancellationToken cancellationToken
+        );
     }
 }
 

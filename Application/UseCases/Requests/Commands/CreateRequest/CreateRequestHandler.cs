@@ -24,9 +24,11 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
             RequestResponse? resultObject = null;
             Guid roomId = new Guid(request.RoomId);
             var account= await _repo.accountRepo.GetByAccountId(request.AccountId);
+            var listfacilityHeads = await _repo.accountRepo.GetAllFacilityHeads();
 
+            //check duplicate request on a room(spam request)
             if (account != null) {
-                var existedUnprocessedRequestOnRoom = account.Requests.
+                var existedUnprocessedRequestOnRoom = account.Requests!.
                                  Where(r => r.RoomId == roomId)
                                 .Where(r=> r.RequestStatusId != 5 && r.RequestStatusId != 6 && r.RequestStatusId !=7)
                                 .FirstOrDefault();
@@ -36,34 +38,78 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
                     return Result.Failure(error, "Create request failed!");
                 }
             }
-          
-            
-            if(account != null)
-            {
-                int requestStatusId = 1;
 
-                var requestData = new Request
+            var requestData = new Request
+            {
+                Id = new Guid(),
+                AccountId = request.AccountId,
+                RoomId = roomId,
+                RequestStatusId = 1,
+                Description = request.Description,
+                SeveralLevel = request.SeveralLevel,
+                Reason = "",
+                Date= request.Date != null ? request.Date : null,
+                Enable = true,
+                CreatedAt = DateTime.Now,
+                UpdateAt = DateTime.Now,
+            };
+            _repo.requestRepo.Add(requestData);
+            resultObject = _mapper.Map<RequestResponse>(requestData);
+
+
+            //creat notification for facility-heads 
+            foreach (var item in listfacilityHeads)
+            {
+                var notificationHandleRequest = new NotificationHandleRequest
                 {
-                    AccountId = request.AccountId,
-                    RoomId = roomId,
-                    RequestStatusId = requestStatusId,
-                    Description = request.Description,
-                    SeveralLevel = request.SeveralLevel,
-                    Reason = "",
-                    Date= request.Date != null ? request.Date : null,
-                    Enable = true,
-                    CreatedAt = DateTime.Now
+                    Id = new Guid(),
+                    RequestId = requestData.Id,
+                    AccountId = item.AccountId,
+                    Purpose = "Create new Request",
+                    IsSeen = false,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
                 };
-                _repo.requestRepo.Add(requestData);
-                resultObject = _mapper.Map<RequestResponse>(requestData);
-            }
-            else
-            {
-                Error error = new("Error.RequestCommandHandler", "There is an error saving data!");
-                return Result.Failure(error, "Create request failed!");
+                _repo.notificationHandleRequestRepo.Add(notificationHandleRequest);
+
+                var notificationRemark = new NotificationRemark
+                {
+                    Id = new Guid(),
+                    RequestId = requestData.Id,
+                    AccountId = item.AccountId,
+                    IsSeen = true,  
+                    Unwatchs = 0,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                _repo.notificationRemarkRepo.Add(notificationRemark);
             }
 
-            // test thu truowng hop Request model luon
+            //create notification for user creating request
+            var notificationHandleRe = new NotificationHandleRequest
+            {
+                Id = new Guid(),
+                RequestId = requestData.Id,
+                AccountId = request.AccountId,
+                Purpose = "Create new Request",
+                IsSeen = true,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+            _repo.notificationHandleRequestRepo.Add(notificationHandleRe);
+
+            var notificationRe = new NotificationRemark
+            {
+                Id = new Guid(),
+                RequestId = requestData.Id,
+                AccountId = request.AccountId,
+                IsSeen = true,
+                Unwatchs = 0,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+            _repo.notificationRemarkRepo.Add(notificationRe);
+
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);

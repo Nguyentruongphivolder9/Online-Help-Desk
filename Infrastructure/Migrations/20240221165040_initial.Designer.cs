@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OHDDbContext))]
-    [Migration("20240201161409_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240221165040_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,8 +32,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("AvatarPhoto")
                         .HasMaxLength(255)
@@ -49,16 +49,16 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("Enable")
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
@@ -110,14 +110,14 @@ namespace Infrastructure.Migrations
                         {
                             AccountId = "ST729729",
                             Address = "Bình Chánh",
-                            Birthday = "30/04/1975",
-                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1167),
+                            Birthday = "1975/04/30",
+                            CreatedAt = new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5713),
                             Email = "student@gmail.com",
                             Enable = true,
-                            FullName = "Johnny Depp",
+                            FullName = "Duy Hiển",
                             Gender = "Male",
-                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
-                            PhoneNumber = "0909009009",
+                            Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
+                            PhoneNumber = "0909009001",
                             RoleId = 1,
                             StatusAccount = "Active"
                         },
@@ -125,14 +125,14 @@ namespace Infrastructure.Migrations
                         {
                             AccountId = "TC729729",
                             Address = "Bình Dương",
-                            Birthday = "02/09/1945",
-                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1172),
+                            Birthday = "1945/09/02",
+                            CreatedAt = new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5733),
                             Email = "teacher@gmail.com",
                             Enable = true,
-                            FullName = "Johnny Dark",
+                            FullName = "Duy Hiển",
                             Gender = "Female",
-                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
-                            PhoneNumber = "0909009009",
+                            Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
+                            PhoneNumber = "0909009002",
                             RoleId = 2,
                             StatusAccount = "Verifying"
                         },
@@ -140,43 +140,43 @@ namespace Infrastructure.Migrations
                         {
                             AccountId = "AS729729",
                             Address = "Bình Định",
-                            Birthday = "07/05/1954",
-                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1174),
+                            Birthday = "1954/06/07",
+                            CreatedAt = new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5736),
                             Email = "assignees@gmail.com",
                             Enable = true,
                             FullName = "Johnny Đãng",
                             Gender = "Orther",
-                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
-                            PhoneNumber = "0909009009",
-                            RoleId = 3,
+                            Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
+                            PhoneNumber = "0909009003",
+                            RoleId = 4,
                             StatusAccount = "Active"
                         },
                         new
                         {
                             AccountId = "FH729729",
                             Address = "Alaska",
-                            Birthday = "30/04/1945",
-                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1175),
+                            Birthday = "1975/04/30",
+                            CreatedAt = new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5739),
                             Email = "facility@gmail.com",
                             Enable = true,
-                            FullName = "Johnny Bruno",
+                            FullName = "Ngọc Nhi",
                             Gender = "Orther",
-                            Password = "$2a$12$TMO/oJcz01OhMREeWrL9eOTn.K4sGISJhtrIYCmdq1LVserqXvMnS",
-                            PhoneNumber = "0909009009",
-                            RoleId = 4,
+                            Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
+                            PhoneNumber = "0909009004",
+                            RoleId = 3,
                             StatusAccount = "Active"
                         },
                         new
                         {
                             AccountId = "AD729729",
                             Address = "Alaska",
-                            Birthday = "30/04/1945",
-                            CreatedAt = new DateTime(2024, 2, 1, 16, 14, 9, 223, DateTimeKind.Utc).AddTicks(1177),
+                            Birthday = "1975/04/30",
+                            CreatedAt = new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5749),
                             Email = "nguyentruongphi15032003@gmail.com",
                             Enable = true,
-                            FullName = "Johnny Đặng",
+                            FullName = "Phi Đzai",
                             Gender = "Orther",
-                            Password = "$2a$12$tGpNXYvvyOQcRNDXepEZe.umYLLDzFYGTN3zDJ3JE0TC7EafEVVF6",
+                            Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
                             PhoneNumber = "0937888707",
                             RoleId = 5,
                             StatusAccount = "Active"
@@ -249,6 +249,76 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HelpAbouts");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Requests.NotificationHandleRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("NotificationHandleRequest");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Requests.NotificationRemark", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Unwatchs")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("NotificationRemark");
                 });
 
             modelBuilder.Entity("Domain.Entities.Requests.ProcessByAssignees", b =>
@@ -543,6 +613,44 @@ namespace Infrastructure.Migrations
                     b.Navigation("Departments");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Requests.NotificationHandleRequest", b =>
+                {
+                    b.HasOne("Domain.Entities.Accounts.Account", "Account")
+                        .WithMany("NotificationHandleRequests")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Requests.Request", "Request")
+                        .WithMany("NotificationHandleRequests")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Requests.NotificationRemark", b =>
+                {
+                    b.HasOne("Domain.Entities.Accounts.Account", "Account")
+                        .WithMany("NotificationRemarks")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Requests.Request", "Request")
+                        .WithMany("NotificationRemarks")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Request");
+                });
+
             modelBuilder.Entity("Domain.Entities.Requests.ProcessByAssignees", b =>
                 {
                     b.HasOne("Domain.Entities.Accounts.Account", "Account")
@@ -621,6 +729,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Accounts.Account", b =>
                 {
+                    b.Navigation("NotificationHandleRequests");
+
+                    b.Navigation("NotificationRemarks");
+
                     b.Navigation("ProcessByAssignees");
 
                     b.Navigation("Remarks");
@@ -640,6 +752,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Requests.Request", b =>
                 {
+                    b.Navigation("NotificationHandleRequests");
+
+                    b.Navigation("NotificationRemarks");
+
                     b.Navigation("ProcessByAssignees");
 
                     b.Navigation("Remarks");

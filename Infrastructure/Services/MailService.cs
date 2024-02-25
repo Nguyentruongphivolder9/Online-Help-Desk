@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Auth;
 using Application.Services;
 using Domain.Entities.Settings;
 using MailKit.Net.Smtp;

@@ -24,7 +24,7 @@ namespace Web_Api.Endpoints.Accounts
             [FromRoute(Name = "email")] string email,
             CancellationToken cancellationToken = default)
         {
-            var status = await Sender.Send(new CheckEmailQuery(email));
+            var status = await Sender.Send(new CheckEmailQuery(null, email));
             return Ok(status);
         }
     }
