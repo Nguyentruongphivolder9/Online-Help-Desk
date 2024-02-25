@@ -19,6 +19,13 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
             CreateProcessCommand request,
             CancellationToken cancellationToken)
         {
+            var re = await _repo.assigneesRepo.GetRequestById(request.RequestId);
+            if( re != null)
+            {
+                return Result.Failure(new Error("Error.CreateProcessHandler", "REquestId is exsit!"),
+                   "Request is exsit!");
+            }
+
             var account = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (account == null )
             {
@@ -36,6 +43,11 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                     "Assignees Status is InActive or Banned  !");
             }
 
+            if( request.RequestStatusId != 1)
+            {
+                return Result.Failure(new Error("Error.CreateProcessHandler", "Status Name is error!"),
+                  "Status Name is error !");
+            }
 
             var requestItem = await _repo.requestRepo.GetRequestById(request.RequestId);
             if(requestItem == null)
@@ -44,13 +56,7 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
                    "Request does not exsit !");
             }
 
-            if (requestItem.RequestStatusId != 1 || requestItem.RequestStatus.StatusName != "Open")
-            {
-                return Result.Failure(new Error("Error.CreateProcessHandler", "Status Name is error!"),
-                   "Status Name is error !");
-            }
-
-            requestItem.RequestStatusId = request.RequestStatusId;
+            requestItem.RequestStatusId = 2 ;
             requestItem.UpdateAt = DateTime.UtcNow;
 
             

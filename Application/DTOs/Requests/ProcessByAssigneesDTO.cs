@@ -7,7 +7,6 @@ namespace Application.DTOs.Requests
     {
         public Guid Id { get; set; }
         public Guid RequestId { get; set; }
-        public string AccountId { get; set; }
         public AccountDTO Account { get; set; }
     }
 }

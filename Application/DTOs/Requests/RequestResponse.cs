@@ -14,7 +14,7 @@ namespace Application.DTOs.Requests
         public Boolean Enable { get; set; }
         public DateTime? Date { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime? UpdateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
         public RoomDTO Room { get; set; }
         public RequestStatusDTO RequestStatus { get; set; }
         public AccountDTO Account { get; set; }

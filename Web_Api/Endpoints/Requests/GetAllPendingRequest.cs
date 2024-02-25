@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Requests.Queries.GetAllRequest;
+﻿using Application.UseCases.Requests.Queries.GetAllPendingRequest;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -6,31 +6,31 @@ using SharedKernel;
 
 namespace Web_Api.Endpoints.Requests
 {
-    public class GetAllRequest : EndpointBaseAsync
-        .WithRequest<FieldSSFP2>
+    public class GetAllPendingRequest : EndpointBaseAsync
+        .WithRequest<FieldSSFP3>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public GetAllRequest(IMediator sender)
+        public GetAllPendingRequest(IMediator sender)
         {
             Sender = sender;
         }
 
-        [HttpGet("api/request/getAll")]
+        [HttpGet("api/request/GetAllPendingRequest")]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromQuery] FieldSSFP2 request,
+            [FromQuery]FieldSSFP3 request,
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send
-                (new GetAllRequestQueries(
+            (new GetAllPendingRequestQueries(
                 request.SearchTerm, request.SortColumn,
-                request.SortOrder,request.SortStatus ,request.Page, request.Limit));
+                request.SortOrder, request.SortStatus, request.Page, request.Limit));
             return Ok(status);
         }
     }
 
-    public class FieldSSFP2
+    public class FieldSSFP3
     {
         public string? SearchTerm { get; set; }
         public string? SortColumn { get; set; }

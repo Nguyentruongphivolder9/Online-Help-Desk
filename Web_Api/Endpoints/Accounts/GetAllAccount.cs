@@ -1,7 +1,6 @@
 ﻿using Application.UseCases.Accounts.Queries.GetAllAccount;
 using Ardalis.ApiEndpoints;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 
