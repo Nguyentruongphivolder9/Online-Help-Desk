@@ -21,6 +21,13 @@ namespace Application.UseCases.Rooms.Commands.CreateRoom
 
         public async Task<Result> Handle(CreateRoomCommand request, CancellationToken cancellationToken)
         {
+            var checkRoom = await _repo.roomRepo.GetRoomByRoomNumber(request.RoomNumber);
+            if( checkRoom != null)
+            {
+                return Result.Failure(new Error("Error.CreateRoom", "This name already exists!"),
+                " This name already exists!");
+            }
+
             var room = new Room
             {
                 DepartmentId = request.DepartmentId,

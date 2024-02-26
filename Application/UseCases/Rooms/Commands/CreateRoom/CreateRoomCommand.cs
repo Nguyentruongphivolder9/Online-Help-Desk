@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases.Rooms.Commands.CreateRoom
 {
-    public record class CreateRoomCommand(Guid DepartmentId, string RoomNumber, string RoomStatus) :ICommand;
+    public record class CreateRoomCommand
+        (Guid DepartmentId, string RoomNumber, string RoomStatus) :ICommand;
 }
