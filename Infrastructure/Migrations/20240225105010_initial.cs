@@ -128,6 +128,7 @@ namespace Infrastructure.Migrations
                     RefreshToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     RefreshTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Enable = table.Column<bool>(type: "bit", nullable: false),
+                    IsBanned = table.Column<bool>(type: "bit", nullable: false),
                     StatusAccount = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -324,14 +325,14 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Accounts",
-                columns: new[] { "AccountId", "Address", "AvatarPhoto", "Birthday", "CreatedAt", "Email", "Enable", "FullName", "Gender", "Password", "PhoneNumber", "RefreshToken", "RefreshTokenExpiry", "RoleId", "StatusAccount", "UpdatedAt", "VerifyCode", "VerifyRefreshExpiry" },
+                columns: new[] { "AccountId", "Address", "AvatarPhoto", "Birthday", "CreatedAt", "Email", "Enable", "FullName", "Gender", "IsBanned", "Password", "PhoneNumber", "RefreshToken", "RefreshTokenExpiry", "RoleId", "StatusAccount", "UpdatedAt", "VerifyCode", "VerifyRefreshExpiry" },
                 values: new object[,]
                 {
-                    { "AD729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5749), "nguyentruongphi15032003@gmail.com", true, "Phi Đzai", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0937888707", null, null, 5, "Active", null, null, null },
-                    { "AS729729", "Bình Định", null, "1954/06/07", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5736), "assignees@gmail.com", true, "Johnny Đãng", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009003", null, null, 4, "Active", null, null, null },
-                    { "FH729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5739), "facility@gmail.com", true, "Ngọc Nhi", "Orther", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009004", null, null, 3, "Active", null, null, null },
-                    { "ST729729", "Bình Chánh", null, "1975/04/30", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5713), "student@gmail.com", true, "Duy Hiển", "Male", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009001", null, null, 1, "Active", null, null, null },
-                    { "TC729729", "Bình Dương", null, "1945/09/02", new DateTime(2024, 2, 21, 23, 50, 40, 168, DateTimeKind.Local).AddTicks(5733), "teacher@gmail.com", true, "Duy Hiển", "Female", "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009002", null, null, 2, "Verifying", null, null, null }
+                    { "AD729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 25, 17, 50, 10, 604, DateTimeKind.Local).AddTicks(171), "nguyentruongphi15032003@gmail.com", true, "Phi Đzai", "Orther", false, "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0937888707", null, null, 5, "Active", null, null, null },
+                    { "AS729729", "Bình Định", null, "1954/06/07", new DateTime(2024, 2, 25, 17, 50, 10, 604, DateTimeKind.Local).AddTicks(167), "assignees@gmail.com", true, "Johnny Đãng", "Orther", false, "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009003", null, null, 4, "Active", null, null, null },
+                    { "FH729729", "Alaska", null, "1975/04/30", new DateTime(2024, 2, 25, 17, 50, 10, 604, DateTimeKind.Local).AddTicks(169), "facility@gmail.com", true, "Ngọc Nhi", "Orther", false, "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009004", null, null, 3, "Active", null, null, null },
+                    { "ST729729", "Bình Chánh", null, "1975/04/30", new DateTime(2024, 2, 25, 17, 50, 10, 604, DateTimeKind.Local).AddTicks(152), "student@gmail.com", true, "Duy Hiển", "Male", false, "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009001", null, null, 1, "Active", null, null, null },
+                    { "TC729729", "Bình Dương", null, "1945/09/02", new DateTime(2024, 2, 25, 17, 50, 10, 604, DateTimeKind.Local).AddTicks(165), "teacher@gmail.com", true, "Duy Hiển", "Female", false, "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW", "0909009002", null, null, 2, "Verifying", null, null, null }
                 });
 
             migrationBuilder.CreateIndex(

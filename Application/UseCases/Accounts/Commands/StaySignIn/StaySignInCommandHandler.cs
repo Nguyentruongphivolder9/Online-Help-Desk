@@ -25,7 +25,10 @@ namespace Application.UseCases.Accounts.Commands.StaySignIn
             if (acc == null)
                 return Result.Failure<StaySignInResponse>(new Error("Error.Client", "No data exists"), "The account code or refresh token does not exist.");
 
-            if(acc.RefreshTokenExpiry < DateTime.UtcNow)
+            if (acc.IsBanned)
+                return Result.Failure<StaySignInResponse>(new Error("Error.Client", "Account Banned"), "Your account has been banned.");
+
+            if (acc.RefreshTokenExpiry < DateTime.UtcNow)
                 return Result.Failure<StaySignInResponse>(new Error("Error.Client", "No data exists"), "RefreshToken has expired.");
 
             if (acc.StatusAccount == StaticVariables.StatusAccountUser[0] ||

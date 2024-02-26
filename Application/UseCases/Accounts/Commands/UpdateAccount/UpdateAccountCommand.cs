@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Http;
 namespace Application.UseCases.Accounts.Commands.UpdateAccount
 {
     public sealed record UpdateAccountCommand(
-        string AccountId,
+        string? AccountId,
         int RoleId,
-        string FullName,
-        string Email,
+        string? FullName,
         IFormFile? ImageFile,
-        string Address,
-        string PhoneNumber,
-        string Gender,
-        string Birthday) : ICommand;
+        string? Address,
+        string? PhoneNumber,
+        string? Gender,
+        string? Birthday) : ICommand;
 }

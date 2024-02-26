@@ -24,7 +24,10 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
             var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The account code does not exist. Please double-check your account code.");
-            
+
+            if (acc.IsBanned)
+                return Result.Failure(new Error("Error.Client", "Account Banned"), "Your account has been banned.");
+
             var codeRandom = await _randomService.RandomSixNumberCode();
             acc.VerifyCode = codeRandom;
             acc.VerifyRefreshExpiry = DateTime.UtcNow.AddMinutes(2);
