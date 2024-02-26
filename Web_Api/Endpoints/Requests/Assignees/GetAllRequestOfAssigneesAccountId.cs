@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
+using System.Security.Claims;
 
 namespace Web_Api.Endpoints.Requests.Assignees
 {
@@ -24,8 +25,9 @@ namespace Web_Api.Endpoints.Requests.Assignees
             [FromQuery] FieldSSFPProcessByAssignees request,
             CancellationToken cancellationToken = default)
         {
+            var assigneeAccountId = User.FindFirstValue(ClaimTypes.Sid);
             var status = await Sender.Send(new GetAllRequestOfAssigneeProcessingQuery(
-                request.AccountIdAssignees,
+                assigneeAccountId,
                 request.SearchTerm,
                 request.SortColumn,
                 request.SortOrder,

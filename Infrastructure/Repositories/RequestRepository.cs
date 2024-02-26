@@ -423,7 +423,8 @@ namespace Infrastructure.Repositories
             CancellationToken cancellationToken)
         {
             IQueryable<Request> requestQueries = _dbContext.Set<Request>()
-                .Include(p => p.ProcessByAssignees)
+                .Include(p => p.ProcessByAssignees!)
+                    .ThenInclude(p=> p.Account)
                 .Include(r => r.Account)
                     .ThenInclude(a => a!.Role)
                 .Include(r => r.Room)

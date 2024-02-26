@@ -48,6 +48,7 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
                     {
                         foundNotifiRemark.Unwatchs += 1;
                         foundNotifiRemark.IsSeen = false;
+                        foundNotifiRemark.UpdatedAt = DateTime.Now;
                         _repo.notificationRemarkRepo.Update(foundNotifiRemark);
                     }
                 }
@@ -63,6 +64,7 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
                         {
                             foundNotifiRemark.Unwatchs += 1;
                             foundNotifiRemark.IsSeen = false;
+                            foundNotifiRemark.UpdatedAt = DateTime.Now;
                             _repo.notificationRemarkRepo.Update(foundNotifiRemark);
                         }
                     }
@@ -74,11 +76,13 @@ namespace Application.UseCases.Remarks.Command.CreateRemark
                 {
 
                     var foundNotifiRemarkOfUser = listNotifiRemarkRelateToRequestId.
+                                                Where(noti => noti.Account!.Role!.RoleTypes!.Id == 1).           
                                                 FirstOrDefault(notifiRemark => notifiRemark.RequestId == Guid.Parse(request.RequestId));
                     if (foundNotifiRemarkOfUser != null)
                     {
                         foundNotifiRemarkOfUser.Unwatchs += 1;
                         foundNotifiRemarkOfUser.IsSeen = false;
+                        foundNotifiRemarkOfUser.UpdatedAt = DateTime.Now;
                         _repo.notificationRemarkRepo.Update(foundNotifiRemarkOfUser);
                     }
                 }
