@@ -408,7 +408,7 @@ namespace Infrastructure.Repositories
 
             Expression<Func<Request, object>> keySelector = sortColumn?.ToLower() switch
             {
-                _ => request => request.CreatedAt,
+                _ => request => request.UpdateAt!,
             };
 
             if (sortOrder?.ToLower() == "asc")
