@@ -35,6 +35,7 @@
     <None Remove="UseCases\Assigness\Queries\GetListRequestOfSingleAssignee\" />
     <None Remove="UseCases\Requests\Queries\GetAllPendingRequest\" />
     <None Remove="UseCases\Assigness\Queries\GetAllPendingRequestOfAssignee\" />
+    <None Remove="UseCases\Departments\Queries\GetListDepartmentSSFP\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
@@ -46,5 +47,6 @@
     <Folder Include="UseCases\Assigness\Queries\GetListRequestOfSingleAssignee\" />
     <Folder Include="UseCases\Requests\Queries\GetAllPendingRequest\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllPendingRequestOfAssignee\" />
+    <Folder Include="UseCases\Departments\Queries\GetListDepartmentSSFP\" />
   </ItemGroup>
 </Project>
