@@ -19,7 +19,9 @@ namespace Web_Api.Endpoints.Departments
         }
 
         [HttpPost("api/department/create_department")]
-        public override async Task<ActionResult<Result>> HandleAsync(CreateDepartmentCommand command, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<Result>> HandleAsync
+            (CreateDepartmentCommand command,
+            CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(command);
             return Ok(status);
