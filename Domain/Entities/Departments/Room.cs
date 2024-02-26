@@ -8,7 +8,7 @@ namespace Domain.Entities.Departments
         public Guid Id { get; set; }
         public Guid DepartmentId { get; set; }
         public string RoomNumber { get; set; }
-        public string RoomStatus { get; set; }
+        public bool RoomStatus { get; set; }
 
         public List<Request>? Requests { get; set; }
         [JsonIgnore]

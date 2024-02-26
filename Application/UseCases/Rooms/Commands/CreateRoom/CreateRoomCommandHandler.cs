@@ -2,11 +2,6 @@
 using Domain.Entities.Departments;
 using Domain.Repositories;
 using SharedKernel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.Rooms.Commands.CreateRoom
 {
@@ -31,8 +26,7 @@ namespace Application.UseCases.Rooms.Commands.CreateRoom
             var room = new Room
             {
                 DepartmentId = request.DepartmentId,
-                RoomNumber = request.RoomNumber,
-                RoomStatus = request.RoomStatus,
+                RoomNumber = request.RoomNumber
             };
 
             _repo.roomRepo.Add(room);

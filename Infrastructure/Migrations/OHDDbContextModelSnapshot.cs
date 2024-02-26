@@ -111,7 +111,7 @@ namespace Infrastructure.Migrations
                             AccountId = "ST729729",
                             Address = "Bình Chánh",
                             Birthday = "1975/04/30",
-                            CreatedAt = new DateTime(2024, 2, 26, 21, 28, 55, 302, DateTimeKind.Local).AddTicks(8034),
+                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9641),
                             Email = "student@gmail.com",
                             Enable = true,
                             FullName = "Duy Hiển",
@@ -127,7 +127,7 @@ namespace Infrastructure.Migrations
                             AccountId = "TC729729",
                             Address = "Bình Dương",
                             Birthday = "1945/09/02",
-                            CreatedAt = new DateTime(2024, 2, 26, 21, 28, 55, 302, DateTimeKind.Local).AddTicks(8048),
+                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9654),
                             Email = "teacher@gmail.com",
                             Enable = true,
                             FullName = "Duy Hiển",
@@ -143,7 +143,7 @@ namespace Infrastructure.Migrations
                             AccountId = "AS729729",
                             Address = "Bình Định",
                             Birthday = "1954/06/07",
-                            CreatedAt = new DateTime(2024, 2, 26, 21, 28, 55, 302, DateTimeKind.Local).AddTicks(8050),
+                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9656),
                             Email = "assignees@gmail.com",
                             Enable = true,
                             FullName = "Johnny Đãng",
@@ -159,7 +159,7 @@ namespace Infrastructure.Migrations
                             AccountId = "FH729729",
                             Address = "Alaska",
                             Birthday = "1975/04/30",
-                            CreatedAt = new DateTime(2024, 2, 26, 21, 28, 55, 302, DateTimeKind.Local).AddTicks(8051),
+                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9658),
                             Email = "facility@gmail.com",
                             Enable = true,
                             FullName = "Ngọc Nhi",
@@ -175,7 +175,7 @@ namespace Infrastructure.Migrations
                             AccountId = "AD729729",
                             Address = "Alaska",
                             Birthday = "1975/04/30",
-                            CreatedAt = new DateTime(2024, 2, 26, 21, 28, 55, 302, DateTimeKind.Local).AddTicks(8053),
+                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9660),
                             Email = "nguyentruongphi15032003@gmail.com",
                             Enable = true,
                             FullName = "Phi Đzai",
@@ -221,10 +221,8 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("RoomStatus")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<bool>("RoomStatus")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

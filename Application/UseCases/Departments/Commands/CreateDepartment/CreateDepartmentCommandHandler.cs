@@ -27,7 +27,7 @@ namespace Application.UseCases.Departments.Commands.CreateDepartment
             var department = new Department
             {
                 DepartmentName = request.DepartmentName,
-                StatusDeppartment = true
+                StatusDepartment = true
             };
 
             _repo.departmentRepo.Add(department);
