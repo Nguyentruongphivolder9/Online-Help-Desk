@@ -1,4 +1,6 @@
 ﻿using Domain.Entities.Departments;
+using Domain.Entities.Requests;
+using SharedKernel;
 
 namespace Domain.Repositories
 {
@@ -6,5 +8,10 @@ namespace Domain.Repositories
     {
         Task<Department?> GetDepartmentById(Guid id);
         Task<IEnumerable<Department?>> GetAllDepartment();
+
+        Task<Department?> GetDepartmentByName(string departmentName);
+
+        Task<DataResponse<Department>> GetListDepartmentSSFP
+    (string? searchTerm, int page, int pageSize, CancellationToken cancellationToken);
     }
 }

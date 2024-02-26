@@ -21,7 +21,7 @@ namespace Web_Api.Endpoints.Requests
 
 
         [HttpPost("api/request/create_request")]
-        [Authorize(Roles = "End-Users")]
+        //[Authorize(Roles = "End-Users")]
         public override async Task<ActionResult<Result>> HandleAsync(CreateRequestCommand command, CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(command);

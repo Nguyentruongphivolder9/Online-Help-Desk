@@ -30,6 +30,9 @@ namespace Application.UseCases.Accounts.Commands.Login
             if (user == null)
                 return Result.Failure<LoginDTO>(errorLogin, "Login faild! Incorrect Account code or Password.");
 
+            if (user.IsBanned)
+                return Result.Failure<LoginDTO>(new Error("Error.Login", "Account Banned"), "Your account has been banned.");
+
             var checkPassword = _encryptService.DecryptString(request.Password, user.Password);
             if (!checkPassword)
                 return Result.Failure<LoginDTO>(errorLogin, "Login faild! Incorrect Account code or Password.");

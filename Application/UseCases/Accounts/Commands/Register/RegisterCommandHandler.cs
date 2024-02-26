@@ -83,21 +83,21 @@ namespace Application.UseCases.Accounts.Commands.Register
 
             } while (!checkAccountId);
 
-            string password = "@abcOHD123";
+            string password = "@Asd1234";
             string hashPassword = _bCryptService.EncodeString(password);
 
             var userRegister = new Account
             {
                 AccountId = accountId,
                 RoleId = request.RoleId,
-                FullName = request.FullName,
+                FullName = request.FullName!,
                 Email = request.Email,
                 Password = hashPassword,
                 AvatarPhoto = newFileName,
-                Address = request.Address,
+                Address = request.Address!,
                 PhoneNumber = request.PhoneNumber,
-                Gender = request.Gender,
-                Birthday = request.Birthday,
+                Gender = request.Gender!,
+                Birthday = request.Birthday!,
                 CreatedAt = DateTime.UtcNow,
                 StatusAccount = StaticVariables.StatusAccountUser[0]
             };

@@ -19,7 +19,10 @@ namespace Application.UseCases.Accounts.Commands.Verify
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
 
-            if(acc.VerifyCode != request.VerifyCode)
+            if (acc.IsBanned)
+                return Result.Failure(new Error("Error.Client", "Account Banned"), "Your account has been banned.");
+
+            if (acc.VerifyCode != request.VerifyCode)
                 return Result.Failure(new Error("Error.Client", "Data comparison errors"), "Incorrect verification code.");
 
             if(acc.VerifyRefreshExpiry < DateTime.UtcNow)

@@ -23,6 +23,7 @@ namespace Domain.Entities.Accounts
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiry { get; set; }
         public bool Enable { get; set; }
+        public bool IsBanned { get; set; }
         public string StatusAccount { get; set; }
 
         [JsonIgnore]

@@ -2,7 +2,7 @@
 {
     public static class StaticVariables
     {
-        public readonly static string[] StatusAccountUser = { "Verifying", "Active", "InActive", "Banned" };
+        public readonly static string[] StatusAccountUser = { "Verifying", "Active", "Banned" };
         public readonly static string[] Gender = { "Male", "Female", "Other" };
 
 

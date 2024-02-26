@@ -1,6 +1,5 @@
 ﻿using Application.Common.Mapppings;
 using Domain.Entities.Accounts;
-using Domain.Entities.Roles;
 
 namespace Application.DTOs.Accounts
 {
@@ -17,6 +16,7 @@ namespace Application.DTOs.Accounts
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public bool Enable { get; set; }
+        public bool IsBanned { get; set; }
         public int RoleId { get; set; }
         public string StatusAccount { get; set; }
 

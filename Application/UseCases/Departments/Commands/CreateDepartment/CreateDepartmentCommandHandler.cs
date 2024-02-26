@@ -17,6 +17,13 @@ namespace Application.UseCases.Departments.Commands.CreateDepartment
 
         public async Task<Result> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
         {
+            var check = await _repo.departmentRepo.GetDepartmentByName(request.DepartmentName);
+            if( check != null)
+            {
+                return Result.Failure(new Error("Error.CreateDepartment", "This name already exists!"),
+                 " This name already exists!");
+            }
+
             var department = new Department
             {
                 DepartmentName = request.DepartmentName
