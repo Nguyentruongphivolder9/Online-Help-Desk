@@ -1,34 +1,32 @@
-﻿using Application.UseCases.Requests.Commands.UpdateRequest;
+﻿using Application.UseCases.NotifiRemarks.Command;
+using Application.UseCases.Requests.Commands.UpdateRequest;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace Web_Api.Endpoints.Requests
+namespace Web_Api.Endpoints.NotificationRemarks
 {
-    public class UpdateRequest : EndpointBaseAsync
-        .WithRequest<UpdateRequestCommand>
+    public class UpdateUnwatchsSeenOnNotifiRemark : EndpointBaseAsync
+        .WithRequest<UpdateUnwatchsSeenOnNotifiRemarkCommand>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
 
-        public UpdateRequest(IMediator sender)
+        public UpdateUnwatchsSeenOnNotifiRemark(IMediator sender)
         {
             Sender = sender;
         }
 
-        //update status name of ticket 
-        [HttpPost("api/request/update_request")]
-        [Authorize(Roles = "End-Users")]
+        [HttpPost("api/noti/update_notiremark")]
+        [Authorize]
         public async override Task<ActionResult<Result>> HandleAsync(
-            UpdateRequestCommand request
+            UpdateUnwatchsSeenOnNotifiRemarkCommand request
             ,CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(request);
             return status;
         }
-
     }
 }

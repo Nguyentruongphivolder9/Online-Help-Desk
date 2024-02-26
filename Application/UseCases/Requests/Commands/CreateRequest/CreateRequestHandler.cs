@@ -72,7 +72,7 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
                 };
                 _repo.notificationHandleRequestRepo.Add(notificationHandleRequest);
 
-                var notificationRemark = new NotificationRemark
+                var notificationRemark = new Domain.Entities.Requests.NotificationRemark
                 {
                     Id = new Guid(),
                     RequestId = requestData.Id,
@@ -98,7 +98,7 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
             };
             _repo.notificationHandleRequestRepo.Add(notificationHandleRe);
 
-            var notificationRe = new NotificationRemark
+            var notificationRe = new Domain.Entities.Requests.NotificationRemark
             {
                 Id = new Guid(),
                 RequestId = requestData.Id,

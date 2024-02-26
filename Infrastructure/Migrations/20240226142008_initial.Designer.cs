@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OHDDbContext))]
-    partial class OHDDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240226142008_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +65,6 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<bool>("IsBanned")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,14 +111,11 @@ namespace Infrastructure.Migrations
                             AccountId = "ST729729",
                             Address = "Bình Chánh",
                             Birthday = "1975/04/30",
-
-                            CreatedAt = new DateTime(2024, 2, 26, 18, 49, 46, 792, DateTimeKind.Local).AddTicks(4532),
-
+                            CreatedAt = new DateTime(2024, 2, 26, 21, 20, 8, 743, DateTimeKind.Local).AddTicks(4773),
                             Email = "student@gmail.com",
                             Enable = true,
                             FullName = "Duy Hiển",
                             Gender = "Male",
-                            IsBanned = false,
                             Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
                             PhoneNumber = "0909009001",
                             RoleId = 1,
@@ -129,14 +126,11 @@ namespace Infrastructure.Migrations
                             AccountId = "TC729729",
                             Address = "Bình Dương",
                             Birthday = "1945/09/02",
-
-                            CreatedAt = new DateTime(2024, 2, 26, 18, 49, 46, 792, DateTimeKind.Local).AddTicks(4549),
-
+                            CreatedAt = new DateTime(2024, 2, 26, 21, 20, 8, 743, DateTimeKind.Local).AddTicks(4787),
                             Email = "teacher@gmail.com",
                             Enable = true,
                             FullName = "Duy Hiển",
                             Gender = "Female",
-                            IsBanned = false,
                             Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
                             PhoneNumber = "0909009002",
                             RoleId = 2,
@@ -147,14 +141,11 @@ namespace Infrastructure.Migrations
                             AccountId = "AS729729",
                             Address = "Bình Định",
                             Birthday = "1954/06/07",
-
-                            CreatedAt = new DateTime(2024, 2, 26, 18, 49, 46, 792, DateTimeKind.Local).AddTicks(4551),
-
+                            CreatedAt = new DateTime(2024, 2, 26, 21, 20, 8, 743, DateTimeKind.Local).AddTicks(4789),
                             Email = "assignees@gmail.com",
                             Enable = true,
                             FullName = "Johnny Đãng",
                             Gender = "Orther",
-                            IsBanned = false,
                             Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
                             PhoneNumber = "0909009003",
                             RoleId = 4,
@@ -165,14 +156,11 @@ namespace Infrastructure.Migrations
                             AccountId = "FH729729",
                             Address = "Alaska",
                             Birthday = "1975/04/30",
-
-                            CreatedAt = new DateTime(2024, 2, 26, 18, 49, 46, 792, DateTimeKind.Local).AddTicks(4553),
-
+                            CreatedAt = new DateTime(2024, 2, 26, 21, 20, 8, 743, DateTimeKind.Local).AddTicks(4791),
                             Email = "facility@gmail.com",
                             Enable = true,
                             FullName = "Ngọc Nhi",
                             Gender = "Orther",
-                            IsBanned = false,
                             Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
                             PhoneNumber = "0909009004",
                             RoleId = 3,
@@ -183,14 +171,11 @@ namespace Infrastructure.Migrations
                             AccountId = "AD729729",
                             Address = "Alaska",
                             Birthday = "1975/04/30",
-
-                            CreatedAt = new DateTime(2024, 2, 26, 18, 49, 46, 792, DateTimeKind.Local).AddTicks(4554),
-
+                            CreatedAt = new DateTime(2024, 2, 26, 21, 20, 8, 743, DateTimeKind.Local).AddTicks(4792),
                             Email = "nguyentruongphi15032003@gmail.com",
                             Enable = true,
                             FullName = "Phi Đzai",
                             Gender = "Orther",
-                            IsBanned = false,
                             Password = "$2a$12$GPbRVLdOyRw7H1yw/.fv/uStTWDcvprTAergcVbhc7zQ3/zFAqOtW",
                             PhoneNumber = "0937888707",
                             RoleId = 5,
@@ -208,9 +193,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("StatusDepartment")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
