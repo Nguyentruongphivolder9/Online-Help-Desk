@@ -26,7 +26,8 @@ namespace Application.UseCases.Rooms.Commands.CreateRoom
             var room = new Room
             {
                 DepartmentId = request.DepartmentId,
-                RoomNumber = request.RoomNumber
+                RoomNumber = request.RoomNumber,
+                RoomStatus = true
             };
 
             _repo.roomRepo.Add(room);
