@@ -22,7 +22,8 @@ namespace Application.UseCases.Departments.Queries.GetListDepartmentSSFP
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<Department>>> Handle(GetListDepartmentSSFPQueries request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<Department>>> Handle
+            (GetListDepartmentSSFPQueries request, CancellationToken cancellationToken)
         {
             var list = await _repo.departmentRepo.GetListDepartmentSSFP
                 (request.SearchTerm, request.Page, request.Limit, cancellationToken);
@@ -39,7 +40,7 @@ namespace Application.UseCases.Departments.Queries.GetListDepartmentSSFP
                 TotalCount = list.TotalCount
             };
 
-            return Result.Success<PagedList<Department>>(resultPageList, "Get List Request successfully !");
+            return Result.Success<PagedList<Department>>(resultPageList, "Get List Department SSFP successfully !");
         }
     }
 }

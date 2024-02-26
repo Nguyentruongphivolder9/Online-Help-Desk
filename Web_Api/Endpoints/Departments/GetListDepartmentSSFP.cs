@@ -19,7 +19,7 @@ namespace Web_Api.Endpoints.Departments
             Sender = sender;
         }
 
-        [HttpGet("api/request/getListDepartmentSSFP")]
+        [HttpGet("api/department/getListDepartmentSSFP")]
         public async override Task<ActionResult<Result>> HandleAsync(
             [FromQuery]Field request,
             CancellationToken cancellationToken = default)
