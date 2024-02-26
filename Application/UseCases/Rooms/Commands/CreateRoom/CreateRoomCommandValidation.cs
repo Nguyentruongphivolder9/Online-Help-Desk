@@ -11,10 +11,10 @@ namespace Application.UseCases.Rooms.Commands.CreateRoom
     {
         public CreateRoomCommandValidation() 
         {
-            RuleFor(r => r.RoomStatus)
+            RuleFor(r => r.RoomNumber)
                 .NotEmpty().WithMessage("Room number cannot be blank");
-            RuleFor(rs => rs.RoomStatus)
-                .NotEmpty().WithMessage("Room status cannot be blank");
+            RuleFor(rs => rs.DepartmentId)
+                .NotEmpty().WithMessage("Department Id cannot be blank");
         }    
     }
 }
