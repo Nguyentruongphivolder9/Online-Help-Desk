@@ -48,4 +48,5 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
 app.MapHub<NotificationHub>("/hubs/notificationRemark");
+app.MapHub<BannedHub>("/hubs/bannedAccount");
 app.Run();

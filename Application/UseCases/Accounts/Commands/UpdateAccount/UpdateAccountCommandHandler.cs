@@ -21,17 +21,14 @@ namespace Application.UseCases.Accounts.Commands.UpdateAccount
 
         public async Task<Result> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
         {
-            var acccount = await _repo.accountRepo.GetByAccountId(request.AccountId);
+            var acccount = await _repo.accountRepo.GetByAccountId(request.AccountId!);
             if(acccount == null) 
                 return Result.Failure(new Error("Error.Client", "Data does not exist"), "Account does not exist.");
 
             string oldFileName = acccount.AvatarPhoto;
             string editFileName = null;
-            var checkEmail = await _repo.accountRepo.GetByEmailEdit(request.AccountId, request.Email);
-            if (checkEmail != null)
-                return Result.Failure(new Error("Error.Client", "Data duplication"), "Email already exists.");
 
-            var checkPhone = await _repo.accountRepo.GetByPhoneNumberEdit(request.AccountId, request.PhoneNumber);
+            var checkPhone = await _repo.accountRepo.GetByPhoneNumberEdit(request.AccountId!, request.PhoneNumber!);
             if (checkPhone != null)
                 return Result.Failure(new Error("Error.Client", "Data duplication"), "Phone number already exists.");
 
@@ -49,14 +46,13 @@ namespace Application.UseCases.Accounts.Commands.UpdateAccount
                 }
             }
 
-            acccount.AccountId = request.AccountId;
+            acccount.AccountId = request.AccountId!;
             acccount.RoleId = request.RoleId;
-            acccount.FullName = request.FullName;
-            acccount.Email = request.Email;
-            acccount.Address = request.Address;
-            acccount.PhoneNumber = request.PhoneNumber;
-            acccount.Gender = request.Gender;
-            acccount.Birthday = request.Birthday;
+            acccount.FullName = request.FullName!;
+            acccount.Address = request.Address!;
+            acccount.PhoneNumber = request.PhoneNumber!;
+            acccount.Gender = request.Gender!;
+            acccount.Birthday = request.Birthday!;
             acccount.UpdatedAt = DateTime.UtcNow;
 
             _repo.accountRepo.Update(acccount);
@@ -69,7 +65,7 @@ namespace Application.UseCases.Accounts.Commands.UpdateAccount
                     await _fileService.DeleteImage(oldFileName);
                 }
 
-                return Result.Success("Register Successfully!");
+                return Result.Success("Edit " + request.AccountId + " Successfully!");
             }
             catch (Exception ex)
             {

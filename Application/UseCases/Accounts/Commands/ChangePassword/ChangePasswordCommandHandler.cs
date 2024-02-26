@@ -23,6 +23,9 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
             if (acc == null)
                 return Result.Failure(new Error("Error.Client", "No data exists"), "The email does not exist. Please double-check your email address.");
 
+            if (acc.IsBanned)
+                return Result.Failure(new Error("Error.Client", "Account Banned"), "Your account has been banned.");
+
             if (!acc.Enable)
             {
                 acc.Enable = true;
