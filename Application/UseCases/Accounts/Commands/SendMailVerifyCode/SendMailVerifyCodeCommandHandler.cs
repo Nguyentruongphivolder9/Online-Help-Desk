@@ -21,9 +21,9 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
 
         public async Task<Result> Handle(SendMailVerifyCodeCommand request, CancellationToken cancellationToken)
         {
-            var acc = await _repo.accountRepo.GetByAccountId(request.AccountId);
+            var acc = await _repo.accountRepo.GetByEmail(request.Email);
             if (acc == null)
-                return Result.Failure(new Error("Error.Client", "No data exists"), "The account code does not exist. Please double-check your account code.");
+                return Result.Failure(new Error("Error.Client", "No data exists"), "The account code does not exist. Please double-check your email address.");
 
             if (acc.IsBanned)
                 return Result.Failure(new Error("Error.Client", "Account Banned"), "Your account has been banned.");
@@ -46,7 +46,7 @@ namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
                 await _repo.SaveChangesAsync(cancellationToken);
                 await _mailService.SendMailAsync(sendMail);
 
-                return Result.Success("Account ID verification is successful. Please check your registered email.");
+                return Result.Success("Email address verification is successful. Please check your registered email.");
             }
             catch (Exception ex)
             {

@@ -22,7 +22,6 @@ namespace Infrastructure.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Remark> Remarks { get; set; }
-        public DbSet<HelpAbout> HelpAbouts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
