@@ -6,9 +6,9 @@ namespace Application.UseCases.Accounts.Commands.ChangePassword
     {
         public ChangePasswordCommandValidator() 
         {
-            RuleFor(x => x.AccountId)
-                .NotEmpty().WithMessage("AccountId cannot be left blank.")
-                .MaximumLength(100);
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("Email cannot be left blank.")
+                .EmailAddress().WithMessage("Please enter a valid email address.");
 
             RuleFor(x => x.NewPassword)
                 .NotEmpty().WithMessage("New password cannot be left blank.")

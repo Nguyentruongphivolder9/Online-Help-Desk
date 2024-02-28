@@ -2,5 +2,5 @@
 
 namespace Application.UseCases.Accounts.Commands.SendMailVerifyCode
 {
-    public sealed record SendMailVerifyCodeCommand(string AccountId) : ICommand;
+    public sealed record SendMailVerifyCodeCommand(string Email) : ICommand;
 }
