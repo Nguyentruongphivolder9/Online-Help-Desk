@@ -19,7 +19,9 @@ namespace Domain.Repositories
 
         Task<ProcessByAssignees?> GetRequestById(Guid requestId);
         Task<List<ProcessByAssignees>> GetListByAssigneeHandleRequest(Guid requestId);
-        Task<List<ProcessByAssignees>> GetListHandleRequestOfOneAssigneeByAccountId(string accountId);   
+        Task<List<ProcessByAssignees>> GetListHandleRequestOfOneAssigneeByAccountId(string accountId);
+
+        Task<IEnumerable<Account?>> GetAllAssignee();
     }
 }
 

@@ -57,7 +57,7 @@ namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
             }
 
             requestItem.RequestStatusId = 2 ;
-            requestItem.UpdateAt = DateTime.UtcNow;
+            requestItem.UpdateAt = DateTime.Now;
 
             
             var processByAssignee = await _repo.assigneesRepo

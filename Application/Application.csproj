@@ -26,7 +26,6 @@
     <None Remove="DTOs\Requests\" />
     <None Remove="UseCases\Assigness\" />
     <None Remove="UseCases\Assigness\Queries\" />
-    <None Remove="UseCases\Assigness\Queries\GetAllAssignees\" />
     <None Remove="UseCases\Requests\Commands\CreateProcessForAssignees\" />
     <None Remove="UseCases\Assigness\Queries\GetAssigneeById\" />
     <None Remove="UseCases\Requests\Queries\GetRequestStatus\" />
@@ -38,9 +37,12 @@
     <None Remove="UseCases\Departments\Queries\GetListDepartmentSSFP\" />
     <None Remove="UseCases\Rooms\Queries\" />
     <None Remove="UseCases\Rooms\Queries\GetAllRoomSSFP\" />
+    <None Remove="UseCases\Assigness\Queries\GetAllAssigneesSSFP\" />
+    <None Remove="UseCases\Assigness\Queries\GetAllAssignee\" />
+    <None Remove="UseCases\Rooms\Commands\UpdateStatusRoom\" />
+    <None Remove="UseCases\Departments\Commands\UpdateStatusDepartment\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UseCases\Assigness\Queries\GetAllAssignees\" />
     <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
     <Folder Include="UseCases\Assigness\Queries\GetAssigneeById\" />
     <Folder Include="UseCases\Requests\Queries\GetRequestStatus\" />
@@ -52,5 +54,9 @@
     <Folder Include="UseCases\Departments\Queries\GetListDepartmentSSFP\" />
     <Folder Include="UseCases\Rooms\Queries\" />
     <Folder Include="UseCases\Rooms\Queries\GetAllRoomSSFP\" />
+    <Folder Include="UseCases\Assigness\Queries\GetAllAssigneesSSFP\" />
+    <Folder Include="UseCases\Assigness\Queries\GetAllAssignee\" />
+    <Folder Include="UseCases\Rooms\Commands\UpdateStatusRoom\" />
+    <Folder Include="UseCases\Departments\Commands\UpdateStatusDepartment\" />
   </ItemGroup>
 </Project>

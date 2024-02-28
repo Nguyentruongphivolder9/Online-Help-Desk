@@ -14,6 +14,15 @@ namespace Infrastructure.Repositories
         {
         }
 
+        public async Task<IEnumerable<Account?>> GetAllAssignee()
+        {
+            var list = await _dbContext.Set<Account>()
+                 .Where(a => a.RoleId == 4 && a.Enable == true && a.IsBanned == false)
+                 .ToListAsync()
+                 ;
+            return list;
+        }
+
         public async Task<DataResponse<Request?>> GetAllPendingRequestOfAssigneeSSFP(
             string AccountId,
             string? searchTerm, string? sortColumn, string? sortOrder,
