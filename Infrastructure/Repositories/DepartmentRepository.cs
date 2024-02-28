@@ -3,12 +3,6 @@ using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -16,6 +10,14 @@ namespace Infrastructure.Repositories
     {
         public DepartmentRepository(OHDDbContext dbContext)
             : base(dbContext) { }
+
+        public async Task<int> CountRoomInActive(Guid id)
+        {
+            var result = await _dbContext.Set<Department>()
+                 .Where(a => a.Rooms!.Any(de => de.RoomStatus == true) && a.Id == id)
+                 .CountAsync();
+            return result;
+        }
 
         public async Task<IEnumerable<Department?>> GetAllDepartment()
         {

@@ -13,5 +13,7 @@ namespace Domain.Repositories
 
         Task<DataResponse<Department>> GetListDepartmentSSFP
     (string? searchTerm, int page, int pageSize, CancellationToken cancellationToken);
+
+        Task<int> CountRoomInActive(Guid id);
     }
 }

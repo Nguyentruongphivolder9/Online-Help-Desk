@@ -141,7 +141,7 @@ namespace Infrastructure.Repositories
             CancellationToken cancellationToken)
         {
             IQueryable<Account> accountQuery = _dbContext.Set<Account>()
-                .Where(u => u.RoleId == 4 && u.StatusAccount == "Active");
+                .Where(u => u.RoleId == 4);
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -158,7 +158,7 @@ namespace Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync(cancellationToken);
 
-            return new DataResponse<Account>
+            return new DataResponse<Account?>
             {
                 Items = accounts,
                 TotalCount = totalCount
