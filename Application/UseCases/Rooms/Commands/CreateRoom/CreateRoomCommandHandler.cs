@@ -23,6 +23,16 @@ namespace Application.UseCases.Rooms.Commands.CreateRoom
                 " This name already exists!");
             }
 
+            var department = await _repo.departmentRepo.GetDepartmentById(request.DepartmentId);
+            if (department == null)
+            {
+                return Result.Failure(new Error("Error", "CreateRoomHandler"), "Cannot find Department by Id.");
+            }
+            if (department!.StatusDepartment == false)
+            {
+                return Result.Failure(new Error("Error", "CreateRoomHandler"), "Department does not working . Create room Fail!");
+            }
+
             var room = new Room
             {
                 DepartmentId = request.DepartmentId,
