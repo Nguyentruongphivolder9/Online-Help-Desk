@@ -18,7 +18,17 @@ namespace Application.UseCases.Rooms.Commands.UpdateStatusRoom
             var room = await _repo.roomRepo.GetRoomById(request.Id);
             if (room == null)
             {
-                return Result.Failure(new Error("Error", "No data exists"), "Cannot find Room by Id.");
+                return Result.Failure(new Error("Error", "UpdateStatusRoomHandler"), "Cannot find Room by Id.");
+            }
+
+            var department = await _repo.departmentRepo.GetDepartmentById(room.DepartmentId);
+            if( department == null)
+            {
+                return Result.Failure(new Error("Error", "UpdateStatusRoomHandler"), "Cannot find Department by Id.");
+            }
+            if( department!.StatusDepartment == false)
+            {
+                return Result.Failure(new Error("Error", "UpdateStatusRoomHandler"), "Department does not working . Change Status Room Fail !!");
             }
 
             // Toggle the RoomStatus
