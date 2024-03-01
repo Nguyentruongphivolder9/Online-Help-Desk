@@ -124,17 +124,18 @@ namespace Infrastructure.Repositories
                 "description" => request => request.Description,
                 "severallevel" => request => request.SeveralLevel,
                 "createdAt" => request => request.CreatedAt,
-                _ => request => request.CreatedAt
+                _ => request => request.UpdateAt!
             };
 
             // Adjust the ordering based on sortOrder
-            if (sortOrder?.ToLower() == "desc")
+            if (sortOrder?.ToLower() == "asc")
             {
-                requestQuery = requestQuery.OrderByDescending(keySelector);
+
+                requestQuery = requestQuery.OrderBy(keySelector);
             }
             else
             {
-                requestQuery = requestQuery.OrderBy(keySelector);
+                requestQuery = requestQuery.OrderByDescending(keySelector);
             }
 
             var totalCount = await requestQuery.CountAsync();
