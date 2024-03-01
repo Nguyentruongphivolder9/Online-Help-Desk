@@ -15,7 +15,7 @@ namespace Application.UseCases.Departments.Commands.CreateDepartment
         {
             RuleFor(x => x.DepartmentName)
                 .NotEmpty().WithMessage("DepartmentName cannot be blank.")
-                .MaximumLength(20).WithMessage("DepartmentName does not exceed 20 characters");
+                .MaximumLength(100).WithMessage("DepartmentName does not exceed 100 characters");
         }
     }
 }
