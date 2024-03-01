@@ -1,6 +1,7 @@
 ﻿using Application.UseCases.Requests.Commands.ProcessUpdateStatusRequest;
 using Ardalis.ApiEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 
@@ -20,7 +21,7 @@ namespace Web_Api.Endpoints.Requests.Assignees
 
 
         [HttpPut("api/request/update-status")]
-        //[Authorize(Roles = "Assignees")]
+        [Authorize(Roles = "Assignees")]
         public override async Task<ActionResult<Result>> HandleAsync(
             ProcessUpdateStatusRequestCommand command, 
             CancellationToken cancellationToken = default
@@ -28,13 +29,5 @@ namespace Web_Api.Endpoints.Requests.Assignees
             var status = await Sender.Send(command);
             return status;
         }
-    }
-
-    public class UpdateStatus
-    {
-        [FromRoute(Name = "requestId")]
-        public Guid Id { get; set; }
-        [FromQuery]
-        public int RequestStatusId { get; set; }
     }
 }

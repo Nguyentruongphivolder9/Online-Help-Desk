@@ -35,6 +35,11 @@ namespace Application.UseCases.Requests.Commands.ProcessUpdateStatusRequest
             if(request.RequestStatusId <= resultRequest.RequestStatus!.Id)
                 return Result.Failure(new Error("Error", "wrong state"), "Can't go back to the old state");
 
+            if(request.RequestStatusId == 5 && request.Reason != null)
+            {
+                resultRequest.Reason = request.Reason;
+            }
+
             resultRequest.RequestStatusId = request.RequestStatusId;
             resultRequest.UpdateAt = DateTime.Now;
             _repo.requestRepo.Update(resultRequest);
