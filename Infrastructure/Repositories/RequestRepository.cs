@@ -110,7 +110,7 @@ namespace Infrastructure.Repositories
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 requestQuery = requestQuery.Where(r =>
-                r.Account!.FullName.Contains(searchTerm) ||
+                r.Room.RoomNumber.Contains(searchTerm) ||
                 r.SeveralLevel.Contains(searchTerm) ||
                 r.Room!.Departments!.DepartmentName.Contains(searchTerm) ||
                 r!.RequestStatus!.StatusName.Contains(searchTerm));
