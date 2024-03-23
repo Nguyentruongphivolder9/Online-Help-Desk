@@ -43,13 +43,8 @@
     <None Remove="UseCases\Departments\Commands\UpdateStatusDepartment\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UseCases\Requests\Commands\CreateProcessForAssignees\" />
     <Folder Include="UseCases\Assigness\Queries\GetAssigneeById\" />
-    <Folder Include="UseCases\Requests\Queries\GetRequestStatus\" />
-    <Folder Include="UseCases\Requests\Queries\GetTotalRequestByAssignees\" />
-    <Folder Include="UseCases\Requests\Queries\GetTotalRequest\" />
     <Folder Include="UseCases\Assigness\Queries\GetListRequestOfSingleAssignee\" />
-    <Folder Include="UseCases\Requests\Queries\GetAllPendingRequest\" />
     <Folder Include="UseCases\Assigness\Queries\GetAllPendingRequestOfAssignee\" />
     <Folder Include="UseCases\Departments\Queries\GetListDepartmentSSFP\" />
     <Folder Include="UseCases\Rooms\Queries\" />

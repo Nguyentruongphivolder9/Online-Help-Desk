@@ -15,5 +15,5 @@ namespace Application.UseCases.Requests.Queries.GetAllRequestOfAssigneeProcessin
         string? Status,
         int Page,
         int Limit
-     ) : IQuery<PagedList<RequestResponse>>;
+     ) : IQuery<PagedList<RequestDTO>>;
 }

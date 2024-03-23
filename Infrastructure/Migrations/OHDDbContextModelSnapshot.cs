@@ -111,7 +111,7 @@ namespace Infrastructure.Migrations
                             AccountId = "ST729729",
                             Address = "Bình Chánh",
                             Birthday = "1975/04/30",
-                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9641),
+                            CreatedAt = new DateTime(2024, 3, 20, 14, 12, 58, 91, DateTimeKind.Local).AddTicks(4127),
                             Email = "student@gmail.com",
                             Enable = true,
                             FullName = "Duy Hiển",
@@ -127,7 +127,7 @@ namespace Infrastructure.Migrations
                             AccountId = "TC729729",
                             Address = "Bình Dương",
                             Birthday = "1945/09/02",
-                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9654),
+                            CreatedAt = new DateTime(2024, 3, 20, 14, 12, 58, 91, DateTimeKind.Local).AddTicks(4145),
                             Email = "teacher@gmail.com",
                             Enable = true,
                             FullName = "Duy Hiển",
@@ -143,7 +143,7 @@ namespace Infrastructure.Migrations
                             AccountId = "AS729729",
                             Address = "Bình Định",
                             Birthday = "1954/06/07",
-                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9656),
+                            CreatedAt = new DateTime(2024, 3, 20, 14, 12, 58, 91, DateTimeKind.Local).AddTicks(4148),
                             Email = "assignees@gmail.com",
                             Enable = true,
                             FullName = "Johnny Đãng",
@@ -159,7 +159,7 @@ namespace Infrastructure.Migrations
                             AccountId = "FH729729",
                             Address = "Alaska",
                             Birthday = "1975/04/30",
-                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9658),
+                            CreatedAt = new DateTime(2024, 3, 20, 14, 12, 58, 91, DateTimeKind.Local).AddTicks(4150),
                             Email = "facility@gmail.com",
                             Enable = true,
                             FullName = "Ngọc Nhi",
@@ -175,7 +175,7 @@ namespace Infrastructure.Migrations
                             AccountId = "AD729729",
                             Address = "Alaska",
                             Birthday = "1975/04/30",
-                            CreatedAt = new DateTime(2024, 2, 27, 0, 30, 4, 460, DateTimeKind.Local).AddTicks(9660),
+                            CreatedAt = new DateTime(2024, 3, 20, 14, 12, 58, 91, DateTimeKind.Local).AddTicks(4152),
                             Email = "nguyentruongphi15032003@gmail.com",
                             Enable = true,
                             FullName = "Phi Đzai",
@@ -231,30 +231,89 @@ namespace Infrastructure.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("Domain.Entities.HelpAbout", b =>
+            modelBuilder.Entity("Domain.Entities.Notifications.NotificationQueue", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Body")
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountSenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsViewed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("NotificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NotificationTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("NotificationTypeId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("UpdateAt")
+                    b.Property<DateTime?>("ViewedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("HelpAbouts");
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("AccountSenderId");
+
+                    b.HasIndex("NotificationTypeId");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("NotificationQueue");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Notifications.NotificationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NotificationType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            TypeName = "Create request"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            TypeName = "Assigned request"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            TypeName = "Update request"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            TypeName = "Chat"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Requests.NotificationHandleRequest", b =>
@@ -325,6 +384,65 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RequestId");
 
                     b.ToTable("NotificationRemark");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Requests.Problem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDisplay")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Problem");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDisplay = true,
+                            Title = "Fire and Safety Hazards"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDisplay = true,
+                            Title = "Poor Ventilation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDisplay = true,
+                            Title = "Bullying and Harassment"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDisplay = true,
+                            Title = "Inadequate Facilities"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsDisplay = true,
+                            Title = "Health and Sanitation Issues"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IsDisplay = true,
+                            Title = "Transportation Challenges"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Requests.ProcessByAssignees", b =>
@@ -406,6 +524,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Enable")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ProblemId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Reason")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
@@ -427,6 +548,8 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("ProblemId");
 
                     b.HasIndex("RequestStatusId");
 
@@ -619,6 +742,40 @@ namespace Infrastructure.Migrations
                     b.Navigation("Departments");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Notifications.NotificationQueue", b =>
+                {
+                    b.HasOne("Domain.Entities.Accounts.Account", "Account")
+                        .WithMany("NotificationQueuesAccount")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Accounts.Account", "AccountSender")
+                        .WithMany("NotificationQueuesAccountSender")
+                        .HasForeignKey("AccountSenderId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Domain.Entities.Notifications.NotificationType", "NotificationType")
+                        .WithMany("NotificationQueues")
+                        .HasForeignKey("NotificationTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Requests.Request", "Request")
+                        .WithMany("NotificationQueues")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("AccountSender");
+
+                    b.Navigation("NotificationType");
+
+                    b.Navigation("Request");
+                });
+
             modelBuilder.Entity("Domain.Entities.Requests.NotificationHandleRequest", b =>
                 {
                     b.HasOne("Domain.Entities.Accounts.Account", "Account")
@@ -703,6 +860,12 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Requests.Problem", "Problem")
+                        .WithMany("Requests")
+                        .HasForeignKey("ProblemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Requests.RequestStatus", "RequestStatus")
                         .WithMany("Requests")
                         .HasForeignKey("RequestStatusId")
@@ -716,6 +879,8 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+
+                    b.Navigation("Problem");
 
                     b.Navigation("RequestStatus");
 
@@ -737,6 +902,10 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("NotificationHandleRequests");
 
+                    b.Navigation("NotificationQueuesAccount");
+
+                    b.Navigation("NotificationQueuesAccountSender");
+
                     b.Navigation("NotificationRemarks");
 
                     b.Navigation("ProcessByAssignees");
@@ -756,9 +925,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("Requests");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Notifications.NotificationType", b =>
+                {
+                    b.Navigation("NotificationQueues");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Requests.Problem", b =>
+                {
+                    b.Navigation("Requests");
+                });
+
             modelBuilder.Entity("Domain.Entities.Requests.Request", b =>
                 {
                     b.Navigation("NotificationHandleRequests");
+
+                    b.Navigation("NotificationQueues");
 
                     b.Navigation("NotificationRemarks");
 

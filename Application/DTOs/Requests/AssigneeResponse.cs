@@ -11,7 +11,7 @@ namespace Application.DTOs.Requests
         public Guid RequestId { get; set; }
         public string AccountId { get; set; }
 
-        public RequestResponse Request { get; set; }
+        public RequestDTO Request { get; set; }
     }
 }
 

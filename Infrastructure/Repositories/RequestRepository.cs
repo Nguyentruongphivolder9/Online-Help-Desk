@@ -1,8 +1,6 @@
 using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
-using MailKit.Search;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 using System.Linq.Expressions;
@@ -17,6 +15,43 @@ namespace Infrastructure.Repositories
         public async Task<Request?> GetRequestById(Guid id)
         {
             var requestObj = await _dbContext.Set<Request>()
+                /*.Include(p => p.Problem)
+                .Select(request => new RequestDTO
+                {
+                    Id = request.Id,
+                    Description = request.Description,
+                    SeveralLevel = request.SeveralLevel,
+                    Reason = request.Reason,
+                    Enable = request.Enable,
+                    Date = request.Date,
+                    CreatedAt = request.CreatedAt,
+                    UpdateAt = request.UpdateAt,
+                    RequestStatus = new RequestStatusDTO {
+                        Id = request.RequestStatus.Id,
+                        StatusName = request.RequestStatus.StatusName,
+                        ColorCode = request.RequestStatus.ColorCode,
+                    },
+                    Problem = new ProblemDTOGetAll
+                    {
+                        Id = request.Problem.Id,
+                        Title = request.Problem.Title,
+                        IsDisplay = request.Problem.IsDisplay,
+                    },
+                    Room = new RoomDTO
+                    {
+                        Id = request.Room.Id,
+                        RoomNumber = request.Room.RoomNumber,
+                        RoomStatus = request.Room.RoomStatus,
+                        Departments = new DepartmentDTO
+                        {
+                            Id = request.Room.Departments.Id,
+                            DepartmentName = request.Room.Departments.DepartmentName,
+                            StatusDepartment = request.Room.Departments.StatusDepartment
+                        }
+                    }
+                })*/
+
+                .Include(p => p.Problem)
                 .Include(u => u.RequestStatus)
                 .Include(i => i.Account).ThenInclude(a => a.Role)
                 .Include(r => r.Room).ThenInclude(de => de!.Departments)

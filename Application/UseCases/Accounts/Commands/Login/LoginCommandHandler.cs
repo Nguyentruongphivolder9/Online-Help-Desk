@@ -64,6 +64,7 @@ namespace Application.UseCases.Accounts.Commands.Login
                     {
                         AccountId = user.AccountId,
                         RoleName = user.Role.RoleName,
+                        Email = user.Email,
                         RoleTypeName = user.Role.RoleTypes.RoleTypeName,
                         Enable = user.Enable,
                         Access_token = token.TokenString!,

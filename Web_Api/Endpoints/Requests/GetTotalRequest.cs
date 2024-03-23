@@ -8,7 +8,7 @@ using SharedKernel;
 namespace Web_Api.Endpoints.Requests
 {
 	public class GetTotalRequest : EndpointBaseAsync
-        .WithRequest<GetTotalRequestQueries>
+        .WithRequest<GetTotalRequestQuery>
         .WithActionResult<Result>
 	{
 
@@ -21,7 +21,7 @@ namespace Web_Api.Endpoints.Requests
 
         [HttpGet("api/Request/GetTotalRequest")]
         public async override Task<ActionResult<Result>> HandleAsync(
-           [FromQuery] GetTotalRequestQueries request,
+           [FromQuery] GetTotalRequestQuery request,
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(request);

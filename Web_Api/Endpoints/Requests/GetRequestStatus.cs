@@ -9,7 +9,7 @@ using SharedKernel;
 namespace Web_Api.Endpoints.Requests
 {
 	public class GetRequestStatus : EndpointBaseAsync
-        .WithRequest<GetRequestStatusQueries>
+        .WithRequest<GetRequestStatusQuery>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
@@ -21,7 +21,7 @@ namespace Web_Api.Endpoints.Requests
 
         [HttpGet("api/request/requestStatus")]
         public async override Task<ActionResult<Result>> HandleAsync(
-           [FromQuery] GetRequestStatusQueries request,
+           [FromQuery] GetRequestStatusQuery request,
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send(request);

@@ -1,6 +1,4 @@
-﻿using Application.UseCases.Remarks.Queries;
-using Application.UseCases.Remarks.Queries.GetListRemarskByAccountId;
-using Application.UseCases.Requests.Queries.GetRequestById;
+﻿using Application.UseCases.Remarks.Queries.GetListRemarskByAccountId;
 using Ardalis.ApiEndpoints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

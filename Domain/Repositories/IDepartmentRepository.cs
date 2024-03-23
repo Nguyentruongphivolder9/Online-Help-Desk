@@ -1,5 +1,4 @@
 ﻿using Domain.Entities.Departments;
-using Domain.Entities.Requests;
 using SharedKernel;
 
 namespace Domain.Repositories

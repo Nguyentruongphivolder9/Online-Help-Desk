@@ -10,7 +10,7 @@ using System.Security.Claims;
 namespace Web_Api.Endpoints.Requests
 {
     public class GetAllRequestWithoutSSFP: EndpointBaseAsync
-        .WithRequest<GetAllRequestWithoutSSFPQueries>
+        .WithRequest<GetAllRequestWithoutSSFPQuery>
         .WithActionResult<Result>
     {
         private readonly IMediator Sender;
@@ -23,12 +23,12 @@ namespace Web_Api.Endpoints.Requests
         [HttpGet("api/request_withoutssfp")]
         [Authorize]
         public async override Task<ActionResult<Result>> HandleAsync(
-            [FromRoute] GetAllRequestWithoutSSFPQueries request,
+            [FromRoute] GetAllRequestWithoutSSFPQuery request,
             CancellationToken cancellationToken = default)
         {
             var accountId = User.FindFirstValue(ClaimTypes.Sid);
 
-            var status = await Sender.Send(new GetAllRequestWithoutSSFPQueries(accountId));
+            var status = await Sender.Send(new GetAllRequestWithoutSSFPQuery(accountId));
             return Ok(status);
         }
     }

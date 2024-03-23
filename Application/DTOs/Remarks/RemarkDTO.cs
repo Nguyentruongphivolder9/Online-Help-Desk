@@ -20,6 +20,6 @@ namespace Application.DTOs.Remarks
         public DateTime CreateAt { get; set; }
         public bool Enable { get; set; }
         public AccountResponse? Account { get; set; }
-        public RequestResponse? Request { get; set; }
+        public RequestDTO? Request { get; set; }
     }
 }

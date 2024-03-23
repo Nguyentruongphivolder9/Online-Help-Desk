@@ -27,6 +27,12 @@ namespace Infrastructure.Repositories
         public INotificationRemarkRepository notificationRemarkRepo {  get; private set; }
         public INotificationHandleRequestRepository notificationHandleRequestRepo{ get; private set; }
 
+        public INotificationTypeRepository notificationTypeRepo { get; private set; }
+
+        public INotificationQueueRepository notificationQueueRepo { get; private set; }
+
+        public IProblemRepository problemRepo { get; private set; }
+
         public UnitOfWorkRepository(OHDDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -41,7 +47,9 @@ namespace Infrastructure.Repositories
             requestStatusRepo = new RequestStatusRepositoty(dbContext);
             notificationRemarkRepo = new NotificationRemarkRepository(dbContext);
             notificationHandleRequestRepo = new NotificationHandleRequestRepository(dbContext);
-
+            notificationTypeRepo = new NotificationTypeRepository(dbContext);
+            notificationQueueRepo = new NotificationQueueRepository(dbContext);
+            problemRepo = new ProblemRepository(dbContext);
         }
 
 

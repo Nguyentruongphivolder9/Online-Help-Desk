@@ -1,12 +1,6 @@
 ﻿using Application.Common.Messaging;
-using Domain.Entities.Requests;
 using Domain.Repositories;
 using SharedKernel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.Requests.Commands.UpdateRequest
 {

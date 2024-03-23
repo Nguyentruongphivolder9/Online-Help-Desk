@@ -1,12 +1,10 @@
-﻿using Application.DTOs.Remarks;
-using Application.UseCases.Remarks.Command.CreateRemark;
+﻿using Application.UseCases.Remarks.Command.CreateRemark;
 using Ardalis.ApiEndpoints;
 using Domain.Repositories;
 using Infrastructure.sHubs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SharedKernel;

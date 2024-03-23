@@ -23,7 +23,7 @@ namespace Web_Api.Endpoints.Requests
             CancellationToken cancellationToken = default)
         {
             var status = await Sender.Send
-                (new GetAllRequestQueries(
+                (new GetAllRequestQuery(
                 request.SearchTerm, request.SortColumn,
                 request.SortOrder,request.SortStatus ,request.Page, request.Limit));
             return Ok(status);

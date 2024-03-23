@@ -28,6 +28,11 @@ namespace Infrastructure.Data.Configurations
                 .WithMany(a => a.Requests)
                 .HasForeignKey(r => r.RequestStatusId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(r => r.Problem)
+                .WithMany(a => a.Requests)
+                .HasForeignKey(r => r.ProblemId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

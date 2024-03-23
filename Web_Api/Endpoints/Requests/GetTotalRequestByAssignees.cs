@@ -23,7 +23,7 @@ namespace Web_Api.Endpoints.Requests
            [FromRoute] string id,
             CancellationToken cancellationToken = default)
         {
-            var getTotalRequestByAssignees = new GetTotalRequestByAssigneesQueries { AccountId = id };
+            var getTotalRequestByAssignees = new GetTotalRequestByAssigneesQuery { AccountId = id };
             var status = await Sender.Send(getTotalRequestByAssignees);
             return Ok(status);
         }

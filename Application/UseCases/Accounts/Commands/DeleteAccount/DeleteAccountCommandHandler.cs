@@ -31,7 +31,10 @@ namespace Application.UseCases.Accounts.Commands.DeleteAccount
             try
             {
                 await _repo.SaveChangesAsync(cancellationToken);
-                await _fileService.DeleteImage(oldPhoto);
+                if(oldPhoto != null)
+                {
+                    await _fileService.DeleteImage(oldPhoto);
+                }
 
                 return Result.Success("Delete account " + request.AccountId + " successfully");
             }

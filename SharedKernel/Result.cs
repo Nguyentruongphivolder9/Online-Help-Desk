@@ -15,7 +15,6 @@
         }
 
         public bool IsSuccess { get; }
-        public bool IsFailure => !IsSuccess;
         public string StatusMessage { get; }
         public Error? Error { get; }
 

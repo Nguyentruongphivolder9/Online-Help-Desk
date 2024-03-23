@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Requests;
+﻿using Domain.Entities.Notifications;
+using Domain.Entities.Requests;
 using Domain.Entities.Roles;
 using System.Text.Json.Serialization;
 
@@ -33,5 +34,7 @@ namespace Domain.Entities.Accounts
         public List<ProcessByAssignees>? ProcessByAssignees { get; set; }
         public List<NotificationRemark>? NotificationRemarks { get; set; }
         public List<NotificationHandleRequest>? NotificationHandleRequests { get; set; }
+        public List<NotificationQueue>? NotificationQueuesAccount { get; set; }
+        public List<NotificationQueue>? NotificationQueuesAccountSender { get; set; }
     }
 }

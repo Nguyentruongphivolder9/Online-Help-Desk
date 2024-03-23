@@ -8,7 +8,7 @@ using AutoMapper;
 
 namespace Application.UseCases.Requests.Queries.GetAllRequestOfAssigneeProcessing
 {
-    internal sealed class GetAllRequestOfAssigneeProcessingQueryHandler : IQueryHandler<GetAllRequestOfAssigneeProcessingQuery, PagedList<RequestResponse>>
+    internal sealed class GetAllRequestOfAssigneeProcessingQueryHandler : IQueryHandler<GetAllRequestOfAssigneeProcessingQuery, PagedList<RequestDTO>>
     {
         private readonly IUnitOfWorkRepository _repo;
         private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ namespace Application.UseCases.Requests.Queries.GetAllRequestOfAssigneeProcessin
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<RequestResponse>>> Handle(GetAllRequestOfAssigneeProcessingQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<RequestDTO>>> Handle(GetAllRequestOfAssigneeProcessingQuery request, CancellationToken cancellationToken)
         {
             var listAccount = await _repo.requestRepo.GetAllRequestOfAssigneeProcessingSSFP(
                 request.AccountIdAssignees,
@@ -36,17 +36,17 @@ namespace Application.UseCases.Requests.Queries.GetAllRequestOfAssigneeProcessin
 
             if (listAccount.Items == null)
             {
-                return Result.Failure<PagedList<RequestResponse>>(new Error("Error.Empty", "data null"), "List Account is Null");
+                return Result.Failure<PagedList<RequestDTO>>(new Error("Error.Empty", "data null"), "List Account is Null");
             }
-            var resultList = _mapper.Map<List<RequestResponse>>(listAccount.Items);
-            var resultPageList = new PagedList<RequestResponse>
+            var resultList = _mapper.Map<List<RequestDTO>>(listAccount.Items);
+            var resultPageList = new PagedList<RequestDTO>
             {
                 Items = resultList,
                 Page = request.Page,
                 Limit = request.Limit,
                 TotalCount = listAccount.TotalCount
             };
-            return Result.Success<PagedList<RequestResponse>>(resultPageList, "Get list account successfully!");
+            return Result.Success<PagedList<RequestDTO>>(resultPageList, "Get list account successfully!");
         }
     }
 }

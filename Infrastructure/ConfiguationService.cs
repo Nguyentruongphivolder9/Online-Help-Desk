@@ -48,6 +48,7 @@ namespace Infrastructure
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IBCryptService, BCryptService>();
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             return services;
         }

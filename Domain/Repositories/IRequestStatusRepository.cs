@@ -7,6 +7,7 @@ namespace Domain.Repositories
 	public interface IRequestStatusRepository : IGenericRepository<RequestStatus>
     {
 		Task<IEnumerable<RequestStatus?>> GetAll(); 
+		Task<RequestStatus?> GetRequestStatusById(int id);
 	}
 }
 

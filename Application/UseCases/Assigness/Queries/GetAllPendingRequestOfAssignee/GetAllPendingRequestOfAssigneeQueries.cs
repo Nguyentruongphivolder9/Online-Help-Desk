@@ -9,6 +9,6 @@ namespace Application.UseCases.Assigness.Queries.GetAllPendingRequestOfAssignee
         string AccountId,
         string? SearchTerm, string? SortColumn, string? SortOrder,
         string? SortStatus, int Page, int Limit)
-        : IQuery<PagedList<RequestResponse>>;
+        : IQuery<PagedList<RequestDTO>>;
 }
 

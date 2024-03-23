@@ -1,4 +1,5 @@
 ﻿using Application.Common.Mapppings;
+using Application.DTOs.Accounts;
 using Domain.Entities.Requests;
 
 namespace Application.DTOs.Requests

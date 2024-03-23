@@ -10,6 +10,7 @@ namespace Application.DTOs.Auth
         public string AccountId { get; set; }
         public string RoleName { get; set; }
         public string RoleTypeName { get; set; }
+        public string Email { get; set; }
         public bool Enable { get; set; }
         public string Access_token { get; set; }
         public string Refresh_token { get; set; }

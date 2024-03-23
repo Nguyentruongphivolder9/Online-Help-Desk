@@ -2,7 +2,6 @@ using Application;
 using Domain.Entities.Settings;
 using Infrastructure;
 using Infrastructure.sHubs;
-using Microsoft.AspNetCore.SignalR;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +28,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -49,4 +47,5 @@ app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
 app.MapHub<NotificationHub>("/hubs/notificationRemark");
 app.MapHub<BannedHub>("/hubs/bannedAccount");
+app.MapHub<NotificationHub>("/hubs/notificationForAccount");
 app.Run();

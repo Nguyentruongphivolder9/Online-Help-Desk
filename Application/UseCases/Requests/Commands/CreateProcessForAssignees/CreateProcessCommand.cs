@@ -1,8 +1,7 @@
 ﻿using Application.Common.Messaging;
-using Application.DTOs.Requests;
 
 namespace Application.UseCases.Requests.Commands.CreateProcessForAssignees
 {
-    public record class CreateProcessCommand (Guid RequestId , string AccountId ,int RequestStatusId) : ICommand;
+    public sealed record CreateProcessCommand (string AccountId, string RequestId, string FacilityHeadId, string FullNameFacilityHeads) : ICommand;
 }
 

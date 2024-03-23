@@ -4,11 +4,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
+using System.Security.Claims;
 
 namespace Web_Api.Endpoints.Requests.Assignees
 {
     public class AssigneesProcessUpdateStatusRequest : EndpointBaseAsync
-     .WithRequest<ProcessUpdateStatusRequestCommand>
+     .WithRequest<FieldUpdateRequest>
      .WithActionResult<Result>
     {
 
@@ -23,11 +24,20 @@ namespace Web_Api.Endpoints.Requests.Assignees
         [HttpPut("api/request/update-status")]
         [Authorize(Roles = "Assignees")]
         public override async Task<ActionResult<Result>> HandleAsync(
-            ProcessUpdateStatusRequestCommand command, 
+            [FromBody] FieldUpdateRequest command, 
             CancellationToken cancellationToken = default
         ) {
-            var status = await Sender.Send(command);
+            var accountId = User.FindFirstValue(ClaimTypes.Sid);
+            var fullName = User.FindFirstValue(ClaimTypes.Name);
+            var status = await Sender.Send(new ProcessUpdateStatusRequestCommand(command.RequestId, command.RequestStatusId, command.Reason, accountId, fullName));
             return status;
         }
+    }
+
+    public class FieldUpdateRequest
+    {
+        public string RequestId { get; set; }
+        public string RequestStatusId { get; set; }
+        public string? Reason { get; set; }
     }
 }

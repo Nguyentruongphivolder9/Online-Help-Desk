@@ -22,7 +22,7 @@ namespace Web_Api.Endpoints.Requests
              [FromRoute] Guid id, 
              CancellationToken cancellationToken = default)
         {
-            var newRquestQueries = new GetRequestByIdQueries { Id = id };
+            var newRquestQueries = new GetRequestByIdQuery(id);
             var status = await Sender.Send(newRquestQueries);
             return Ok(status);
         }

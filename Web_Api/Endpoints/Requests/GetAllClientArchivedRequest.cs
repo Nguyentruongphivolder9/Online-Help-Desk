@@ -28,7 +28,7 @@ namespace Web_Api.Endpoints.Requests
         {
             var accountId = User.FindFirstValue(ClaimTypes.Sid);
             var status = await Sender.Send
-                (new GetAllClientArchivedRequestQueries(
+                (new GetAllClientArchivedRequestQuery(
                 accountId,
                 request.FCondition, request.SCondition, request.TCondition,
                 request.SearchTerm, request.SortColumn,

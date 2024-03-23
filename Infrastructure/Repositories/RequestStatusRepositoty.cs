@@ -1,6 +1,4 @@
-﻿using System;
-using Domain.Entities.Departments;
-using Domain.Entities.Requests;
+﻿using Domain.Entities.Requests;
 using Domain.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +15,12 @@ namespace Infrastructure.Repositories
         {
             var list = await _dbContext.Set<RequestStatus>()
               .ToListAsync();
+            return list;
+        }
+
+        public async Task<RequestStatus?> GetRequestStatusById(int id)
+        {
+            var list = await _dbContext.Set<RequestStatus>().SingleOrDefaultAsync(r => r.Id == id);
             return list;
         }
     }

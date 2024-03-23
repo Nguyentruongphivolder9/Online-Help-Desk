@@ -1,8 +1,10 @@
 ﻿using Application.UseCases.Requests.Commands.CreateRequest;
 using Ardalis.ApiEndpoints;
+using Infrastructure.sHubs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SharedKernel;
 
 namespace Web_Api.Endpoints.Requests
@@ -13,14 +15,16 @@ namespace Web_Api.Endpoints.Requests
     {
 
         private readonly IMediator Sender;
+        public readonly IHubContext<NotificationHub> _hubContext;
 
-        public CreateRequest(IMediator sender)
+        public CreateRequest(IMediator sender, IHubContext<NotificationHub> hubContext)
         {
             Sender = sender;
+            _hubContext = hubContext;
         }
 
 
-        [HttpPost("api/request/create_request")]
+        [HttpPost("api/requests/create")]
         [Authorize(Roles = "End-Users")]
         public override async Task<ActionResult<Result>> HandleAsync(CreateRequestCommand command, CancellationToken cancellationToken = default)
         {

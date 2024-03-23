@@ -66,10 +66,12 @@ namespace Application.UseCases.Requests.Commands.CreateRequest
                 .NotEmpty().WithMessage("Account ID is required to be filled in");
             RuleFor(rid => rid.RoomId)
                .NotEmpty().WithMessage("Room cannot be blank");
+            RuleFor(rid => rid.ProblemId)
+               .NotEmpty().WithMessage("Problem cannot be blank");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Description cannot be left blank.")
-                .MaximumLength(100).WithMessage("Description does not exceed 100 characters.")
+                .MaximumLength(300).WithMessage("Description does not exceed 300 characters.")
                 .Must(comment => !Regex.IsMatch(comment, sensitiveWordsPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline))
                 .WithMessage("The message contains sensitive, offensive words");
             RuleFor(x => x.SeveralLevel)
